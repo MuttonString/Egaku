@@ -2,7 +2,7 @@
 
 **[English](README.md) | [简体中文](README_hans.md) | [繁體中文](README_hant.md) | [日本語](README_jp.md)**
 
-## How to run front-end applications
+## 如何运行前端应用程序
 
 ```shell
 cd front-end
@@ -10,7 +10,7 @@ npm install
 npm run dev
 ```
 
-## How to run back-end applications
+## 如何运行后端应用程序
 
 ```shell
 cd front-back
