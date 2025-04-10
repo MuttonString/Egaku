@@ -1,0 +1,26 @@
+.layout {
+  background: transparent;
+}
+
+@header-height: 48px;
+
+.header {
+  position: sticky;
+  top: 0;
+  z-index: 1;
+  width: 100%;
+  height: @header-height;
+  display: flex;
+}
+
+.content {
+  top: -@header-height;
+  padding-top: @header-height;
+  height: 100vh;
+  overflow: scroll;
+  position: relative;
+}
+
+.container {
+  padding: 16px;
+}

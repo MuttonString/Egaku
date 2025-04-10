@@ -1,0 +1,33 @@
+.container {
+  display: flex;
+  width: fit-content;
+  height: fit-content;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.spin {
+  animation: spin 300ms ease-in-out;
+}
+
+@keyframes bounce {
+  50% {
+    transform: scale(1.2);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+.bounce-start {
+  scale: 0.8;
+  transition: scale 200ms ease-in-out;
+}
+
+.bounce-end {
+  animation: bounce 200ms ease-in-out;
+}

@@ -1,0 +1,32 @@
+:root {
+  --main-color: black;
+  --main-bgcolor: white;
+  --sub-bgcolor: rgba(255, 255, 255, 0.8);
+
+  .bgMenu {
+    background-color: rgba(192, 192, 192, 0.5);
+    backdrop-filter: blur(16px);
+  }
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --main-color: white;
+    --main-bgcolor: black;
+    --sub-bgcolor: rgba(0, 0, 0, 0.8);
+
+    .bgMenu {
+      background-color: rgba(64, 64, 64, 0.5);
+    }
+  }
+}
+
+body {
+  margin: 0;
+  color: var(--main-color);
+  background-color: var(--main-bgcolor);
+  background-position: center;
+  background-size: cover;
+  height: 100vh;
+  overflow: hidden;
+}
