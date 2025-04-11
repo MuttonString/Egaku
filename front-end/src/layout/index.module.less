@@ -11,6 +11,61 @@
   width: 100%;
   height: @header-height;
   display: flex;
+  align-items: center;
+  padding: 4px 16px;
+
+  .logo {
+    font-size: 24px;
+    width: 64px;
+    height: 32px;
+    line-height: 32px;
+    background: green;
+  }
+
+  .menu {
+    line-height: 32px;
+    background-color: transparent;
+    border: none;
+    width: 100%;
+    padding: 8px;
+
+    :global {
+      .ant-menu-item {
+        border-radius: 32px;
+
+        &:not(.ant-menu-item-selected)::after {
+          width: 0;
+        }
+      }
+
+      .ant-menu-item-active {
+        background: var(--active-bgcolor) !important;
+      }
+
+      .ant-menu-item-selected {
+        color: inherit;
+
+        &::after {
+          border-radius: 16px;
+          margin: auto;
+          width: 24px;
+          transition: width 200ms ease-out;
+        }
+      }
+    }
+  }
+
+  .search {
+    min-width: 10em;
+    max-width: 20em;
+
+    :global {
+      .ant-input,
+      .ant-btn {
+        background: var(--active-bgcolor);
+      }
+    }
+  }
 }
 
 .content {
