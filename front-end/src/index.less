@@ -1,22 +1,63 @@
-:root {
+html {
   --main-color: black;
   --main-bgcolor: white;
   --sub-bgcolor: rgba(255, 255, 255, 0.8);
-  --active-bgcolor: rgba(192, 192, 192, 0.6);
+  --active-bgcolor: rgba(192, 192, 192, 0.4);
 
-  .bgMenu {
-    background-color: var(--active-bgcolor);
+  .ant-layout-header,
+  .ant-tooltip-inner,
+  .ant-dropdown-menu,
+  .ant-drawer-content-wrapper,
+  .ant-select-dropdown {
+    background-color: var(--active-bgcolor) !important;
+    color: var(--main-color) !important;
     backdrop-filter: blur(16px);
+  }
+
+  .ant-drawer-content {
+    .ant-select-selector,
+    .ant-input,
+    .ant-btn {
+      background-color: var(--active-bgcolor) !important;
+      box-shadow: none;
+    }
+
+    .ant-select-selector,
+    .ant-input {
+      min-width: 200px;
+    }
+  }
+
+  .ant-slide-up-enter,
+  .ant-slide-up-leave {
+    border-radius: 8px;
+    backdrop-filter: blur(16px);
+  }
+
+  .ant-zoom-big-fast-enter,
+  .ant-zoom-big-fast-leave {
+    border-radius: 6px;
+    backdrop-filter: blur(16px);
+  }
+
+  .ant-drawer-content {
+    background: transparent !important;
+  }
+
+  .ant-select-open .ant-select-arrow {
+    rotate: 180deg;
+  }
+
+  .ant-select .ant-select-arrow {
+    transition: rotate 200ms ease-in-out;
   }
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --main-color: white;
-    --main-bgcolor: black;
-    --sub-bgcolor: rgba(0, 0, 0, 0.8);
-    --active-bgcolor: rgba(64, 64, 64, 0.6);
-  }
+html[data-darkmode='true'] {
+  --main-color: white;
+  --main-bgcolor: black;
+  --sub-bgcolor: rgba(0, 0, 0, 0.8);
+  --active-bgcolor: rgba(64, 64, 64, 0.4);
 }
 
 body {

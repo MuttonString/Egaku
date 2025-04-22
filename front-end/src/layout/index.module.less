@@ -3,6 +3,7 @@
 }
 
 @header-height: 48px;
+@content-height: 32px;
 
 .header {
   position: sticky;
@@ -12,26 +13,28 @@
   height: @header-height;
   display: flex;
   align-items: center;
+  justify-content: space-between;
   padding: 4px 16px;
 
   .logo {
+    margin-top: 8px;
     font-size: 24px;
     width: 64px;
-    height: 32px;
-    line-height: 32px;
+    height: @content-height;
+    line-height: @content-height;
     background: green;
   }
 
   .menu {
-    line-height: 32px;
+    line-height: @content-height;
+    font-size: 18px;
     background-color: transparent;
     border: none;
-    width: 100%;
     padding: 8px;
 
     :global {
       .ant-menu-item {
-        border-radius: 32px;
+        border-radius: @content-height;
 
         &:not(.ant-menu-item-selected)::after {
           width: 0;
@@ -48,7 +51,7 @@
         &::after {
           border-radius: 16px;
           margin: auto;
-          width: 24px;
+          width: 2em;
           transition: width 200ms ease-out;
         }
       }
@@ -61,10 +64,66 @@
 
     :global {
       .ant-input,
-      .ant-btn {
+      .ant-btn,
+      .ant-btn:hover {
         background: var(--active-bgcolor);
       }
     }
+  }
+
+  .btn {
+    width: @content-height;
+    height: @content-height;
+    font-size: 18px;
+    border-radius: 18px;
+
+    &:hover {
+      background: var(--active-bgcolor) !important;
+    }
+  }
+
+  .user {
+    height: @content-height;
+    border-radius: 16px;
+
+    .username {
+      line-height: @content-height;
+      padding-right: 4px;
+    }
+
+    &:hover {
+      background-color: var(--active-bgcolor);
+    }
+  }
+}
+
+.optionDivider::after {
+  position: absolute;
+  content: '';
+  left: 0px;
+  top: 0px;
+  width: 100%;
+  height: 1px;
+  background-color: var(--active-bgcolor);
+}
+
+.settingGroup {
+  margin-bottom: 16px;
+
+  h3 {
+    font-weight: normal;
+    margin: 0;
+    line-height: 32px;
+  }
+
+  .colorBlock {
+    display: inline-block;
+    width: 48px;
+    height: 48px;
+    line-height: 48px;
+    vertical-align: middle;
+    text-align: center;
+    font-size: 18px;
   }
 }
 
@@ -74,8 +133,4 @@
   height: 100vh;
   overflow: scroll;
   position: relative;
-}
-
-.container {
-  padding: 16px;
 }

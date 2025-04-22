@@ -1,5 +1,32 @@
 {
-  "test": {
-    "hello": "你好，世界！"
+  "notFound": {
+    "title": "這個頁面似乎不存在……",
+    "current": "當前頁面："
+  },
+  "layout": {
+    "menu": {
+      "recommend": "推薦",
+      "subscribe": "訂閲",
+      "article": "文章",
+      "video": "視頻"
+    },
+    "user": {
+      "reply": "回復",
+      "at": "@我",
+      "like": "點贊",
+      "notice": "通知",
+      "settings": "設置"
+    },
+    "drawer": {
+      "title": "設置",
+      "lang": "語言",
+      "default": "系統預設",
+      "colorMode": "顏色模式",
+      "lightColor": "深色",
+      "darkColor": "淺色",
+      "bgImg": "背景圖片",
+      "select": "點擊選取圖片",
+      "theme": "主題色"
+    }
   }
 }

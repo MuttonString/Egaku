@@ -1,5 +1,32 @@
 {
-  "test": {
-    "hello": "Hello World!"
+  "notFound": {
+    "title": "This page seems not to exist...",
+    "current": "Current page: "
+  },
+  "layout": {
+    "menu": {
+      "recommend": "Recommendation",
+      "subscribe": "Subscription",
+      "article": "Article",
+      "video": "Video"
+    },
+    "user": {
+      "reply": "Reply",
+      "at": "@Me",
+      "like": "Like",
+      "notice": "Notification",
+      "settings": "Settings"
+    },
+    "drawer": {
+      "title": "Settings",
+      "lang": "Language",
+      "default": "System default",
+      "colorMode": "Color mode",
+      "lightColor": "Light color",
+      "darkColor": "Dark color",
+      "bgImg": "Background image",
+      "select": "Click to select image",
+      "theme": "Theme color"
+    }
   }
 }

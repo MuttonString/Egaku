@@ -1,5 +1,32 @@
 {
-  "test": {
-    "hello": "你好，世界！"
+  "notFound": {
+    "title": "这个页面似乎不存在……",
+    "current": "当前页面："
+  },
+  "layout": {
+    "menu": {
+      "recommend": "推荐",
+      "subscribe": "关注",
+      "article": "文章",
+      "video": "视频"
+    },
+    "user": {
+      "reply": "回复",
+      "at": "@我",
+      "like": "点赞",
+      "notice": "通知",
+      "settings": "设置"
+    },
+    "drawer": {
+      "title": "设置",
+      "lang": "语言",
+      "default": "系统默认",
+      "colorMode": "颜色模式",
+      "lightColor": "深色",
+      "darkColor": "浅色",
+      "bgImg": "背景图片",
+      "select": "点击选择图片",
+      "theme": "主题色"
+    }
   }
 }

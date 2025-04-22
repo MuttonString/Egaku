@@ -1,5 +1,32 @@
 {
-  "test": {
-    "hello": "こんにちは、世界！"
+  "notFound": {
+    "title": "このページは存在しないようです…",
+    "current": "現在のページ："
+  },
+  "layout": {
+    "menu": {
+      "recommend": "おすすめ",
+      "subscribe": "フォロー",
+      "article": "文章",
+      "video": "ビデオ"
+    },
+    "user": {
+      "reply": "返信",
+      "at": "@ミー",
+      "like": "いいね",
+      "notice": "通知",
+      "settings": "設定"
+    },
+    "drawer": {
+      "title": "設定",
+      "lang": "言語",
+      "default": "システムのデフォルト",
+      "colorMode": "カラーモード",
+      "lightColor": "明るい色",
+      "darkColor": "暗い色",
+      "bgImg": "背景画像",
+      "select": "クリックして画像選択する",
+      "theme": "テーマカラー"
+    }
   }
 }

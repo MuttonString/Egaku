@@ -19,6 +19,7 @@ i18n.use(initReactI18next).init({
     [LANGUAGE.ZH_HANT]: { translation: zhHant },
     [LANGUAGE.JA]: { translation: ja },
   },
+  fallbackLng: LANGUAGE.EN,
 });
 
 export default i18n;
