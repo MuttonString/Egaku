@@ -22,8 +22,8 @@
       "lang": "語言",
       "default": "系統預設",
       "colorMode": "顏色模式",
-      "lightColor": "深色",
-      "darkColor": "淺色",
+      "lightColor": "淺色",
+      "darkColor": "深色",
       "bgImg": "背景圖片",
       "select": "點擊選取圖片",
       "theme": "主題色"

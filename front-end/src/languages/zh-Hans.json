@@ -22,8 +22,8 @@
       "lang": "语言",
       "default": "系统默认",
       "colorMode": "颜色模式",
-      "lightColor": "深色",
-      "darkColor": "浅色",
+      "lightColor": "浅色",
+      "darkColor": "深色",
       "bgImg": "背景图片",
       "select": "点击选择图片",
       "theme": "主题色"
