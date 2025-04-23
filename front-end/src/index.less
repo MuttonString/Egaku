@@ -11,6 +11,7 @@ html {
   .ant-select-dropdown {
     background-color: var(--active-bgcolor) !important;
     color: var(--main-color) !important;
+    -webkit-backdrop-filter: blur(16px);
     backdrop-filter: blur(16px);
   }
 
@@ -31,12 +32,14 @@ html {
   .ant-slide-up-enter,
   .ant-slide-up-leave {
     border-radius: 8px;
+    -webkit-backdrop-filter: blur(16px);
     backdrop-filter: blur(16px);
   }
 
   .ant-zoom-big-fast-enter,
   .ant-zoom-big-fast-leave {
     border-radius: 6px;
+    -webkit-backdrop-filter: blur(16px);
     backdrop-filter: blur(16px);
   }
 
@@ -69,4 +72,7 @@ body {
   background-repeat: no-repeat;
   height: 100vh;
   overflow: hidden;
+  -webkit-tap-highlight-color: transparent;
+  -webkit-user-select: none;
+  user-select: none;
 }
