@@ -56,8 +56,10 @@ export default function PageLayout() {
   );
   const [fileName, setFileName] = useState('');
   const [themeColor, setThemeColor] = useState(
-    parseInt(localStorage.getItem(SETTINGS.THEME_COLOR) as string) ||
-      DEFAULT_THEME_COLOR
+    parseInt(
+      (localStorage.getItem(SETTINGS.THEME_COLOR) ||
+        DEFAULT_THEME_COLOR) as string
+    )
   );
 
   useEffect(() => {
