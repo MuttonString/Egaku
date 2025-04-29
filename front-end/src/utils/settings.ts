@@ -183,5 +183,7 @@ export function changeThemeColor(id?: number | string | null, save = true) {
   }
 
   if (save) localStorage.setItem(SETTINGS.THEME_COLOR, id.toString());
-  globalSetActions.setThemeColor?.(THEME_COLORS[id]);
+  const themeColor = THEME_COLORS[id];
+  globalSetActions.setThemeColor?.(themeColor);
+  document.querySelector('html')!.style.setProperty('--primary-color', themeColor);
 }

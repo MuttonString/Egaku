@@ -3,6 +3,12 @@
     "title": "This page seems not to exist...",
     "current": "Current page: "
   },
+  "home": {
+    "welcome": "Welcome to Egaku",
+    "desc": "Inspire in this painting exchange community",
+    "signup": "Sign up",
+    "login": "Login"
+  },
   "layout": {
     "menu": {
       "recommend": "Recommendation",

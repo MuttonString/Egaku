@@ -1,0 +1,42 @@
+.page {
+  position: relative;
+  top: calc(50vh - 64px);
+  left: 50%;
+  transform: translateX(-50%) translateY(-50%);
+  min-width: 300px;
+  max-width: 50%;
+  text-align: center;
+  background-color: var(--sub-bgcolor);
+  border-radius: 8px;
+  padding: 24px;
+
+  .logo {
+    position: relative;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 96px;
+    height: 96px;
+    background-size: cover;
+    background-image: url('./logo.png');
+  }
+
+  p {
+    margin: 0.5em 0;
+  }
+
+  .welcome {
+    font-size: 32px;
+    font-weight: bolder;
+  }
+
+  .desc {
+    font-size: 24px;
+  }
+
+  .btn {
+    font-size: 24px;
+    width: 50%;
+    height: 48px;
+    margin: 16px;
+  }
+}

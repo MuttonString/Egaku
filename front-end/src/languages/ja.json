@@ -3,6 +3,12 @@
     "title": "このページは存在しないようです…",
     "current": "現在のページ："
   },
+  "home": {
+    "welcome": "Egakuへようこそ",
+    "desc": "この絵画交流コミュニティでインスピレーションを得る",
+    "signup": "登録",
+    "login": "ログイン"
+  },
   "layout": {
     "menu": {
       "recommend": "おすすめ",

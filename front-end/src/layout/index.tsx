@@ -153,10 +153,10 @@ export default function PageLayout() {
   return (
     <Layout className={styles.layout}>
       <Header className={styles.header}>
-        <Flex gap="middle">
-          <div className={styles.logo} onClick={() => navigate('/')}>
-            Logo
-          </div>
+        <Flex>
+          <Animation animation="bounce">
+            <div className={styles.logo} onClick={() => navigate('/')} />
+          </Animation>
           <Menu
             mode="horizontal"
             items={items}

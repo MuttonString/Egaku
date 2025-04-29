@@ -3,6 +3,12 @@
     "title": "這個頁面似乎不存在……",
     "current": "當前頁面："
   },
+  "home": {
+    "welcome": "歡迎來到Egaku",
+    "desc": "在這個繪畫交流社區激發靈感",
+    "signup": "註冊",
+    "login": "登錄"
+  },
   "layout": {
     "menu": {
       "recommend": "推薦",

@@ -3,6 +3,12 @@
     "title": "这个页面似乎不存在……",
     "current": "当前页面："
   },
+  "home": {
+    "welcome": "欢迎来到Egaku",
+    "desc": "在这个绘画交流社区激发灵感",
+    "signup": "注册",
+    "login": "登录"
+  },
   "layout": {
     "menu": {
       "recommend": "推荐",
