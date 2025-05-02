@@ -32,6 +32,7 @@
       "darkColor": "Dark color",
       "bgImg": "Background image",
       "select": "Click to select image",
+      "darkenImg": "Darken background image in dark mode",
       "theme": "Theme color"
     }
   }

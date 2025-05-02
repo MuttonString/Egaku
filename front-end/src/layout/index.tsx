@@ -10,6 +10,7 @@ import {
   Menu,
   Select,
   Space,
+  Switch,
   Upload,
 } from 'antd';
 import { useTranslation } from 'react-i18next';
@@ -18,14 +19,15 @@ import { MenuProps } from 'antd/lib';
 import Animation from '../components/Animation';
 import {
   CheckCircleOutlined,
+  DeleteOutlined,
   SettingFilled,
-  UndoOutlined,
   UserOutlined,
 } from '@ant-design/icons';
 import { useEffect, useState } from 'react';
 import { LANGUAGE } from '../utils/i18n';
 import {
   changeBackground,
+  changeDarkenBackgroundImage,
   changeDarkmode,
   changeLanguage,
   changeThemeColor,
@@ -53,6 +55,9 @@ export default function PageLayout() {
   );
   const [darkmode, setDarkmode] = useState(
     localStorage.getItem(SETTINGS.DARKMODE) || ''
+  );
+  const [darkenImg, setDarkenImg] = useState(
+    localStorage.getItem(SETTINGS.DARKEN_IMAGE) !== 'false'
   );
   const [fileName, setFileName] = useState('');
   const [themeColor, setThemeColor] = useState(
@@ -229,9 +234,19 @@ export default function PageLayout() {
                   }}
                   disabled={!fileName}
                 >
-                  <UndoOutlined style={{ rotate: '90deg' }} />
+                  <DeleteOutlined />
                 </Button>
               </Space.Compact>
+            </div>
+            <div className={styles.settingGroup}>
+              <h3>{t('layout.drawer.darkenImg')}</h3>
+              <Switch
+                value={darkenImg}
+                onChange={(val) => {
+                  setDarkenImg(val);
+                  changeDarkenBackgroundImage(val);
+                }}
+              />
             </div>
             <div className={styles.settingGroup}>
               <h3>{t('layout.drawer.theme')}</h3>

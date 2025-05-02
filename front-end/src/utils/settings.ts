@@ -20,6 +20,7 @@ export enum SETTINGS {
   DARKMODE = 'darkmode',
   BACKGROUND = 'bg',
   THEME_COLOR = 'theme',
+  DARKEN_IMAGE = 'dakren',
 }
 
 export const THEME_COLORS = [
@@ -37,7 +38,7 @@ export const THEME_COLORS = [
   '#eb2f96',
 ];
 
-export const DEFAULT_THEME_COLOR = 6;
+export const DEFAULT_THEME_COLOR = 1;
 
 interface SetActions {
   setLocale?: Dispatch<SetStateAction<Locale | undefined>>;
@@ -73,6 +74,11 @@ export async function init(setActions: SetActions) {
   );
 
   changeThemeColor(localStorage.getItem(SETTINGS.THEME_COLOR), false);
+
+  changeDarkenBackgroundImage(
+    localStorage.getItem(SETTINGS.DARKEN_IMAGE),
+    false
+  );
 }
 
 /**
@@ -143,6 +149,10 @@ export function changeDarkmode(
   }
   globalSetActions.setDarkmode?.(darkmode);
   document.querySelector('html')!.dataset.darkmode = darkmode.toString();
+  changeDarkenBackgroundImage(
+    localStorage.getItem(SETTINGS.DARKEN_IMAGE),
+    false
+  );
 }
 
 /**
@@ -151,18 +161,41 @@ export function changeDarkmode(
  * @param save 是否将更改保存到localforage，默认为true
  */
 export async function changeBackground(img?: RcFile | null, save = true) {
-  let url: string;
+  let bg: string;
   if (img) {
     if (save) localforage.setItem(SETTINGS.BACKGROUND, img);
-    url = URL.createObjectURL(img);
+    bg = `url(${URL.createObjectURL(img)})`;
   } else {
     if (save) localforage.removeItem(SETTINGS.BACKGROUND);
-    url = '/bg.jpg';
+    bg = '';
   }
 
   globalSetActions.setBackgroundImageFileName?.(img?.name || '');
-  const body = document.querySelector('body')!;
-  body.style.backgroundImage = `url(${url})`;
+  document.querySelector('body')!.style.backgroundImage = bg;
+  changeDarkenBackgroundImage(
+    localStorage.getItem(SETTINGS.DARKEN_IMAGE),
+    false
+  );
+}
+
+/**
+ * 更改是否在黑暗模式变暗背景图片
+ * @param darken 是否变暗背景图片
+ * @param save 是否将更改保存到localStorage，默认为true
+ */
+export function changeDarkenBackgroundImage(
+  darken?: boolean | string | null,
+  save = true
+) {
+  if (darken === 'false' || darken === false) darken = false;
+  else darken = true;
+
+  if (save) localStorage.setItem(SETTINGS.DARKEN_IMAGE, darken.toString());
+  const overlay = 'linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), ';
+  const bodyStyle = document.querySelector('body')!.style;
+  bodyStyle.backgroundImage = bodyStyle.backgroundImage.replace(overlay, '');
+  if (darken && document.querySelector('html')!.dataset.darkmode === 'true')
+    bodyStyle.backgroundImage = overlay + bodyStyle.backgroundImage;
 }
 
 /**
@@ -185,5 +218,7 @@ export function changeThemeColor(id?: number | string | null, save = true) {
   if (save) localStorage.setItem(SETTINGS.THEME_COLOR, id.toString());
   const themeColor = THEME_COLORS[id];
   globalSetActions.setThemeColor?.(themeColor);
-  document.querySelector('html')!.style.setProperty('--primary-color', themeColor);
+  document
+    .querySelector('html')!
+    .style.setProperty('--primary-color', themeColor);
 }

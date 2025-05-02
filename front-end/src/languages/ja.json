@@ -28,10 +28,11 @@
       "lang": "言語",
       "default": "システムのデフォルト",
       "colorMode": "カラーモード",
-      "lightColor": "明るい色",
-      "darkColor": "暗い色",
+      "lightColor": "ライトカラー",
+      "darkColor": "ダークカラー",
       "bgImg": "背景画像",
-      "select": "クリックして画像選択する",
+      "select": "クリックして画像を選択する",
+      "darkenImg": "ダークモードで背景画像を暗くする",
       "theme": "テーマカラー"
     }
   }

@@ -32,6 +32,7 @@
       "darkColor": "深色",
       "bgImg": "背景圖片",
       "select": "點擊選取圖片",
+      "darkenImg": "在深色模式下變暗背景圖片",
       "theme": "主題色"
     }
   }

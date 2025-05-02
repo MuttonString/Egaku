@@ -1,46 +1,52 @@
 html {
-  --main-color: black;
-  --main-bgcolor: white;
-  --sub-bgcolor: rgba(255, 255, 255, 0.8);
-  --active-bgcolor: rgba(192, 192, 192, 0.4);
+  --text: #000000e0;
+  --secondary-text: #000000a6;
+  --disabled-text: #00000040;
+  --default-border: #d9d9d9;
+  --separator: #0505050f;
+  --background: #f5f5f5;
+  --secondary-background: #f5f5f5cc;
+  --layout-background: #f5f5f5a0;
 
   .ant-layout-header,
   .ant-tooltip-inner,
   .ant-dropdown-menu,
   .ant-drawer-content-wrapper,
   .ant-select-dropdown {
-    background-color: var(--active-bgcolor) !important;
-    color: var(--main-color) !important;
-    -webkit-backdrop-filter: blur(16px);
-    backdrop-filter: blur(16px);
+    background-color: var(--layout-background) !important;
+    color: var(--text) !important;
+    -webkit-backdrop-filter: blur(20px);
+    backdrop-filter: blur(20px);
   }
 
   .ant-drawer-content {
     .ant-select-selector,
     .ant-input,
     .ant-btn {
-      background-color: var(--active-bgcolor) !important;
+      background-color: var(--layout-background) !important;
       box-shadow: none;
     }
 
     .ant-select-selector,
     .ant-input {
-      min-width: 200px;
+      min-width: 250px;
     }
   }
 
   .ant-slide-up-enter,
   .ant-slide-up-leave {
     border-radius: 8px;
-    -webkit-backdrop-filter: blur(16px);
-    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: saturate(180%) blur(20px);
+    backdrop-filter: saturate(180%) blur(20px);
+    will-change: backdrop-filter;
   }
 
   .ant-zoom-big-fast-enter,
   .ant-zoom-big-fast-leave {
     border-radius: 6px;
-    -webkit-backdrop-filter: blur(16px);
-    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: saturate(180%) blur(20px);
+    backdrop-filter: saturate(180%) blur(20px);
+    will-change: backdrop-filter;
   }
 
   .ant-drawer-content {
@@ -57,16 +63,20 @@ html {
 }
 
 html[data-darkmode='true'] {
-  --main-color: white;
-  --main-bgcolor: black;
-  --sub-bgcolor: rgba(0, 0, 0, 0.8);
-  --active-bgcolor: rgba(64, 64, 64, 0.4);
+  --text: #ffffffd9;
+  --secondary-text: #ffffffa6;
+  --disabled-text: #ffffff40;
+  --default-border: #424242;
+  --separator: #fdfdfd1f;
+  --background: #000000;
+  --secondary-background: #000000cc;
+  --layout-background: #000000a0;
 }
 
 body {
   margin: 0;
-  color: var(--main-color);
-  background-color: var(--main-bgcolor);
+  color: var(--text);
+  background-color: var(--background);
   background-position: center;
   background-size: cover;
   background-repeat: no-repeat;
@@ -79,5 +89,5 @@ body {
 * {
   -webkit-tap-highlight-color: transparent;
   scrollbar-width: thin;
-  scrollbar-color: var(--primary-color) var(--active-bgcolor);
+  scrollbar-color: var(--primary-color) var(--layout-background);
 }
