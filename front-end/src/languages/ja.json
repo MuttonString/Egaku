@@ -35,5 +35,46 @@
       "darkenImg": "ダークモードで背景画像を暗くする",
       "theme": "テーマカラー"
     }
+  },
+  "loginModal": {
+    "title": {
+      "login": "ログイン",
+      "signup": "登録",
+      "reset": "パスワードをリセット"
+    },
+    "form": {
+      "accountOrEmail": "アカウント名かメール",
+      "account": "アカウント名",
+      "email": "メール",
+      "code": "認証コード",
+      "password": "パスワード",
+      "passwordAgain": "リピートパスワード",
+      "remember": "ログイン状態を維持する"
+    },
+    "tip": {
+      "account": "英数字とアンダースコアのみ",
+      "strength": "パスワード強度"
+    },
+    "invalid": {
+      "required": "{{label}}が必要",
+      "length": "{{label}}は{{len}}文字である",
+      "account": "無効なアカウント名",
+      "email": "無効なメール",
+      "pwdNotSame": "二つの入力したパスワードが一致しない",
+      "existAccount": "アカウント名は使われた",
+      "existEmail": "メールは登録された"
+    },
+    "btn": {
+      "login": "ログイン",
+      "code": "認証コード送信",
+      "signup": "登録",
+      "reset": "パスワードをリセット"
+    },
+    "bottom": {
+      "signup": "新しいアカウントを作成する",
+      "forget": "パスワード忘れた？",
+      "login": "すでにアカウントがある？",
+      "back": "ログイン"
+    }
   }
 }

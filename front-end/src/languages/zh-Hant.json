@@ -35,5 +35,46 @@
       "darkenImg": "在深色模式下變暗背景圖片",
       "theme": "主題色"
     }
+  },
+  "loginModal": {
+    "title": {
+      "login": "登錄",
+      "signup": "註冊",
+      "reset": "重設密碼"
+    },
+    "form": {
+      "accountOrEmail": "賬戶名或電子郵件",
+      "account": "賬戶名",
+      "email": "電子郵件",
+      "code": "驗證碼",
+      "password": "密碼",
+      "passwordAgain": "重複密碼",
+      "remember": "記住我"
+    },
+    "tip": {
+      "account": "僅限英文字母、數字和底線",
+      "strength": "密碼強度"
+    },
+    "invalid": {
+      "required": "{{label}}未填",
+      "length": "{{label}}字符數應在{{len}}之間",
+      "account": "無效賬戶名",
+      "email": "無效電子郵件",
+      "pwdNotSame": "兩次輸入的密碼不匹配",
+      "existAccount": "賬戶名已被使用",
+      "existEmail": "電子郵件已被註冊"
+    },
+    "btn": {
+      "login": "登錄",
+      "code": "發送驗證碼",
+      "signup": "註冊",
+      "reset": "重設密碼"
+    },
+    "bottom": {
+      "signup": "創建新賬戶",
+      "forget": "忘記密碼？",
+      "login": "已有一個賬戶？",
+      "back": "登錄"
+    }
   }
 }

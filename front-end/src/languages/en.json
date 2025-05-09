@@ -35,5 +35,46 @@
       "darkenImg": "Darken background image in dark mode",
       "theme": "Theme color"
     }
+  },
+  "loginModal": {
+    "title": {
+      "login": "Login",
+      "signup": "Sign up",
+      "reset": "Reset password"
+    },
+    "form": {
+      "accountOrEmail": "Account name or email",
+      "account": "Account name",
+      "email": "Email",
+      "code": "Verification code",
+      "password": "Password",
+      "passwordAgain": "Repeat password",
+      "remember": "Remember me"
+    },
+    "tip": {
+      "account": "English letters, numbers, and underscores only",
+      "strength": "Password strength"
+    },
+    "invalid": {
+      "required": "{{label}} is required",
+      "length": "{{label}}は{{len}} characters",
+      "account": "Invalid account name",
+      "email": "Invalid email",
+      "pwdNotSame": "The two entered passwords do not match",
+      "existAccount": "Account name has been used",
+      "existEmail": "Email has been signed up"
+    },
+    "btn": {
+      "login": "Login",
+      "code": "Send verification code",
+      "signup": "Sign up",
+      "reset": "Reset password"
+    },
+    "bottom": {
+      "signup": "Create a new account",
+      "forget": "Forget password?",
+      "login": "Alrealy have a account?",
+      "back": "Login"
+    }
   }
 }

@@ -1,0 +1,39 @@
+.modal {
+  transition: height 200ms ease-out;
+  overflow: hidden;
+
+  .inputWithBtn {
+    width: 100%;
+  }
+
+  .labelWithTip {
+    label {
+      width: 100%;
+    }
+
+    .row {
+      width: 100%;
+      display: flex;
+      justify-content: space-between;
+    }
+
+    .tip {
+      color: var(--secondary-text);
+    }
+
+    .progress {
+      display: flex;
+      margin-left: 8px;
+    }
+  }
+
+  .btn {
+    text-align: center;
+  }
+
+  .bottom {
+    display: flex;
+    flex-direction: row-reverse;
+    justify-content: space-between;
+  }
+}

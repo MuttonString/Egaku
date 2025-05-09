@@ -42,6 +42,12 @@ html {
     backdrop-filter: var(--blur-backdrop);
   }
 
+  .ant-form-vertical {
+    label::before {
+      content: none !important;
+    }
+  }
+
   .ant-slide-up-enter,
   .ant-slide-up-leave {
     border-radius: 8px;
