@@ -105,8 +105,13 @@ function LoginModal(props: ModalProps, ref: Ref<ILoginModal>) {
               <Form.Item name="remember" valuePropName="checked">
                 <Checkbox>{t('loginModal.form.remember')}</Checkbox>
               </Form.Item>
-              <Form.Item className={styles.btn}>
-                <Button type="primary" htmlType="submit" loading={false}>
+              <Form.Item className={styles.btnRow}>
+                <Button
+                  className={styles.btn}
+                  type="primary"
+                  htmlType="submit"
+                  loading={false}
+                >
                   {t('loginModal.btn.login')}
                 </Button>
               </Form.Item>
@@ -284,8 +289,13 @@ function LoginModal(props: ModalProps, ref: Ref<ILoginModal>) {
               >
                 <Input.Password maxLength={40} />
               </Form.Item>
-              <Form.Item className={styles.btn}>
-                <Button type="primary" htmlType="submit" loading={false}>
+              <Form.Item className={styles.btnRow}>
+                <Button
+                  className={styles.btn}
+                  type="primary"
+                  htmlType="submit"
+                  loading={false}
+                >
                   {t('loginModal.btn.signup')}
                 </Button>
               </Form.Item>
@@ -417,8 +427,13 @@ function LoginModal(props: ModalProps, ref: Ref<ILoginModal>) {
               >
                 <Input.Password maxLength={40} />
               </Form.Item>
-              <Form.Item className={styles.btn}>
-                <Button type="primary" htmlType="submit" loading={false}>
+              <Form.Item className={styles.btnRow}>
+                <Button
+                  className={styles.btn}
+                  type="primary"
+                  htmlType="submit"
+                  loading={false}
+                >
                   {t('loginModal.btn.reset')}
                 </Button>
               </Form.Item>
