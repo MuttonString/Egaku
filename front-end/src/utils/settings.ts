@@ -191,7 +191,7 @@ export function changeDarkenBackgroundImage(
   else darken = true;
 
   if (save) localStorage.setItem(SETTINGS.DARKEN_IMAGE, darken.toString());
-  const overlay = 'linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), ';
+  const overlay = 'linear-gradient(rgba(0, 0, 0, 0.55), rgba(0, 0, 0, 0.55)), ';
   const bodyStyle = document.querySelector('body')!.style;
   bodyStyle.backgroundImage = bodyStyle.backgroundImage.replace(overlay, '');
   if (darken && document.querySelector('html')!.dataset.darkmode === 'true')

@@ -5,8 +5,9 @@ html {
   --default-border: #d9d9d9;
   --separator: #0505050f;
   --background: #f5f5f5;
-  --secondary-background: #f5f5f5cc;
-  --layout-background: #f5f5f5a0;
+  --secondary-background: rgba(245, 245, 245, 0.8);
+  --layout-background: rgba(245, 245, 245, 0.55);
+  --blur-backdrop: saturate(180%) blur(20px);
 
   .ant-layout-header,
   .ant-tooltip-inner,
@@ -15,8 +16,8 @@ html {
   .ant-select-dropdown {
     background-color: var(--layout-background) !important;
     color: var(--text) !important;
-    -webkit-backdrop-filter: blur(20px);
-    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: var(--blur-backdrop);
+    backdrop-filter: var(--blur-backdrop);
   }
 
   .ant-drawer-content {
@@ -33,19 +34,27 @@ html {
     }
   }
 
+  .ant-drawer-mask {
+    background: transparent !important;
+  }
+
+  .ant-modal-mask {
+    backdrop-filter: var(--blur-backdrop);
+  }
+
   .ant-slide-up-enter,
   .ant-slide-up-leave {
     border-radius: 8px;
-    -webkit-backdrop-filter: saturate(180%) blur(20px);
-    backdrop-filter: saturate(180%) blur(20px);
+    -webkit-backdrop-filter: var(--blur-backdrop);
+    backdrop-filter: var(--blur-backdrop);
     will-change: backdrop-filter;
   }
 
   .ant-zoom-big-fast-enter,
   .ant-zoom-big-fast-leave {
     border-radius: 6px;
-    -webkit-backdrop-filter: saturate(180%) blur(20px);
-    backdrop-filter: saturate(180%) blur(20px);
+    -webkit-backdrop-filter: var(--blur-backdrop);
+    backdrop-filter: var(--blur-backdrop);
     will-change: backdrop-filter;
   }
 
@@ -69,8 +78,8 @@ html[data-darkmode='true'] {
   --default-border: #424242;
   --separator: #fdfdfd1f;
   --background: #000000;
-  --secondary-background: #000000cc;
-  --layout-background: #000000a0;
+  --secondary-background: rgba(0, 0, 0, 0.8);
+  --layout-background: rgba(0, 0, 0, 0.55);
 }
 
 body {
