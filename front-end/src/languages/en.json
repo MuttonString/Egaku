@@ -57,7 +57,7 @@
     },
     "invalid": {
       "required": "{{label}} is required",
-      "length": "{{label}}should be between {{len}} characters",
+      "length": "{{label}} should be between {{len}} characters",
       "account": "Invalid account name",
       "email": "Invalid email",
       "pwdNotSame": "The two entered passwords do not match"
