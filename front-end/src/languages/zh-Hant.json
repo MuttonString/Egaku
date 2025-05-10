@@ -60,9 +60,7 @@
       "length": "{{label}}字符數應在{{len}}之間",
       "account": "無效賬戶名",
       "email": "無效電子郵件",
-      "pwdNotSame": "兩次輸入的密碼不匹配",
-      "existAccount": "賬戶名已被使用",
-      "existEmail": "電子郵件已被註冊"
+      "pwdNotSame": "兩次輸入的密碼不匹配"
     },
     "btn": {
       "login": "登錄",

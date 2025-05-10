@@ -60,9 +60,7 @@
       "length": "{{label}}は{{len}}文字である",
       "account": "無効なアカウント名",
       "email": "無効なメール",
-      "pwdNotSame": "二つの入力したパスワードが一致しない",
-      "existAccount": "アカウント名は使われた",
-      "existEmail": "メールは登録された"
+      "pwdNotSame": "二つの入力したパスワードが一致しない"
     },
     "btn": {
       "login": "ログイン",

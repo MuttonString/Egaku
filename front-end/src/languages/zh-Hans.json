@@ -60,9 +60,7 @@
       "length": "{{label}}字符数应在{{len}}之间",
       "account": "无效账户名",
       "email": "无效电子邮件",
-      "pwdNotSame": "两次输入的密码不匹配",
-      "existAccount": "账户名已被使用",
-      "existEmail": "电子邮件已被注册"
+      "pwdNotSame": "两次输入的密码不匹配"
     },
     "btn": {
       "login": "登录",
