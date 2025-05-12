@@ -21,7 +21,7 @@
       "at": "@ミー",
       "like": "いいね",
       "notice": "通知",
-      "settings": "設定"
+      "logout": "ログアウト"
     },
     "drawer": {
       "title": "設定",
@@ -35,6 +35,12 @@
       "darkenImg": "ダークモードで背景画像を暗くする",
       "theme": "テーマカラー"
     }
+  },
+  "errorNotification": {
+    "title": "エラー"
+  },
+  "successMessage": {
+    "title": "{{msg}}成功"
   },
   "loginModal": {
     "title": {
@@ -60,7 +66,12 @@
       "length": "{{label}}は{{len}}文字である",
       "account": "無効なアカウント名",
       "email": "無効なメール",
-      "pwdNotSame": "二つの入力したパスワードが一致しない"
+      "pwdNotSame": "二つの入力したパスワードが一致しない",
+      "existAccount": "アカウント名は使われた",
+      "existEmail": "メールは登録されている",
+      "notExistEmail": "メールは登録されていない",
+      "errCode": "認証コードエラー",
+      "notCorrect": "アカウント名、メール、またはパスワードが間違っている"
     },
     "btn": {
       "login": "ログイン",

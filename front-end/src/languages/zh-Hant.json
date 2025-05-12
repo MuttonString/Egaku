@@ -17,11 +17,11 @@
       "video": "視頻"
     },
     "user": {
-      "reply": "回復",
+      "reply": "回覆",
       "at": "@我",
       "like": "點贊",
       "notice": "通知",
-      "settings": "設置"
+      "logout": "登出"
     },
     "drawer": {
       "title": "設置",
@@ -35,6 +35,12 @@
       "darkenImg": "在深色模式下變暗背景圖片",
       "theme": "主題色"
     }
+  },
+  "errorNotification": {
+    "title": "錯誤"
+  },
+  "successMessage": {
+    "title": "{{msg}}成功"
   },
   "loginModal": {
     "title": {
@@ -60,7 +66,12 @@
       "length": "{{label}}字符數應在{{len}}之間",
       "account": "無效賬戶名",
       "email": "無效電子郵件",
-      "pwdNotSame": "兩次輸入的密碼不匹配"
+      "pwdNotSame": "兩次輸入的密碼不匹配",
+      "existAccount": "賬戶名已被使用",
+      "existEmail": "電子郵件已被註冊",
+      "notExistEmail": "電子郵件尚未註冊",
+      "errCode": "驗證碼錯誤",
+      "notCorrect": "賬戶名、電子郵件或密碼錯誤"
     },
     "btn": {
       "login": "登錄",

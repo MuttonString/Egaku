@@ -16,10 +16,12 @@ npm run dev
 
 ```shell
 cd front-back
+
 # Windows:
 .\venv\Scripts\activate
 # macOS/Linux:
 source venv/bin/activate
+
 pip install -r requirements.txt
-python src/main.py
+uvicorn main:app --reload
 ```

@@ -21,7 +21,7 @@
       "at": "@我",
       "like": "点赞",
       "notice": "通知",
-      "settings": "设置"
+      "logout": "退出登录"
     },
     "drawer": {
       "title": "设置",
@@ -35,6 +35,12 @@
       "darkenImg": "在深色模式下变暗背景图片",
       "theme": "主题色"
     }
+  },
+  "errorNotification": {
+    "title": "错误"
+  },
+  "successMessage": {
+    "title": "{{msg}}成功"
   },
   "loginModal": {
     "title": {
@@ -60,7 +66,12 @@
       "length": "{{label}}字符数应在{{len}}之间",
       "account": "无效账户名",
       "email": "无效电子邮件",
-      "pwdNotSame": "两次输入的密码不匹配"
+      "pwdNotSame": "两次输入的密码不匹配",
+      "existAccount": "账户名已被使用",
+      "existEmail": "电子邮件已被注册",
+      "notExistEmail": "电子邮件尚未注册",
+      "errCode": "验证码错误",
+      "notCorrect": "账户名、电子邮件或密码错误"
     },
     "btn": {
       "login": "登录",

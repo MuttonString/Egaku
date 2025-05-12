@@ -21,7 +21,7 @@
       "at": "@Me",
       "like": "Like",
       "notice": "Notification",
-      "settings": "Settings"
+      "logout": "Logout"
     },
     "drawer": {
       "title": "Settings",
@@ -35,6 +35,12 @@
       "darkenImg": "Darken background image in dark mode",
       "theme": "Theme color"
     }
+  },
+  "errorNotification": {
+    "title": "Error"
+  },
+  "successMessage": {
+    "title": "{{msg}} successful"
   },
   "loginModal": {
     "title": {
@@ -60,7 +66,12 @@
       "length": "{{label}} should be between {{len}} characters",
       "account": "Invalid account name",
       "email": "Invalid email",
-      "pwdNotSame": "The two entered passwords do not match"
+      "pwdNotSame": "The two entered passwords do not match",
+      "existAccount": "Account name has been used",
+      "existEmail": "Email has been signed up",
+      "notExistEmail": "Email has not been signed up",
+      "errCode": "Verification code error",
+      "notCorrect": "Incorrect account name, email or password"
     },
     "btn": {
       "login": "Login",

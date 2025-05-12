@@ -37,6 +37,7 @@ import {
   THEME_COLORS,
 } from '../utils/settings';
 import { Outlet, useLocation, useNavigate } from 'react-router';
+import Cookies from 'js-cookie';
 
 const { Header, Content } = Layout;
 const { Search } = Input;
@@ -147,13 +148,19 @@ export default function PageLayout() {
     { label: t('layout.user.notice'), key: 'notice' },
     {
       label: (
-        <span className={styles.optionDivider}>
-          {t('layout.user.settings')}
-        </span>
+        <span className={styles.optionDivider}>{t('layout.user.logout')}</span>
       ),
-      key: 'settings',
+      key: 'logout',
+      onClick() {
+        Cookies.remove('account');
+        Cookies.remove('pwd');
+        sessionStorage.removeItem('token');
+        window.location.reload();
+      },
     },
   ];
+
+  // const { data: userData } = useRequest();
 
   return (
     <Layout className={styles.layout}>

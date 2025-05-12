@@ -1,0 +1,424 @@
+[
+    {
+        "label": "APIRouter",
+        "importPath": "fastapi",
+        "description": "fastapi",
+        "isExtraImport": true,
+        "detail": "fastapi",
+        "documentation": {}
+    },
+    {
+        "label": "FastAPI",
+        "importPath": "fastapi",
+        "description": "fastapi",
+        "isExtraImport": true,
+        "detail": "fastapi",
+        "documentation": {}
+    },
+    {
+        "label": "create_engine",
+        "importPath": "sqlalchemy",
+        "description": "sqlalchemy",
+        "isExtraImport": true,
+        "detail": "sqlalchemy",
+        "documentation": {}
+    },
+    {
+        "label": "TypeDecorator",
+        "importPath": "sqlalchemy",
+        "description": "sqlalchemy",
+        "isExtraImport": true,
+        "detail": "sqlalchemy",
+        "documentation": {}
+    },
+    {
+        "label": "DATETIME",
+        "importPath": "sqlalchemy",
+        "description": "sqlalchemy",
+        "isExtraImport": true,
+        "detail": "sqlalchemy",
+        "documentation": {}
+    },
+    {
+        "label": "BIGINT",
+        "importPath": "sqlalchemy",
+        "description": "sqlalchemy",
+        "isExtraImport": true,
+        "detail": "sqlalchemy",
+        "documentation": {}
+    },
+    {
+        "label": "Column",
+        "importPath": "sqlalchemy",
+        "description": "sqlalchemy",
+        "isExtraImport": true,
+        "detail": "sqlalchemy",
+        "documentation": {}
+    },
+    {
+        "label": "BIGINT",
+        "importPath": "sqlalchemy",
+        "description": "sqlalchemy",
+        "isExtraImport": true,
+        "detail": "sqlalchemy",
+        "documentation": {}
+    },
+    {
+        "label": "VARCHAR",
+        "importPath": "sqlalchemy",
+        "description": "sqlalchemy",
+        "isExtraImport": true,
+        "detail": "sqlalchemy",
+        "documentation": {}
+    },
+    {
+        "label": "INT",
+        "importPath": "sqlalchemy",
+        "description": "sqlalchemy",
+        "isExtraImport": true,
+        "detail": "sqlalchemy",
+        "documentation": {}
+    },
+    {
+        "label": "DATETIME",
+        "importPath": "sqlalchemy",
+        "description": "sqlalchemy",
+        "isExtraImport": true,
+        "detail": "sqlalchemy",
+        "documentation": {}
+    },
+    {
+        "label": "BOOLEAN",
+        "importPath": "sqlalchemy",
+        "description": "sqlalchemy",
+        "isExtraImport": true,
+        "detail": "sqlalchemy",
+        "documentation": {}
+    },
+    {
+        "label": "declarative_base",
+        "importPath": "sqlalchemy.ext.declarative",
+        "description": "sqlalchemy.ext.declarative",
+        "isExtraImport": true,
+        "detail": "sqlalchemy.ext.declarative",
+        "documentation": {}
+    },
+    {
+        "label": "sessionmaker",
+        "importPath": "sqlalchemy.orm",
+        "description": "sqlalchemy.orm",
+        "isExtraImport": true,
+        "detail": "sqlalchemy.orm",
+        "documentation": {}
+    },
+    {
+        "label": "datetime",
+        "importPath": "datetime",
+        "description": "datetime",
+        "isExtraImport": true,
+        "detail": "datetime",
+        "documentation": {}
+    },
+    {
+        "label": "timezone",
+        "importPath": "datetime",
+        "description": "datetime",
+        "isExtraImport": true,
+        "detail": "datetime",
+        "documentation": {}
+    },
+    {
+        "label": "datetime",
+        "importPath": "datetime",
+        "description": "datetime",
+        "isExtraImport": true,
+        "detail": "datetime",
+        "documentation": {}
+    },
+    {
+        "label": "BaseModel",
+        "importPath": "pydantic",
+        "description": "pydantic",
+        "isExtraImport": true,
+        "detail": "pydantic",
+        "documentation": {}
+    },
+    {
+        "label": "hashlib",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "hashlib",
+        "description": "hashlib",
+        "detail": "hashlib",
+        "documentation": {}
+    },
+    {
+        "label": "secrets",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "secrets",
+        "description": "secrets",
+        "detail": "secrets",
+        "documentation": {}
+    },
+    {
+        "label": "re",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "re",
+        "description": "re",
+        "detail": "re",
+        "documentation": {}
+    },
+    {
+        "label": "router",
+        "importPath": "src.apis",
+        "description": "src.apis",
+        "isExtraImport": true,
+        "detail": "src.apis",
+        "documentation": {}
+    },
+    {
+        "label": "json",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "json",
+        "description": "json",
+        "detail": "json",
+        "documentation": {}
+    },
+    {
+        "label": "user_signup",
+        "kind": 2,
+        "importPath": "back-end.src.apis",
+        "description": "back-end.src.apis",
+        "peekOfCode": "def user_signup(data: UserSignup):\n    try:\n        if db.query(User).filter(User.account == data.account).first():\n            return error('ACCOUNT_EXIST')\n        if db.query(User).filter(User.email == data.email).first():\n            return error('EMAIL_EXIST')\n        # todo: verify code\n        new_user = User(\n            account=data.account,\n            email=data.email,",
+        "detail": "back-end.src.apis",
+        "documentation": {}
+    },
+    {
+        "label": "user_login",
+        "kind": 2,
+        "importPath": "back-end.src.apis",
+        "description": "back-end.src.apis",
+        "peekOfCode": "def user_login(data: UserLogin):\n    try:\n        isEmail = '@' in data.accountOrEmail\n        user = db.query(User).filter(\n            User.email == data.accountOrEmail if isEmail else User.account == data.accountOrEmail\n        ).first()\n        if not user:\n            return error('NOT_CORRECT')\n        new_token = Token(\n            token=token(),",
+        "detail": "back-end.src.apis",
+        "documentation": {}
+    },
+    {
+        "label": "router",
+        "kind": 5,
+        "importPath": "back-end.src.apis",
+        "description": "back-end.src.apis",
+        "peekOfCode": "router = APIRouter(prefix=\"/api\")\n@router.post('/user/signup')\ndef user_signup(data: UserSignup):\n    try:\n        if db.query(User).filter(User.account == data.account).first():\n            return error('ACCOUNT_EXIST')\n        if db.query(User).filter(User.email == data.email).first():\n            return error('EMAIL_EXIST')\n        # todo: verify code\n        new_user = User(",
+        "detail": "back-end.src.apis",
+        "documentation": {}
+    },
+    {
+        "label": "TimestampDateTime",
+        "kind": 6,
+        "importPath": "back-end.src.database",
+        "description": "back-end.src.database",
+        "peekOfCode": "class TimestampDateTime(TypeDecorator):\n    ''' 将数据库的DATETIME类型与时间戳相互转换 '''\n    impl = DATETIME\n    def process_bind_param(self, value, dialect):\n        return datetime.utcfromtimestamp(value / 1000)\n    def process_result_value(self, value, dialect):\n        return int(value.replace(tzinfo=timezone.utc).timestamp() * 1000) if value else None\nclass BigIntStr(TypeDecorator):\n    ''' 将数据库的BIGINT转换为字符串 '''\n    impl = BIGINT",
+        "detail": "back-end.src.database",
+        "documentation": {}
+    },
+    {
+        "label": "BigIntStr",
+        "kind": 6,
+        "importPath": "back-end.src.database",
+        "description": "back-end.src.database",
+        "peekOfCode": "class BigIntStr(TypeDecorator):\n    ''' 将数据库的BIGINT转换为字符串 '''\n    impl = BIGINT\n    def process_result_value(self, value, dialect):\n        return str(value)",
+        "detail": "back-end.src.database",
+        "documentation": {}
+    },
+    {
+        "label": "DATABASE_URL",
+        "kind": 5,
+        "importPath": "back-end.src.database",
+        "description": "back-end.src.database",
+        "peekOfCode": "DATABASE_URL = \"mysql+pymysql://root:123456@localhost:3306/egaku?charset=utf8mb4\"\nPOOL_SIZE = 20\nengine = create_engine(DATABASE_URL, pool_size=POOL_SIZE)\nSessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)\ndb = SessionLocal()\nBase = declarative_base()\nclass TimestampDateTime(TypeDecorator):\n    ''' 将数据库的DATETIME类型与时间戳相互转换 '''\n    impl = DATETIME\n    def process_bind_param(self, value, dialect):",
+        "detail": "back-end.src.database",
+        "documentation": {}
+    },
+    {
+        "label": "POOL_SIZE",
+        "kind": 5,
+        "importPath": "back-end.src.database",
+        "description": "back-end.src.database",
+        "peekOfCode": "POOL_SIZE = 20\nengine = create_engine(DATABASE_URL, pool_size=POOL_SIZE)\nSessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)\ndb = SessionLocal()\nBase = declarative_base()\nclass TimestampDateTime(TypeDecorator):\n    ''' 将数据库的DATETIME类型与时间戳相互转换 '''\n    impl = DATETIME\n    def process_bind_param(self, value, dialect):\n        return datetime.utcfromtimestamp(value / 1000)",
+        "detail": "back-end.src.database",
+        "documentation": {}
+    },
+    {
+        "label": "engine",
+        "kind": 5,
+        "importPath": "back-end.src.database",
+        "description": "back-end.src.database",
+        "peekOfCode": "engine = create_engine(DATABASE_URL, pool_size=POOL_SIZE)\nSessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)\ndb = SessionLocal()\nBase = declarative_base()\nclass TimestampDateTime(TypeDecorator):\n    ''' 将数据库的DATETIME类型与时间戳相互转换 '''\n    impl = DATETIME\n    def process_bind_param(self, value, dialect):\n        return datetime.utcfromtimestamp(value / 1000)\n    def process_result_value(self, value, dialect):",
+        "detail": "back-end.src.database",
+        "documentation": {}
+    },
+    {
+        "label": "SessionLocal",
+        "kind": 5,
+        "importPath": "back-end.src.database",
+        "description": "back-end.src.database",
+        "peekOfCode": "SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)\ndb = SessionLocal()\nBase = declarative_base()\nclass TimestampDateTime(TypeDecorator):\n    ''' 将数据库的DATETIME类型与时间戳相互转换 '''\n    impl = DATETIME\n    def process_bind_param(self, value, dialect):\n        return datetime.utcfromtimestamp(value / 1000)\n    def process_result_value(self, value, dialect):\n        return int(value.replace(tzinfo=timezone.utc).timestamp() * 1000) if value else None",
+        "detail": "back-end.src.database",
+        "documentation": {}
+    },
+    {
+        "label": "db",
+        "kind": 5,
+        "importPath": "back-end.src.database",
+        "description": "back-end.src.database",
+        "peekOfCode": "db = SessionLocal()\nBase = declarative_base()\nclass TimestampDateTime(TypeDecorator):\n    ''' 将数据库的DATETIME类型与时间戳相互转换 '''\n    impl = DATETIME\n    def process_bind_param(self, value, dialect):\n        return datetime.utcfromtimestamp(value / 1000)\n    def process_result_value(self, value, dialect):\n        return int(value.replace(tzinfo=timezone.utc).timestamp() * 1000) if value else None\nclass BigIntStr(TypeDecorator):",
+        "detail": "back-end.src.database",
+        "documentation": {}
+    },
+    {
+        "label": "Base",
+        "kind": 5,
+        "importPath": "back-end.src.database",
+        "description": "back-end.src.database",
+        "peekOfCode": "Base = declarative_base()\nclass TimestampDateTime(TypeDecorator):\n    ''' 将数据库的DATETIME类型与时间戳相互转换 '''\n    impl = DATETIME\n    def process_bind_param(self, value, dialect):\n        return datetime.utcfromtimestamp(value / 1000)\n    def process_result_value(self, value, dialect):\n        return int(value.replace(tzinfo=timezone.utc).timestamp() * 1000) if value else None\nclass BigIntStr(TypeDecorator):\n    ''' 将数据库的BIGINT转换为字符串 '''",
+        "detail": "back-end.src.database",
+        "documentation": {}
+    },
+    {
+        "label": "User",
+        "kind": 6,
+        "importPath": "back-end.src.models",
+        "description": "back-end.src.models",
+        "peekOfCode": "class User(Base):\n    __tablename__ = 'user'\n    uid = Column(BigIntStr, primary_key=True, autoincrement=True, index=True, unique=True)\n    account = Column(VARCHAR(16), nullable=False, index=True, unique=True)\n    email = Column(VARCHAR(255), nullable=False, index=True, unique=True)\n    password = Column(VARCHAR(512), nullable=False)\n    sex = Column(INT)\n    nickname = Column(VARCHAR(50))\n    avator = Column(VARCHAR(255))\n    desc = Column(VARCHAR(255))",
+        "detail": "back-end.src.models",
+        "documentation": {}
+    },
+    {
+        "label": "Token",
+        "kind": 6,
+        "importPath": "back-end.src.models",
+        "description": "back-end.src.models",
+        "peekOfCode": "class Token(Base):\n    __tablename__ = 'token'\n    id = Column(BigIntStr, primary_key=True, autoincrement=True, index=True, unique=True)\n    token = Column(VARCHAR(255), nullable=False)\n    expire_time = Column(TimestampDateTime, nullable=False)",
+        "detail": "back-end.src.models",
+        "documentation": {}
+    },
+    {
+        "label": "UserSignup",
+        "kind": 6,
+        "importPath": "back-end.src.schemas",
+        "description": "back-end.src.schemas",
+        "peekOfCode": "class UserSignup(BaseModel):\n    account: str\n    email: str\n    password: str\n    code: str\nclass UserLogin(BaseModel):\n    account_or_email: str\n    password: str",
+        "detail": "back-end.src.schemas",
+        "documentation": {}
+    },
+    {
+        "label": "UserLogin",
+        "kind": 6,
+        "importPath": "back-end.src.schemas",
+        "description": "back-end.src.schemas",
+        "peekOfCode": "class UserLogin(BaseModel):\n    account_or_email: str\n    password: str",
+        "detail": "back-end.src.schemas",
+        "documentation": {}
+    },
+    {
+        "label": "error",
+        "kind": 2,
+        "importPath": "back-end.src.utils",
+        "description": "back-end.src.utils",
+        "peekOfCode": "def error(msg='Server error'):\n    return { 'success': False, 'data': { 'error': msg } }\ndef success(data={}):\n    return { 'success': True, 'data': data }\ndef time():\n    return datetime.now().timestamp() * 1000\ndef hash_password(pwd: str, acc: str, email: str):\n    sha512 = hashlib.sha512()\n    sha512.update(f'{acc}{pwd}{email}'.encode('utf-8'))\n    return sha512.hexdigest()",
+        "detail": "back-end.src.utils",
+        "documentation": {}
+    },
+    {
+        "label": "success",
+        "kind": 2,
+        "importPath": "back-end.src.utils",
+        "description": "back-end.src.utils",
+        "peekOfCode": "def success(data={}):\n    return { 'success': True, 'data': data }\ndef time():\n    return datetime.now().timestamp() * 1000\ndef hash_password(pwd: str, acc: str, email: str):\n    sha512 = hashlib.sha512()\n    sha512.update(f'{acc}{pwd}{email}'.encode('utf-8'))\n    return sha512.hexdigest()\ndef token():\n    return secrets.token_hex(32)",
+        "detail": "back-end.src.utils",
+        "documentation": {}
+    },
+    {
+        "label": "time",
+        "kind": 2,
+        "importPath": "back-end.src.utils",
+        "description": "back-end.src.utils",
+        "peekOfCode": "def time():\n    return datetime.now().timestamp() * 1000\ndef hash_password(pwd: str, acc: str, email: str):\n    sha512 = hashlib.sha512()\n    sha512.update(f'{acc}{pwd}{email}'.encode('utf-8'))\n    return sha512.hexdigest()\ndef token():\n    return secrets.token_hex(32)\ndef mask_email(email: str):\n    masked = re.sub(r'(\\w)(\\w+)(\\w)(?=@)',",
+        "detail": "back-end.src.utils",
+        "documentation": {}
+    },
+    {
+        "label": "hash_password",
+        "kind": 2,
+        "importPath": "back-end.src.utils",
+        "description": "back-end.src.utils",
+        "peekOfCode": "def hash_password(pwd: str, acc: str, email: str):\n    sha512 = hashlib.sha512()\n    sha512.update(f'{acc}{pwd}{email}'.encode('utf-8'))\n    return sha512.hexdigest()\ndef token():\n    return secrets.token_hex(32)\ndef mask_email(email: str):\n    masked = re.sub(r'(\\w)(\\w+)(\\w)(?=@)',\n                    lambda m: m.group(1) + '***' + m.group(3),\n                    email)",
+        "detail": "back-end.src.utils",
+        "documentation": {}
+    },
+    {
+        "label": "token",
+        "kind": 2,
+        "importPath": "back-end.src.utils",
+        "description": "back-end.src.utils",
+        "peekOfCode": "def token():\n    return secrets.token_hex(32)\ndef mask_email(email: str):\n    masked = re.sub(r'(\\w)(\\w+)(\\w)(?=@)',\n                    lambda m: m.group(1) + '***' + m.group(3),\n                    email)\n    return masked",
+        "detail": "back-end.src.utils",
+        "documentation": {}
+    },
+    {
+        "label": "mask_email",
+        "kind": 2,
+        "importPath": "back-end.src.utils",
+        "description": "back-end.src.utils",
+        "peekOfCode": "def mask_email(email: str):\n    masked = re.sub(r'(\\w)(\\w+)(\\w)(?=@)',\n                    lambda m: m.group(1) + '***' + m.group(3),\n                    email)\n    return masked",
+        "detail": "back-end.src.utils",
+        "documentation": {}
+    },
+    {
+        "label": "app",
+        "kind": 5,
+        "importPath": "back-end.main",
+        "description": "back-end.main",
+        "peekOfCode": "app = FastAPI()\napp.include_router(router)",
+        "detail": "back-end.main",
+        "documentation": {}
+    },
+    {
+        "label": "_Known",
+        "kind": 6,
+        "importPath": "front-end.node_modules.flatted.python.flatted",
+        "description": "front-end.node_modules.flatted.python.flatted",
+        "peekOfCode": "class _Known:\n    def __init__(self):\n        self.key = []\n        self.value = []\nclass _String:\n    def __init__(self, value):\n        self.value = value\ndef _array_keys(value):\n    keys = []\n    i = 0",
+        "detail": "front-end.node_modules.flatted.python.flatted",
+        "documentation": {}
+    },
+    {
+        "label": "_String",
+        "kind": 6,
+        "importPath": "front-end.node_modules.flatted.python.flatted",
+        "description": "front-end.node_modules.flatted.python.flatted",
+        "peekOfCode": "class _String:\n    def __init__(self, value):\n        self.value = value\ndef _array_keys(value):\n    keys = []\n    i = 0\n    for _ in value:\n        keys.append(i)\n        i += 1\n    return keys",
+        "detail": "front-end.node_modules.flatted.python.flatted",
+        "documentation": {}
+    },
+    {
+        "label": "parse",
+        "kind": 2,
+        "importPath": "front-end.node_modules.flatted.python.flatted",
+        "description": "front-end.node_modules.flatted.python.flatted",
+        "peekOfCode": "def parse(value, *args, **kwargs):\n    json = _json.loads(value, *args, **kwargs)\n    wrapped = []\n    for value in json:\n        wrapped.append(_wrap(value))\n    input = []\n    for value in wrapped:\n        if isinstance(value, _String):\n            input.append(value.value)\n        else:",
+        "detail": "front-end.node_modules.flatted.python.flatted",
+        "documentation": {}
+    },
+    {
+        "label": "stringify",
+        "kind": 2,
+        "importPath": "front-end.node_modules.flatted.python.flatted",
+        "description": "front-end.node_modules.flatted.python.flatted",
+        "peekOfCode": "def stringify(value, *args, **kwargs):\n    known = _Known()\n    input = []\n    output = []\n    i = int(_index(known, input, value))\n    while i < len(input):\n        output.append(_transform(known, input, input[i]))\n        i += 1\n    return _json.dumps(output, *args, **kwargs)",
+        "detail": "front-end.node_modules.flatted.python.flatted",
+        "documentation": {}
+    }
+]
