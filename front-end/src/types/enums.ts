@@ -5,3 +5,9 @@ export const enum USER_ERR {
   CODE_ERROR = 'CODE_ERROR',
   NOT_CORRECT = 'NOT_CORRECT',
 }
+
+export const enum USER_SEX {
+  UNKNOWN,
+  MALE,
+  FEMALE,
+}

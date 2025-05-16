@@ -9,9 +9,10 @@ function App() {
   const [locale, setLocale] = useState<Locale>();
   const [darkmode, setDarkmode] = useState(false);
   const [themeColor, setThemeColor] = useState('');
+  const [done, setDone] = useState(false);
 
   useEffect(() => {
-    init({ setLocale, setDarkmode, setThemeColor });
+    init({ setLocale, setDarkmode, setThemeColor }).then(() => setDone(true));
   }, []);
 
   return (
@@ -23,7 +24,8 @@ function App() {
       locale={locale}
       wave={{ showEffect: showInsetEffect }}
     >
-      <PageLayout />
+      <div id="bg" />
+      {done && <PageLayout />}
     </ConfigProvider>
   );
 }

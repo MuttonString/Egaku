@@ -1,6 +1,6 @@
 from datetime import datetime
 from .database import db
-from .models import Config
+from .models import Config, Token
 import hashlib
 import secrets
 import re
@@ -8,6 +8,9 @@ import smtplib
 import random
 from email.mime.text import MIMEText
 from email.mime.multipart import MIMEMultipart
+from fastapi import UploadFile, File
+import uuid
+import os
 
 def error(msg='Server error'):
     return { 'success': False, 'data': { 'error': msg } }
@@ -38,7 +41,6 @@ def generate_code():
 def send_code(code: str, email: str, lang: str):
     config = db.query(Config).first()
     db.close()
-    print(config.smtp_server, config.smtp_port, config.sender_email, config.sender_password)
     SMTP_SERVER = config.smtp_server
     SMTP_PORT = config.smtp_port
     SENDER_EMAIL = config.sender_email
@@ -129,3 +131,30 @@ def send_code(code: str, email: str, lang: str):
 
     server.sendmail(SENDER_EMAIL, email, message.as_string())
     server.quit()
+    
+def verify_token(token: str):
+    token_obj = db.query(Token).filter(Token.token == token).order_by(Token.expire_time.desc()).first()
+    if token_obj:
+        if token_obj.expire_time < time():
+            db.close()
+            return False
+        token_obj.expire_time = time() + 24 * 60 * 60 * 1000
+        email = token_obj.email
+        db.commit()
+        db.close()
+        return email
+    db.close()
+    return False
+
+async def save_file(file: UploadFile = File(..., max_size=1024*1024*1024)):
+    BASE_URL = 'http://localhost:8000'
+
+    file_ext = file.filename.split('.')[-1]
+    filename = f'{uuid.uuid4().hex}.{file_ext}'
+    if not os.path.exists('uploads'):
+        os.makedirs('uploads')
+    file_path = os.path.join('uploads', filename)
+    with open(file_path, 'wb') as buffer:
+        while chunk := await file.read(1024 * 1024):
+            buffer.write(chunk)
+    return f'{BASE_URL}/files/{filename}'

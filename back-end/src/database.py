@@ -14,6 +14,7 @@ Base = declarative_base()
 class TimestampDateTime(TypeDecorator):
     ''' 将数据库的DATETIME类型与时间戳相互转换 '''
     impl = DATETIME
+    cache_ok = True
 
     def process_bind_param(self, value, dialect):
         return datetime.utcfromtimestamp(value / 1000)
@@ -24,6 +25,7 @@ class TimestampDateTime(TypeDecorator):
 class BigIntStr(TypeDecorator):
     ''' 将数据库的BIGINT转换为字符串 '''
     impl = BIGINT
+    cache_ok = True
 
     def process_result_value(self, value, dialect):
         return str(value)

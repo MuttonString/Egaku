@@ -3,7 +3,7 @@ import { notification } from 'antd';
 import { useTranslation } from 'react-i18next';
 
 export interface IErrorNotification {
-  open: (err: Error) => void;
+  open: (err?: Error | string) => void;
 }
 
 function ErrorNotification(_: any, ref: Ref<IErrorNotification>) {
@@ -14,7 +14,7 @@ function ErrorNotification(_: any, ref: Ref<IErrorNotification>) {
     open(err) {
       api['error']({
         message: t('errorNotification.title'),
-        description: err.message,
+        description: err instanceof Error ? err.message : err,
         placement: 'bottomRight',
       });
     },

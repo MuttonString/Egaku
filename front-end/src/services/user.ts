@@ -16,3 +16,11 @@ export async function reset(data: UserResetReq): Response<UserResetReq> {
 export async function sendCode(data: UserSendCodeReq): Response {
   return await request.post('/user/sendCode', data);
 }
+
+export async function getInfo(): Response<UserGetInfoRes> {
+  return await request.post('/user/getInfo');
+}
+
+export async function update(data: UserUpdateReq): Response {
+  return await request.post('/user/update', data);
+}

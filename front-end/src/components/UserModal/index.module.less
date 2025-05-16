@@ -1,0 +1,56 @@
+.accountRow {
+  display: flex;
+  gap: 16px;
+  width: 100%;
+  margin-bottom: 16px;
+
+  .nicknamePart {
+    width: calc(100% - 70px);
+
+    .nickname {
+      display: flex;
+      align-items: center;
+    }
+  }
+
+  .account {
+    color: var(--secondary-text);
+    user-select: text;
+    display: flex;
+    justify-content: space-between;
+
+    .email {
+      user-select: none;
+      display: flex;
+      gap: 8px;
+    }
+  }
+}
+
+.row {
+  display: flex;
+  gap: 16px;
+  margin-top: 16px;
+  align-items: start;
+  justify-content: space-between;
+
+  .title {
+    font-weight: bold;
+    max-width: 25%;
+  }
+}
+
+.textarea {
+  max-width: 75%;
+  margin-bottom: 16px;
+}
+
+.footer {
+  display: flex;
+  justify-content: space-between;
+
+  .origin {
+    display: flex;
+    gap: 16px;
+  }
+}

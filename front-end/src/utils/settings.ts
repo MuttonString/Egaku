@@ -171,7 +171,7 @@ export async function changeBackground(img?: RcFile | null, save = true) {
   }
 
   globalSetActions.setBackgroundImageFileName?.(img?.name || '');
-  document.querySelector('body')!.style.backgroundImage = bg;
+  (document.querySelector('#bg') as HTMLDivElement).style.backgroundImage = bg;
   changeDarkenBackgroundImage(
     localStorage.getItem(SETTINGS.DARKEN_IMAGE),
     false
@@ -192,10 +192,10 @@ export function changeDarkenBackgroundImage(
 
   if (save) localStorage.setItem(SETTINGS.DARKEN_IMAGE, darken.toString());
   const overlay = 'linear-gradient(rgba(0, 0, 0, 0.55), rgba(0, 0, 0, 0.55)), ';
-  const bodyStyle = document.querySelector('body')!.style;
-  bodyStyle.backgroundImage = bodyStyle.backgroundImage.replace(overlay, '');
+  const bgStyle = (document.querySelector('#bg') as HTMLDivElement).style;
+  bgStyle.backgroundImage = bgStyle.backgroundImage.replace(overlay, '');
   if (darken && document.querySelector('html')!.dataset.darkmode === 'true')
-    bodyStyle.backgroundImage = overlay + bodyStyle.backgroundImage;
+    bgStyle.backgroundImage = overlay + bgStyle.backgroundImage;
 }
 
 /**

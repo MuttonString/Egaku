@@ -1,5 +1,5 @@
 .page {
-  margin-left: 200px;
+  margin-left: min(200px, 10%);
   margin-top: 100px;
 
   .icon {
@@ -17,5 +17,11 @@
     font-size: 24px;
     margin-top: 24px;
     text-shadow: 2px 2px 8px var(--secondary-background);
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .page {
+    margin-left: 32px;
   }
 }

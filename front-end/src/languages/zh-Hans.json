@@ -21,19 +21,9 @@
       "at": "@我",
       "like": "点赞",
       "notice": "通知",
-      "logout": "退出登录"
-    },
-    "drawer": {
-      "title": "设置",
-      "lang": "语言",
-      "default": "系统默认",
-      "colorMode": "颜色模式",
-      "lightColor": "浅色",
-      "darkColor": "深色",
-      "bgImg": "背景图片",
-      "select": "点击选择图片",
-      "darkenImg": "在深色模式下变暗背景图片",
-      "theme": "主题色"
+      "settings": "账户设置",
+      "logout": "退出登录",
+      "noLogin": "未登录"
     }
   },
   "errorNotification": {
@@ -41,6 +31,18 @@
   },
   "successMessage": {
     "title": "{{msg}}成功"
+  },
+  "settingsDrawer": {
+    "title": "设置",
+    "lang": "语言",
+    "default": "系统默认",
+    "colorMode": "颜色模式",
+    "lightColor": "浅色",
+    "darkColor": "深色",
+    "bgImg": "背景图片",
+    "select": "点击选择图片",
+    "darkenImg": "在深色模式下变暗背景图片",
+    "theme": "主题色"
   },
   "loginModal": {
     "title": {
@@ -84,6 +86,36 @@
       "forget": "忘记密码？",
       "login": "已有一个账号？",
       "back": "登录"
+    }
+  },
+  "userModal": {
+    "title": "账户设置",
+    "avatar": {
+      "uploadSuccess": "头像已上传",
+      "reset": "重置",
+      "crop": "裁切图片",
+      "change": "更改头像",
+      "del": "删除头像"
+    },
+    "sex": {
+      "title": "性别",
+      "secret": "秘密",
+      "male": "男",
+      "female": "女"
+    },
+    "remind": {
+      "title": "展示消息通知",
+      "reply": "回复",
+      "at": "@我",
+      "like": "点赞",
+      "notice": "通知"
+    },
+    "desc": {
+      "title": "自我介绍",
+      "placeholder": "用几句话介绍一下自己吧"
+    },
+    "btn": {
+      "reset": "重置密码"
     }
   }
 }

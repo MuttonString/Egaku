@@ -21,19 +21,9 @@
       "at": "@ミー",
       "like": "いいね",
       "notice": "通知",
-      "logout": "ログアウト"
-    },
-    "drawer": {
-      "title": "設定",
-      "lang": "言語",
-      "default": "システムのデフォルト",
-      "colorMode": "カラーモード",
-      "lightColor": "ライトカラー",
-      "darkColor": "ダークカラー",
-      "bgImg": "背景画像",
-      "select": "クリックして画像を選択する",
-      "darkenImg": "ダークモードで背景画像を暗くする",
-      "theme": "テーマカラー"
+      "settings": "アカウント設定",
+      "logout": "ログアウト",
+      "noLogin": "ログインしていない"
     }
   },
   "errorNotification": {
@@ -41,6 +31,18 @@
   },
   "successMessage": {
     "title": "{{msg}}成功"
+  },
+  "settingsDrawer": {
+    "title": "設定",
+    "lang": "言語",
+    "default": "システムのデフォルト",
+    "colorMode": "カラーモード",
+    "lightColor": "ライトカラー",
+    "darkColor": "ダークカラー",
+    "bgImg": "背景画像",
+    "select": "クリックして画像を選択する",
+    "darkenImg": "ダークモードで背景画像を暗くする",
+    "theme": "テーマカラー"
   },
   "loginModal": {
     "title": {
@@ -84,6 +86,36 @@
       "forget": "パスワード忘れた？",
       "login": "すでにアカウントがある？",
       "back": "ログイン"
+    }
+  },
+  "userModal": {
+    "title": "アカウント設定",
+    "avatar": {
+      "uploadSuccess": "アバターがアップロードされた",
+      "reset": "リセット",
+      "crop": "画像を切り取る",
+      "change": "アバター変更",
+      "del": "アバター削除"
+    },
+    "sex": {
+      "title": "性別",
+      "secret": "秘密",
+      "male": "男性",
+      "female": "女性"
+    },
+    "remind": {
+      "title": "メッセージリマインダー表示",
+      "reply": "返信",
+      "at": "@ミー",
+      "like": "いいね",
+      "notice": "通知"
+    },
+    "desc": {
+      "title": "自己紹介",
+      "placeholder": "自分自身を簡単に紹介しましょう"
+    },
+    "btn": {
+      "reset": "パスワードリセット"
     }
   }
 }

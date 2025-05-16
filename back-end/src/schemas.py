@@ -1,5 +1,5 @@
 from pydantic import BaseModel
-from typing import Optional
+from typing import Optional, Dict
 
 class UserSignup(BaseModel):
     account: str
@@ -18,5 +18,11 @@ class UserReset(BaseModel):
 
 class UserSendCode(BaseModel):
     email: str
-    lang: str
     isNewEmail: bool
+
+class UserUpdate(BaseModel):
+    nickname: str
+    sex: int
+    desc: str
+    avatar: str
+    showReminder: Dict[str, bool]

@@ -10,24 +10,29 @@ const request = axios.create({
   },
 });
 
+const html = document.querySelector('html')!;
+const sleep = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
+
 request.interceptors.request.use((cfg) => {
   const token = sessionStorage.getItem('token');
   if (token) cfg.headers.token = token;
   cfg.headers.timestamp = Date.now();
+  cfg.headers.lang = html.lang;
   return cfg;
 });
 
 request.interceptors.response.use(async (resp) => {
-  if (!resp.data.success && resp.data.data.error === 'EXPIRED') {
+  await sleep(1000);
+  if (!resp.data.success && resp.data.data.error === 'NOT_LOGIN') {
     const account = Cookies.get('account');
     const pwd = Cookies.get('pwd');
     if (account && pwd) {
-      Cookies.set('account', account, { expires: 7 });
-      Cookies.set('pwd', pwd, { expires: 7 });
-      sessionStorage.setItem(
-        'token',
-        (await login({ accountOrEmail: account, password: pwd })).data.token
-      );
+      Cookies.set('account', account, { expires: 30 });
+      Cookies.set('pwd', pwd, { expires: 30 });
+      const token = (await login({ accountOrEmail: account, password: pwd }))
+        .data.token;
+      if (!token) return resp.data;
+      sessionStorage.setItem('token', token);
       return request.request(resp.config);
     }
     return resp.data;

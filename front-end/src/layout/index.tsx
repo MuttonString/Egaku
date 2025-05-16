@@ -8,36 +8,37 @@ import {
   Input,
   Layout,
   Menu,
-  Select,
-  Space,
-  Switch,
-  Upload,
 } from 'antd';
 import { useTranslation } from 'react-i18next';
 import styles from './index.module.less';
 import { MenuProps } from 'antd/lib';
 import Animation from '../components/Animation';
 import {
-  CheckCircleOutlined,
-  DeleteOutlined,
+  LoadingOutlined,
+  LoginOutlined,
+  MenuOutlined,
   SettingFilled,
   UserOutlined,
 } from '@ant-design/icons';
-import { useEffect, useState } from 'react';
-import { LANGUAGE } from '../utils/i18n';
+import { useEffect, useRef, useState } from 'react';
 import {
-  changeBackground,
-  changeDarkenBackgroundImage,
-  changeDarkmode,
-  changeLanguage,
-  changeThemeColor,
-  DEFAULT_THEME_COLOR,
-  init,
-  SETTINGS,
-  THEME_COLORS,
-} from '../utils/settings';
-import { Outlet, useLocation, useNavigate } from 'react-router';
+  Outlet,
+  useLocation,
+  useNavigate,
+  useSearchParams,
+} from 'react-router';
 import Cookies from 'js-cookie';
+import LoginModal, {
+  ILoginModal,
+  LOGIN_MODAL_TYPE,
+} from '../components/LoginModal';
+import { useRequest, useThrottleFn } from 'ahooks';
+import { getInfo } from '../services/user';
+import ErrorNotification, {
+  IErrorNotification,
+} from '../components/ErrorNotification';
+import SettingsDrawer, { ISettingsDrawer } from '../components/SettingsDrawer';
+import UserModal, { IUserModal } from '../components/UserModal';
 
 const { Header, Content } = Layout;
 const { Search } = Input;
@@ -47,68 +48,37 @@ export default function PageLayout() {
   const { t } = useTranslation();
   const navigate = useNavigate();
   const location = useLocation().pathname.split('/')[1];
+  const search = useSearchParams()[0].get('search');
+  const loginModalRef = useRef<ILoginModal>(null);
+  const errorRef = useRef<IErrorNotification>(null);
+  const settingsRef = useRef<ISettingsDrawer>(null);
+  const userRef = useRef<IUserModal>(null);
 
-  const [drawerOpen, setDrawerOpen] = useState(false);
-  const [hasMsg, setHasMsg] = useState(false);
-  const [username, setUsername] = useState('-');
-  const [lang, setLang] = useState(
-    localStorage.getItem(SETTINGS.LANGUAGE) || ''
-  );
-  const [darkmode, setDarkmode] = useState(
-    localStorage.getItem(SETTINGS.DARKMODE) || ''
-  );
-  const [darkenImg, setDarkenImg] = useState(
-    localStorage.getItem(SETTINGS.DARKEN_IMAGE) !== 'false'
-  );
-  const [fileName, setFileName] = useState('');
-  const [themeColor, setThemeColor] = useState(
-    parseInt(
-      (localStorage.getItem(SETTINGS.THEME_COLOR) ||
-        DEFAULT_THEME_COLOR) as string
-    )
-  );
+  const [isMobile, setIsMobile] = useState(false);
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [searchVal, setSearchVal] = useState(search || '');
+
+  const checkScreenWidth = useThrottleFn(
+    () => setIsMobile(document.documentElement.clientWidth <= 768),
+    { wait: 300 }
+  ).run;
+  window.addEventListener('resize', checkScreenWidth);
+
+  const {
+    data: userData,
+    loading: userLoading,
+    run: userRun,
+  } = useRequest(getInfo, {
+    onError(err) {
+      errorRef.current!.open(err);
+    },
+  });
 
   useEffect(() => {
-    init({ setBackgroundImageFileName: setFileName });
+    if (!location && sessionStorage.getItem('token'))
+      navigate('recommendation');
+    checkScreenWidth();
   }, []);
-
-  const langOptions = [
-    {
-      label: t('layout.drawer.default'),
-      value: '',
-    },
-    {
-      label: <span lang={LANGUAGE.EN}>English (US)</span>,
-      value: LANGUAGE.EN,
-    },
-    {
-      label: <span lang={LANGUAGE.ZH_HANS}>简体中文 (中国大陆)</span>,
-      value: LANGUAGE.ZH_HANS,
-    },
-    {
-      label: <span lang={LANGUAGE.ZH_HANT}>繁體中文 (中國台灣)</span>,
-      value: LANGUAGE.ZH_HANT,
-    },
-    {
-      label: <span lang={LANGUAGE.JA}>日本語 (日本)</span>,
-      value: LANGUAGE.JA,
-    },
-  ];
-
-  const colorModeOptions = [
-    {
-      label: t('layout.drawer.default'),
-      value: '',
-    },
-    {
-      label: t('layout.drawer.lightColor'),
-      value: 'false',
-    },
-    {
-      label: t('layout.drawer.darkColor'),
-      value: 'true',
-    },
-  ];
 
   const items: MenuItem[] = [
     {
@@ -142,151 +112,259 @@ export default function PageLayout() {
   ];
 
   const userItems: MenuItem[] = [
-    { label: t('layout.user.reply'), key: 'reply' },
-    { label: t('layout.user.at'), key: 'at' },
-    { label: t('layout.user.like'), key: 'like' },
-    { label: t('layout.user.notice'), key: 'notice' },
     {
       label: (
-        <span className={styles.optionDivider}>{t('layout.user.logout')}</span>
+        <div>
+          {t('layout.user.reply')}
+          {!!userData?.data.msgNum?.reply && (
+            <span className={styles.msgNum}>
+              ({userData?.data.msgNum.reply})
+            </span>
+          )}
+        </div>
       ),
+      key: 'reply',
+      onClick() {
+        setMobileMenuOpen(false);
+      },
+    },
+    {
+      label: (
+        <div>
+          {t('layout.user.at')}
+          {!!userData?.data.msgNum?.at && (
+            <span className={styles.msgNum}>({userData?.data.msgNum.at})</span>
+          )}
+        </div>
+      ),
+      key: 'at',
+      onClick() {
+        setMobileMenuOpen(false);
+      },
+    },
+    {
+      label: (
+        <div>
+          {t('layout.user.like')}
+          {!!userData?.data.msgNum?.like && (
+            <span className={styles.msgNum}>
+              ({userData?.data.msgNum.like})
+            </span>
+          )}
+        </div>
+      ),
+      key: 'like',
+      onClick() {
+        setMobileMenuOpen(false);
+      },
+    },
+    {
+      label: (
+        <div>
+          {t('layout.user.notice')}
+          {!!userData?.data.msgNum?.notice && (
+            <span className={styles.msgNum}>
+              ({userData?.data.msgNum.notice})
+            </span>
+          )}
+        </div>
+      ),
+      key: 'notice',
+      onClick() {
+        setMobileMenuOpen(false);
+      },
+    },
+    {
+      label: (
+        <span className={styles.optionDivider}>
+          {t('layout.user.settings')}
+        </span>
+      ),
+      key: 'settings',
+      onClick() {
+        userRef.current!.open(userData?.data);
+        setMobileMenuOpen(false);
+      },
+    },
+    {
+      label: t('layout.user.logout'),
+      danger: true,
       key: 'logout',
       onClick() {
         Cookies.remove('account');
         Cookies.remove('pwd');
         sessionStorage.removeItem('token');
+        setMobileMenuOpen(false);
         window.location.reload();
       },
     },
   ];
 
-  // const { data: userData } = useRequest();
-
   return (
     <Layout className={styles.layout}>
-      <Header className={styles.header}>
-        <Flex>
-          <Animation animation="bounce">
-            <div className={styles.logo} onClick={() => navigate('/')} />
-          </Animation>
-          <Menu
-            mode="horizontal"
-            items={items}
-            className={styles.menu}
-            selectedKeys={[location]}
-          />
-        </Flex>
+      <LoginModal ref={loginModalRef} />
+      <ErrorNotification ref={errorRef} />
+      <SettingsDrawer ref={settingsRef} />
+      <UserModal ref={userRef} onSuccess={userRun} />
 
-        <Flex gap="middle">
-          <Search maxLength={100} className={styles.search} />
-
+      {isMobile ? (
+        <Header className={styles.headerMobile}>
+          <Button
+            type="text"
+            className={styles.left}
+            onClick={() => setMobileMenuOpen(true)}
+          >
+            <MenuOutlined />
+          </Button>
+          <div className={styles.center}>
+            <Search
+              maxLength={100}
+              className={styles.search}
+              onSearch={(val) => {
+                if (val) navigate(`search?search=${encodeURIComponent(val)}`);
+              }}
+              onChange={(e) => setSearchVal(e.target.value)}
+              value={searchVal}
+            />
+          </div>
           <Animation animation="spin">
             <Button
               type="text"
-              className={styles.btn}
-              onClick={() => setDrawerOpen(true)}
+              className={styles.right}
+              onClick={() => settingsRef.current!.open()}
             >
               <SettingFilled />
             </Button>
           </Animation>
-
           <Drawer
-            title={t('layout.drawer.title')}
-            open={drawerOpen}
-            onClose={() => setDrawerOpen(false)}
-          >
-            <div className={styles.settingGroup}>
-              <h3>{t('layout.drawer.lang')}</h3>
-              <Select
-                options={langOptions}
-                value={lang}
-                onChange={(val) => {
-                  setLang(val);
-                  changeLanguage(val as LANGUAGE);
-                }}
-              />
-            </div>
-            <div className={styles.settingGroup}>
-              <h3>{t('layout.drawer.colorMode')}</h3>
-              <Select
-                options={colorModeOptions}
-                value={darkmode}
-                onChange={(val) => {
-                  setDarkmode(val);
-                  changeDarkmode(val);
-                }}
-              />
-            </div>
-            <div className={styles.settingGroup}>
-              <h3>{t('layout.drawer.bgImg')}</h3>
-              <Space.Compact>
-                <Upload
-                  accept="image/png, image/jpeg"
-                  beforeUpload={(file) => {
-                    setFileName(file.name);
-                    changeBackground(file);
-                    return false;
-                  }}
-                  showUploadList={false}
-                >
-                  <Input
-                    readOnly
-                    value={fileName || t('layout.drawer.select') + '...'}
-                  />
-                </Upload>
-                <Button
-                  onClick={() => {
-                    setFileName('');
-                    changeBackground(null);
-                  }}
-                  disabled={!fileName}
-                >
-                  <DeleteOutlined />
-                </Button>
-              </Space.Compact>
-            </div>
-            <div className={styles.settingGroup}>
-              <h3>{t('layout.drawer.darkenImg')}</h3>
-              <Switch
-                value={darkenImg}
-                onChange={(val) => {
-                  setDarkenImg(val);
-                  changeDarkenBackgroundImage(val);
-                }}
-              />
-            </div>
-            <div className={styles.settingGroup}>
-              <h3>{t('layout.drawer.theme')}</h3>
-              <div>
-                {THEME_COLORS.map((val, idx) => {
-                  return (
-                    <div
-                      key={idx}
-                      className={styles.colorBlock}
-                      style={{ backgroundColor: val as string }}
-                      onClick={() => {
-                        setThemeColor(idx);
-                        changeThemeColor(idx);
-                      }}
-                    >
-                      {idx === themeColor ? <CheckCircleOutlined /> : undefined}
+            placement="left"
+            open={mobileMenuOpen}
+            onClose={() => setMobileMenuOpen(false)}
+            title={
+              userLoading ? (
+                <LoadingOutlined size={18} />
+              ) : userData?.data.account ? (
+                <Dropdown menu={{ items: userItems }}>
+                  <Flex gap="small" className={styles.drawerHeader}>
+                    <Badge dot={userData.data.hasMsg} offset={[-4, 4]}>
+                      <Avatar shape="circle" src={userData.data.avatar}>
+                        {(
+                          userData.data.nickname || userData.data.account
+                        ).substring(0, 2)}
+                      </Avatar>
+                    </Badge>
+                    <div className={styles.username}>
+                      {userData?.data.nickname || userData?.data.account}
                     </div>
-                  );
-                })}
-              </div>
-            </div>
+                  </Flex>
+                </Dropdown>
+              ) : (
+                <Flex
+                  gap="small"
+                  className={styles.drawerHeader}
+                  onClick={() => {
+                    loginModalRef.current!.open(LOGIN_MODAL_TYPE.LOGIN);
+                  }}
+                >
+                  <Avatar shape="circle" icon={<UserOutlined />} />
+                  <div className={styles.username}>
+                    {t('layout.user.noLogin')}
+                  </div>
+                </Flex>
+              )
+            }
+          >
+            <Menu
+              mode="vertical"
+              items={[
+                {
+                  label: (
+                    <div className={styles.logoWithText}>
+                      <img src="/logo.png" />
+                      <div>Egaku</div>
+                    </div>
+                  ),
+                  key: 'logo',
+                  onClick() {
+                    navigate('/');
+                  },
+                },
+                ...items,
+              ]}
+              className={styles.verticalMenu}
+              selectedKeys={[location]}
+              onClick={() => setMobileMenuOpen(false)}
+            />
           </Drawer>
+        </Header>
+      ) : (
+        <Header className={styles.header}>
+          <Flex>
+            <Animation animation="bounce">
+              <div className={styles.logo} onClick={() => navigate('/')} />
+            </Animation>
+            <Menu
+              mode="horizontal"
+              items={items}
+              className={styles.menu}
+              selectedKeys={[location]}
+            />
+          </Flex>
 
-          <Dropdown menu={{ items: userItems }}>
-            <Flex gap="small" className={styles.user}>
-              <Badge dot={hasMsg} offset={[-4, 4]}>
-                <Avatar shape="circle" icon={<UserOutlined />} />
-              </Badge>
-              <div className={styles.username}>{username}</div>
-            </Flex>
-          </Dropdown>
-        </Flex>
-      </Header>
+          <Flex gap="middle">
+            <Search
+              maxLength={100}
+              className={styles.search}
+              onSearch={(val) => {
+                if (val) navigate(`search?search=${encodeURIComponent(val)}`);
+              }}
+              onChange={(e) => setSearchVal(e.target.value)}
+              value={searchVal}
+            />
+
+            <Animation animation="spin">
+              <Button
+                type="text"
+                className={styles.btn}
+                onClick={() => settingsRef.current!.open()}
+              >
+                <SettingFilled />
+              </Button>
+            </Animation>
+
+            {userLoading ? (
+              <LoadingOutlined size={18} />
+            ) : userData?.data.account ? (
+              <Dropdown menu={{ items: userItems }}>
+                <Flex gap="small" className={styles.user} onClick={() => {}}>
+                  <Badge dot={userData.data.hasMsg} offset={[-4, 4]}>
+                    <Avatar shape="circle" src={userData.data.avatar}>
+                      {(
+                        userData.data.nickname || userData.data.account
+                      ).substring(0, 2)}
+                    </Avatar>
+                  </Badge>
+                  <div className={styles.username}>
+                    {userData.data.nickname || userData.data.account}
+                  </div>
+                </Flex>
+              </Dropdown>
+            ) : (
+              <Animation animation="bounce">
+                <Button
+                  type="text"
+                  className={styles.btn}
+                  onClick={() =>
+                    loginModalRef.current!.open(LOGIN_MODAL_TYPE.LOGIN)
+                  }
+                >
+                  <LoginOutlined />
+                </Button>
+              </Animation>
+            )}
+          </Flex>
+        </Header>
+      )}
       <Content className={styles.content}>
         <Outlet />
       </Content>

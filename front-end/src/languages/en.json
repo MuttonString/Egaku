@@ -21,19 +21,9 @@
       "at": "@Me",
       "like": "Like",
       "notice": "Notification",
-      "logout": "Logout"
-    },
-    "drawer": {
-      "title": "Settings",
-      "lang": "Language",
-      "default": "System default",
-      "colorMode": "Color mode",
-      "lightColor": "Light color",
-      "darkColor": "Dark color",
-      "bgImg": "Background image",
-      "select": "Click to select image",
-      "darkenImg": "Darken background image in dark mode",
-      "theme": "Theme color"
+      "settings": "Account settings",
+      "logout": "Logout",
+      "noLogin": "Not logged in"
     }
   },
   "errorNotification": {
@@ -41,6 +31,18 @@
   },
   "successMessage": {
     "title": "{{msg}} successful"
+  },
+  "settingsDrawer": {
+    "title": "Settings",
+    "lang": "Language",
+    "default": "System default",
+    "colorMode": "Color mode",
+    "lightColor": "Light color",
+    "darkColor": "Dark color",
+    "bgImg": "Background image",
+    "select": "Click to select image",
+    "darkenImg": "Darken background image in dark mode",
+    "theme": "Theme color"
   },
   "loginModal": {
     "title": {
@@ -84,6 +86,36 @@
       "forget": "Forget password?",
       "login": "Alrealy have a account?",
       "back": "Login"
+    }
+  },
+  "userModal": {
+    "title": "Account settings",
+    "avatar": {
+      "uploadSuccess": "Avatar uploaded",
+      "reset": "Reset",
+      "crop": "Crop image",
+      "change": "Change avatar",
+      "del": "Delete avatar"
+    },
+    "sex": {
+      "title": "Gender",
+      "secret": "Secret",
+      "male": "Male",
+      "female": "Female"
+    },
+    "remind": {
+      "title": "Show message reminder",
+      "reply": "Reply",
+      "at": "@Me",
+      "like": "Like",
+      "notice": "Notification"
+    },
+    "desc": {
+      "title": "Brief introduction",
+      "placeholder": "Introduce yourself in a few words"
+    },
+    "btn": {
+      "reset": "Reset password"
     }
   }
 }
