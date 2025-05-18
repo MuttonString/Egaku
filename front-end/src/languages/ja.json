@@ -14,16 +14,21 @@
       "recommend": "おすすめ",
       "subscribe": "フォロー",
       "article": "文章",
-      "video": "ビデオ"
+      "video": "ビデオ",
+      "personal": "個人スペース"
     },
     "user": {
       "reply": "返信",
-      "at": "@ミー",
       "like": "いいね",
       "notice": "通知",
       "settings": "アカウント設定",
       "logout": "ログアウト",
       "noLogin": "ログインしていない"
+    },
+    "search": {
+      "label": "{{website}}で検索",
+      "this": "このサイト",
+      "placeholder": "検索"
     }
   },
   "errorNotification": {
@@ -106,7 +111,6 @@
     "remind": {
       "title": "メッセージリマインダー表示",
       "reply": "返信",
-      "at": "@ミー",
       "like": "いいね",
       "notice": "通知"
     },
@@ -116,6 +120,38 @@
     },
     "btn": {
       "reset": "パスワードリセット"
+    }
+  },
+  "personal": {
+    "tabs": {
+      "collection": "コレクション",
+      "submission": "私の投稿",
+      "reply": "返信",
+      "like": "いいね",
+      "notice": "通知",
+      "article": "文章投稿",
+      "video": "ビデオ投稿"
+    },
+    "article": {
+      "title": "タイトル",
+      "submit": "投稿",
+      "upload": "画像アップロード",
+      "warn": "エディターはモバイルブラウザを完全にサポートしていません。",
+      "saved": "ローカルに保存した",
+      "saveFail": "保存失敗した",
+      "uploading": "画像アップロード中",
+      "uploadSuccess": "画像アップロードされた",
+      "uploadFail": "画像アップロード失敗した",
+      "tooLarge": "画像は10MB以下でなければならない"
+    },
+    "video": {
+      "title": "タイトル",
+      "submit": "投稿",
+      "uploadCover": "カバーアップロード",
+      "uploadVideo": "ビデオアップロード",
+      "limit": "ビデオの最大サイズは1GBです",
+      "crop": "ビデオカバーを切り取る",
+      "reset": "リセット"
     }
   }
 }

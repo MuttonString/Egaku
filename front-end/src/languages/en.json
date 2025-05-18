@@ -14,16 +14,21 @@
       "recommend": "Recommendation",
       "subscribe": "Subscription",
       "article": "Article",
-      "video": "Video"
+      "video": "Video",
+      "personal": "Personal Space"
     },
     "user": {
       "reply": "Reply",
-      "at": "@Me",
       "like": "Like",
       "notice": "Notification",
       "settings": "Account settings",
       "logout": "Logout",
       "noLogin": "Not logged in"
+    },
+    "search": {
+      "label": "Search on {{website}}",
+      "this": "this site",
+      "placeholder": "Search"
     }
   },
   "errorNotification": {
@@ -106,7 +111,6 @@
     "remind": {
       "title": "Show message reminder",
       "reply": "Reply",
-      "at": "@Me",
       "like": "Like",
       "notice": "Notification"
     },
@@ -116,6 +120,38 @@
     },
     "btn": {
       "reset": "Reset password"
+    }
+  },
+  "personal": {
+    "tabs": {
+      "collection": "Collection",
+      "submission": "My Submission",
+      "reply": "Reply",
+      "like": "Like",
+      "notice": "Notification",
+      "article": "Submit Article",
+      "video": "Submit Video"
+    },
+    "article": {
+      "title": "Title",
+      "submit": "Submit",
+      "upload": "Upload image",
+      "warn": "Editor does not fully support mobile browsers.",
+      "saved": "Saved to local",
+      "saveFail": "Save failed",
+      "uploading": "Image uploading",
+      "uploadSuccess": "Image uploaded",
+      "uploadFail": "Image upload failed",
+      "tooLarge": "Image should be less than 10MB"
+    },
+    "video": {
+      "title": "Title",
+      "submit": "Submit",
+      "uploadCover": "Upload cover",
+      "uploadVideo": "Upload video",
+      "limit": "The maxium video size is 1GB",
+      "crop": "Crop video cover",
+      "reset": "Reset"
     }
   }
 }

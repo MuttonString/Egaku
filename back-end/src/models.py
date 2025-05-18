@@ -1,4 +1,4 @@
-from sqlalchemy import Column, BIGINT, VARCHAR, INT, DATETIME, BOOLEAN
+from sqlalchemy import Column, BIGINT, VARCHAR, INT, DATETIME, BOOLEAN, TEXT
 from .database import Base, TimestampDateTime, BigIntStr
 
 class Config(Base):
@@ -26,7 +26,7 @@ class User(Base):
 class Token(Base):
     __tablename__ = 'token'
     id = Column(BigIntStr, primary_key=True, autoincrement=True, index=True, unique=True)
-    email = Column(VARCHAR(255), nullable=False)
+    uid = Column(BigIntStr, nullable=False)
     token = Column(VARCHAR(255), nullable=False)
     expire_time = Column(TimestampDateTime, nullable=False)
 
@@ -42,5 +42,24 @@ class UploadedFile(Base):
     id = Column(BigIntStr, primary_key=True, autoincrement=True, index=True, unique=True)
     url = Column(VARCHAR(512), nullable=False)
     filename = Column(VARCHAR(255), nullable=False)
-    email = Column(VARCHAR(255), nullable=False)
+    uid = Column(BigIntStr, nullable=False)
     upload_time = Column(TimestampDateTime, nullable=False)
+
+class Article(Base):
+    __tablename__ = 'article'
+    id = Column(BigIntStr, primary_key=True, autoincrement=True, index=True, unique=True)
+    uid = Column(BigIntStr, nullable=False)
+    submit_time = Column(TimestampDateTime, nullable=False)
+    title = Column(VARCHAR(50), nullable=False)
+    content = Column(TEXT, nullable=False)
+    status = Column(INT, nullable=False)
+
+class Video(Base):
+    __tablename__ = 'video'
+    id = Column(BigIntStr, primary_key=True, autoincrement=True, index=True, unique=True)
+    uid = Column(BigIntStr, nullable=False)
+    submit_time = Column(TimestampDateTime, nullable=False)
+    title = Column(VARCHAR(50), nullable=False)
+    cover = Column(VARCHAR(255), nullable=False)
+    video = Column(VARCHAR(255), nullable=False)
+    status = Column(INT, nullable=False)

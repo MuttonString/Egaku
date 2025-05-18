@@ -1,4 +1,6 @@
 import {
+  AutoComplete,
+  AutoCompleteProps,
   Avatar,
   Badge,
   Button,
@@ -14,13 +16,14 @@ import styles from './index.module.less';
 import { MenuProps } from 'antd/lib';
 import Animation from '../components/Animation';
 import {
+  HomeOutlined,
   LoadingOutlined,
   LoginOutlined,
   MenuOutlined,
   SettingFilled,
   UserOutlined,
 } from '@ant-design/icons';
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
 import {
   Outlet,
   useLocation,
@@ -41,7 +44,6 @@ import SettingsDrawer, { ISettingsDrawer } from '../components/SettingsDrawer';
 import UserModal, { IUserModal } from '../components/UserModal';
 
 const { Header, Content } = Layout;
-const { Search } = Input;
 type MenuItem = Required<MenuProps>['items'][number];
 
 export default function PageLayout() {
@@ -57,6 +59,7 @@ export default function PageLayout() {
   const [isMobile, setIsMobile] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [searchVal, setSearchVal] = useState(search || '');
+  const [showDot, setShowDot] = useState(location !== 'personal');
 
   const checkScreenWidth = useThrottleFn(
     () => setIsMobile(document.documentElement.clientWidth <= 768),
@@ -64,11 +67,89 @@ export default function PageLayout() {
   ).run;
   window.addEventListener('resize', checkScreenWidth);
 
+  const websiteOptions: AutoCompleteProps['options'] = useMemo(
+    () => [
+      {
+        label: (
+          <div className={styles.websiteBox}>
+            <HomeOutlined className={styles.svg} />
+            <div>
+              {t('layout.search.label', { website: t('layout.search.this') })}
+            </div>
+          </div>
+        ),
+        value: '',
+        disabled: !searchVal,
+      },
+      {
+        label: (
+          <div className={styles.websiteBox}>
+            <img src="/huaban.png" alt="Huaban" />
+            <div>{t('layout.search.label', { website: 'Huaban' })}...</div>
+          </div>
+        ),
+        value: 'https://huaban.com/search?q=',
+      },
+      {
+        label: (
+          <div className={styles.websiteBox}>
+            <img src="/pinterest.png" alt="Pinterest" />
+            <div>{t('layout.search.label', { website: 'Pinterest' })}...</div>
+          </div>
+        ),
+        value: 'https://www.pinterest.com/search/pins/?q=',
+      },
+      {
+        label: (
+          <div className={styles.websiteBox}>
+            <img src="/sketchfab.png" alt="Sketchfab" />
+            <div>{t('layout.search.label', { website: 'Sketchfab' })}...</div>
+          </div>
+        ),
+        value: 'https://sketchfab.com/search?q=',
+      },
+      {
+        label: (
+          <div className={styles.websiteBox}>
+            <img src="/bodiesinmotion.png" alt="Bodiesinmotion" />
+            <div>
+              {t('layout.search.label', { website: 'Bodiesinmotion' })}...
+            </div>
+          </div>
+        ),
+        value: 'https://www.bodiesinmotion.photo/muybridge?search=',
+      },
+      {
+        label: (
+          <div className={styles.websiteBox}>
+            <img src="/mixamo.png" alt="Mixamo" />
+            <div>{t('layout.search.label', { website: 'Mixamo' })}...</div>
+          </div>
+        ),
+        value: 'https://www.mixamo.com/#/?page=1&type=Character&query=',
+      },
+    ],
+    [searchVal, t]
+  );
+
   const {
     data: userData,
     loading: userLoading,
     run: userRun,
   } = useRequest(getInfo, {
+    onSuccess(res) {
+      if (res.success) {
+        if (showDot) {
+          let msgCnt = 0;
+          Object.keys(res.data.msgNum || {}).forEach((key) => {
+            if (res.data.showReminder?.[key as ReminderType]) {
+              msgCnt += res.data.msgNum?.[key] || 0;
+            }
+          });
+          setShowDot(msgCnt !== 0);
+        }
+      }
+    },
     onError(err) {
       errorRef.current!.open(err);
     },
@@ -77,128 +158,164 @@ export default function PageLayout() {
   useEffect(() => {
     if (!location && sessionStorage.getItem('token'))
       navigate('recommendation');
-    checkScreenWidth();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  const items: MenuItem[] = [
-    {
-      label: t('layout.menu.recommend'),
-      key: 'recommendation',
-      onClick() {
-        navigate('recommendation');
-      },
-    },
-    {
-      label: t('layout.menu.subscribe'),
-      key: 'subscription',
-      onClick() {
-        navigate('subscription');
-      },
-    },
-    {
-      label: t('layout.menu.article'),
-      key: 'article',
-      onClick() {
-        navigate('article');
-      },
-    },
-    {
-      label: t('layout.menu.video'),
-      key: 'video',
-      onClick() {
-        navigate('video');
-      },
-    },
-  ];
+  useEffect(() => {
+    checkScreenWidth();
+  }, [checkScreenWidth]);
 
-  const userItems: MenuItem[] = [
-    {
+  const items: MenuItem[] = useMemo(
+    () => [
+      {
+        label: t('layout.menu.recommend'),
+        key: 'recommendation',
+        onClick() {
+          navigate('recommendation');
+        },
+      },
+      {
+        label: t('layout.menu.subscribe'),
+        key: 'subscription',
+        onClick() {
+          navigate('subscription');
+        },
+      },
+      {
+        label: t('layout.menu.article'),
+        key: 'article',
+        onClick() {
+          navigate('article');
+        },
+      },
+      {
+        label: t('layout.menu.video'),
+        key: 'video',
+        onClick() {
+          navigate('video');
+        },
+      },
+    ],
+    [navigate, t]
+  );
+
+  const logoItem: MenuItem = useMemo(
+    () => ({
       label: (
-        <div>
-          {t('layout.user.reply')}
-          {!!userData?.data.msgNum?.reply && (
-            <span className={styles.msgNum}>
-              ({userData?.data.msgNum.reply})
-            </span>
-          )}
+        <div className={styles.logoWithText}>
+          <img src="/logo.png" />
+          <div>Egaku</div>
         </div>
       ),
-      key: 'reply',
+      key: 'logo',
       onClick() {
-        setMobileMenuOpen(false);
+        navigate('/');
       },
-    },
-    {
-      label: (
-        <div>
-          {t('layout.user.at')}
-          {!!userData?.data.msgNum?.at && (
-            <span className={styles.msgNum}>({userData?.data.msgNum.at})</span>
-          )}
-        </div>
-      ),
-      key: 'at',
+    }),
+    [navigate]
+  );
+
+  const extarItem: MenuItem = useMemo(
+    () => ({
+      label: t('layout.menu.personal'),
+      key: 'personal',
       onClick() {
-        setMobileMenuOpen(false);
+        navigate('personal');
+        setShowDot(false);
       },
-    },
-    {
-      label: (
-        <div>
-          {t('layout.user.like')}
-          {!!userData?.data.msgNum?.like && (
-            <span className={styles.msgNum}>
-              ({userData?.data.msgNum.like})
-            </span>
-          )}
-        </div>
-      ),
-      key: 'like',
-      onClick() {
-        setMobileMenuOpen(false);
+    }),
+    [navigate, t]
+  );
+
+  const userItems: MenuItem[] = useMemo(
+    () => [
+      {
+        label: (
+          <div>
+            {t('layout.user.reply')}
+            {showDot &&
+              userData?.data.showReminder?.reply &&
+              !!userData.data.msgNum?.reply && (
+                <span className={styles.msgNum}>
+                  ({userData?.data.msgNum.reply})
+                </span>
+              )}
+          </div>
+        ),
+        key: 'reply',
+        onClick() {
+          setMobileMenuOpen(false);
+          setShowDot(false);
+          navigate('personal/reply');
+        },
       },
-    },
-    {
-      label: (
-        <div>
-          {t('layout.user.notice')}
-          {!!userData?.data.msgNum?.notice && (
-            <span className={styles.msgNum}>
-              ({userData?.data.msgNum.notice})
-            </span>
-          )}
-        </div>
-      ),
-      key: 'notice',
-      onClick() {
-        setMobileMenuOpen(false);
+      {
+        label: (
+          <div>
+            {t('layout.user.like')}
+            {showDot &&
+              userData?.data.showReminder?.like &&
+              !!userData.data.msgNum?.like && (
+                <span className={styles.msgNum}>
+                  ({userData?.data.msgNum.like})
+                </span>
+              )}
+          </div>
+        ),
+        key: 'like',
+        onClick() {
+          setMobileMenuOpen(false);
+          setShowDot(false);
+          navigate('personal/like');
+        },
       },
-    },
-    {
-      label: (
-        <span className={styles.optionDivider}>
-          {t('layout.user.settings')}
-        </span>
-      ),
-      key: 'settings',
-      onClick() {
-        userRef.current!.open(userData?.data);
-        setMobileMenuOpen(false);
+      {
+        label: (
+          <div>
+            {t('layout.user.notice')}
+            {showDot &&
+              userData?.data.showReminder?.notice &&
+              !!userData.data.msgNum?.notice && (
+                <span className={styles.msgNum}>
+                  ({userData?.data.msgNum.notice})
+                </span>
+              )}
+          </div>
+        ),
+        key: 'notice',
+        onClick() {
+          setMobileMenuOpen(false);
+          setShowDot(false);
+          navigate('personal/notice');
+        },
       },
-    },
-    {
-      label: t('layout.user.logout'),
-      danger: true,
-      key: 'logout',
-      onClick() {
-        Cookies.remove('account');
-        Cookies.remove('pwd');
-        sessionStorage.removeItem('token');
-        setMobileMenuOpen(false);
-        window.location.reload();
+      {
+        label: (
+          <span className={styles.optionDivider}>
+            {t('layout.user.settings')}
+          </span>
+        ),
+        key: 'settings',
+        onClick() {
+          userRef.current!.open(userData?.data);
+          setMobileMenuOpen(false);
+        },
       },
-    },
-  ];
+      {
+        label: t('layout.user.logout'),
+        danger: true,
+        key: 'logout',
+        onClick() {
+          Cookies.remove('account');
+          Cookies.remove('pwd');
+          sessionStorage.removeItem('token');
+          setMobileMenuOpen(false);
+          window.location.reload();
+        },
+      },
+    ],
+    [navigate, showDot, t, userData?.data]
+  );
 
   return (
     <Layout className={styles.layout}>
@@ -217,15 +334,27 @@ export default function PageLayout() {
             <MenuOutlined />
           </Button>
           <div className={styles.center}>
-            <Search
-              maxLength={100}
+            <AutoComplete
               className={styles.search}
-              onSearch={(val) => {
-                if (val) navigate(`search?search=${encodeURIComponent(val)}`);
+              options={websiteOptions}
+              onSelect={(val) => {
+                if (val) window.open(val + encodeURIComponent(searchVal));
+                else if (searchVal)
+                  navigate(`search?search=${encodeURIComponent(searchVal)}`);
               }}
-              onChange={(e) => setSearchVal(e.target.value)}
               value={searchVal}
-            />
+              maxLength={100}
+            >
+              <Input
+                onChange={(e) => setSearchVal(e.target.value)}
+                value={searchVal}
+                placeholder={t('layout.search.placeholder')}
+                onPressEnter={() => {
+                  if (searchVal)
+                    navigate(`search?search=${encodeURIComponent(searchVal)}`);
+                }}
+              />
+            </AutoComplete>
           </div>
           <Animation animation="spin">
             <Button
@@ -244,9 +373,9 @@ export default function PageLayout() {
               userLoading ? (
                 <LoadingOutlined size={18} />
               ) : userData?.data.account ? (
-                <Dropdown menu={{ items: userItems }}>
+                <Dropdown menu={{ items: userItems }} forceRender>
                   <Flex gap="small" className={styles.drawerHeader}>
-                    <Badge dot={userData.data.hasMsg} offset={[-4, 4]}>
+                    <Badge dot={showDot} offset={[-4, 4]}>
                       <Avatar shape="circle" src={userData.data.avatar}>
                         {(
                           userData.data.nickname || userData.data.account
@@ -276,21 +405,11 @@ export default function PageLayout() {
           >
             <Menu
               mode="vertical"
-              items={[
-                {
-                  label: (
-                    <div className={styles.logoWithText}>
-                      <img src="/logo.png" />
-                      <div>Egaku</div>
-                    </div>
-                  ),
-                  key: 'logo',
-                  onClick() {
-                    navigate('/');
-                  },
-                },
-                ...items,
-              ]}
+              items={
+                userData?.data.account
+                  ? [logoItem, ...items, extarItem]
+                  : [logoItem, ...items]
+              }
               className={styles.verticalMenu}
               selectedKeys={[location]}
               onClick={() => setMobileMenuOpen(false)}
@@ -299,28 +418,40 @@ export default function PageLayout() {
         </Header>
       ) : (
         <Header className={styles.header}>
-          <Flex>
+          <Flex className={styles.leftPart}>
             <Animation animation="bounce">
               <div className={styles.logo} onClick={() => navigate('/')} />
             </Animation>
             <Menu
               mode="horizontal"
-              items={items}
+              items={userData?.data.account ? [...items, extarItem] : items}
               className={styles.menu}
               selectedKeys={[location]}
             />
           </Flex>
 
           <Flex gap="middle">
-            <Search
-              maxLength={100}
+            <AutoComplete
               className={styles.search}
-              onSearch={(val) => {
-                if (val) navigate(`search?search=${encodeURIComponent(val)}`);
+              options={websiteOptions}
+              onSelect={(val) => {
+                if (val) window.open(val + encodeURIComponent(searchVal));
+                else if (searchVal)
+                  navigate(`search?search=${encodeURIComponent(searchVal)}`);
               }}
-              onChange={(e) => setSearchVal(e.target.value)}
               value={searchVal}
-            />
+              maxLength={100}
+            >
+              <Input
+                onChange={(e) => setSearchVal(e.target.value)}
+                value={searchVal}
+                placeholder={t('layout.search.placeholder')}
+                onPressEnter={() => {
+                  if (searchVal)
+                    navigate(`search?search=${encodeURIComponent(searchVal)}`);
+                }}
+              />
+            </AutoComplete>
 
             <Animation animation="spin">
               <Button
@@ -335,9 +466,9 @@ export default function PageLayout() {
             {userLoading ? (
               <LoadingOutlined size={18} />
             ) : userData?.data.account ? (
-              <Dropdown menu={{ items: userItems }}>
+              <Dropdown menu={{ items: userItems }} forceRender>
                 <Flex gap="small" className={styles.user} onClick={() => {}}>
-                  <Badge dot={userData.data.hasMsg} offset={[-4, 4]}>
+                  <Badge dot={showDot} offset={[-4, 4]}>
                     <Avatar shape="circle" src={userData.data.avatar}>
                       {(
                         userData.data.nickname || userData.data.account

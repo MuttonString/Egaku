@@ -27,7 +27,7 @@ export default function LevelTag(props: IProps & TagProps) {
       }
     }
     setLevel(NEXT.length + 1);
-  }, [props]);
+  }, [exp, props.exp]);
 
   return (
     <Tooltip title={`${exp} / ${NEXT[level - 1] || '∞'}`} arrow={false}>

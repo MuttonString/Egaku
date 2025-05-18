@@ -6,7 +6,7 @@ class UserSignup(BaseModel):
     email: str
     password: str
     code: str
-    
+
 class UserLogin(BaseModel):
     accountOrEmail: str
     password: str
@@ -26,3 +26,12 @@ class UserUpdate(BaseModel):
     desc: str
     avatar: str
     showReminder: Dict[str, bool]
+
+class ArticleSubmit(BaseModel):
+    title: str
+    content: str
+
+class VideoSubmit(BaseModel):
+    title: str
+    cover: str
+    video: str

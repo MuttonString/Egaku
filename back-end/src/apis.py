@@ -19,12 +19,15 @@ def user_signup(data: UserSignup):
         new_user = User(
             account=data.account,
             email=data.email,
-            password=hash_password(data.password, data.account, data.email),
+            password='',
             exp=0,
             signup_time=time(),
             admin=False,
         )
         db.add(new_user)
+        db.flush()
+        db.refresh(new_user)
+        new_user.password = hash_password(data.password, new_user.uid)
         db.commit()
         db.query(Verification).filter(Verification.email == data.email).delete()
         db.commit()
@@ -43,10 +46,10 @@ def user_login(data: UserLogin):
         ).first()
         if not user:
             return error('NOT_CORRECT')
-        if user.password != hash_password(data.password, user.account, user.email):
+        if user.password != hash_password(data.password, user.uid):
             return error('NOT_CORRECT')
         new_token = Token(
-            email=user.email,
+            uid=user.uid,
             token=token(),
             expire_time=time() + 24 * 60 * 60 * 1000,
         )
@@ -70,11 +73,11 @@ def user_reset(data: UserReset):
         verification = db.query(Verification).filter(Verification.email == data.email).order_by(Verification.expire_time.desc()).first()
         if verification.code != data.code or verification.expire_time < time():
             return error('CODE_ERROR')
-        user.password = hash_password(data.password, user.account, user.email)
+        user.password = hash_password(data.password, user.uid)
         db.commit()
         db.query(Verification).filter(Verification.email == data.email).delete()
         db.commit()
-        db.query(Token).filter(Token.email == data.email).delete()
+        db.query(Token).filter(Token.uid == user.uid).delete()
         db.commit()
         return success()
     except Exception as e:
@@ -110,11 +113,12 @@ def user_send_code(data: UserSendCode, lang: str = Header(None)):
 @router.post('/user/getInfo')
 def user_get_info(token: str = Header(None)):
     try:
-        email = verify_token(token)
-        if not email:
+        uid = verify_token(token)
+        if not uid:
             return error('NOT_LOGIN')
-        user = db.query(User).filter(User.email == email).first()
+        user = db.query(User).filter(User.uid == uid).first()
         return success({
+            'uid': user.uid,
             'account': user.account,
             'email': mask_email(user.email),
             'sex': user.sex,
@@ -124,18 +128,15 @@ def user_get_info(token: str = Header(None)):
             'exp': user.exp,
             'signupTime': user.signup_time,
             'admin': user.admin,
-            'hasMsg': True, # TODO
             'msgNum': { # TODO
                 'reply': 0,
-                'at': 7,
                 'like': 2,
                 'notice': 1, 
             },
             'showReminder': {
-                'reply': user.disable_reminder & 0b0001 == 0,
-                'at': user.disable_reminder & 0b0010 == 0,
-                'like': user.disable_reminder & 0b0100 == 0,
-                'notice': user.disable_reminder & 0b1000 == 0,
+                'reply': (user.disable_reminder or 0) & 0b001 == 0,
+                'like': (user.disable_reminder or 0) & 0b010 == 0,
+                'notice': (user.disable_reminder or 0) & 0b100 == 0,
             },
         })
     except Exception as e:
@@ -146,16 +147,16 @@ def user_get_info(token: str = Header(None)):
 @router.post('/user/update')
 def user_update(data: UserUpdate, token: str = Header(None)):
     try:
-        email = verify_token(token)
-        if not email:
+        uid = verify_token(token)
+        if not uid:
             return error('NOT_LOGIN')
-        user = db.query(User).filter(User.email == email).first()
+        user = db.query(User).filter(User.uid == uid).first()
         user.sex = data.sex
         user.nickname = data.nickname
         user.desc = data.desc
         user.avatar = data.avatar
         rem = data.showReminder
-        user.disable_reminder = (not rem.get('reply')) * 0b0001 + (not rem.get('at')) * 0b0010 + (not rem.get('like')) * 0b0100 + (not rem.get('notice')) * 0b1000
+        user.disable_reminder = (not rem.get('reply')) * 0b001 + (not rem.get('like')) * 0b010 + (not rem.get('notice')) * 0b100
         db.commit()
         return success()
     except Exception as e:
@@ -166,14 +167,14 @@ def user_update(data: UserUpdate, token: str = Header(None)):
 @router.post('/uploadFile')
 async def upload_file(file: UploadFile = File(..., max_size=1024*1024*1024), token: str = Header(None)):
     try:
-        email = verify_token(token)
-        if not email:
+        uid = verify_token(token)
+        if not uid:
             return error('NOT_LOGIN')
         file_url = await save_file(file)
         new_file = UploadedFile(
             url=file_url,
             filename=file.filename,
-            email=email,
+            uid=uid,
             upload_time=time()
         )
         db.add(new_file)
@@ -181,6 +182,51 @@ async def upload_file(file: UploadFile = File(..., max_size=1024*1024*1024), tok
         return success({
             'url': file_url
         })
+    except Exception as e:
+        db.rollback()
+        print(e.args)
+        return error()
+
+@router.post('/article/submit')
+def article_submit(data: ArticleSubmit, token: str = Header(None)):
+    try:
+        uid = verify_token(token)
+        if not uid:
+            return error('NOT_LOGIN')
+        new_article = Article(
+            uid=uid,
+            submit_time=time(),
+            title=data.title,
+            content=data.content,
+            status=0
+        )
+        db.add(new_article)
+        db.commit()
+        # TODO: 将data.title和content用AI审核，然后将状态改为1或2
+        return success()
+    except Exception as e:
+        db.rollback()
+        print(e.args)
+        return error()
+
+@router.post('/video/submit')
+def article_submit(data: VideoSubmit, token: str = Header(None)):
+    try:
+        uid = verify_token(token)
+        if not uid:
+            return error('NOT_LOGIN')
+        new_video = Video(
+            uid=uid,
+            submit_time=time(),
+            title=data.title,
+            cover=data.cover,
+            video=data.video,
+            status=0
+        )
+        db.add(new_video)
+        db.commit()
+        # TODO: 将data.title cover video用AI审核，然后将状态改为1或2
+        return success()
     except Exception as e:
         db.rollback()
         print(e.args)

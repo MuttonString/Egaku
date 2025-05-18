@@ -14,16 +14,21 @@
       "recommend": "推荐",
       "subscribe": "关注",
       "article": "文章",
-      "video": "视频"
+      "video": "视频",
+      "personal": "个人空间"
     },
     "user": {
       "reply": "回复",
-      "at": "@我",
       "like": "点赞",
       "notice": "通知",
       "settings": "账户设置",
       "logout": "退出登录",
       "noLogin": "未登录"
+    },
+    "search": {
+      "label": "在{{website}}搜索",
+      "this": "本站",
+      "placeholder": "搜索"
     }
   },
   "errorNotification": {
@@ -106,7 +111,6 @@
     "remind": {
       "title": "展示消息通知",
       "reply": "回复",
-      "at": "@我",
       "like": "点赞",
       "notice": "通知"
     },
@@ -116,6 +120,38 @@
     },
     "btn": {
       "reset": "重置密码"
+    }
+  },
+  "personal": {
+    "tabs": {
+      "collection": "收藏",
+      "submission": "我的投稿",
+      "reply": "回复",
+      "like": "点赞",
+      "notice": "通知",
+      "article": "投稿文章",
+      "video": "投稿视频"
+    },
+    "article": {
+      "title": "标题",
+      "submit": "投稿",
+      "upload": "上传图片",
+      "warn": "编辑器尚未完全支持移动端浏览器。",
+      "saved": "已保存到本地",
+      "saveFail": "保存失败",
+      "uploading": "图片上传中",
+      "uploadSuccess": "图片已上传",
+      "uploadFail": "图片上传失败",
+      "tooLarge": "图片不得大于10MB"
+    },
+    "video": {
+      "title": "标题",
+      "submit": "投稿",
+      "uploadCover": "上传封面",
+      "uploadVideo": "上传视频",
+      "limit": "视频最大为1GB",
+      "crop": "裁切视频封面",
+      "reset": "重置"
     }
   }
 }

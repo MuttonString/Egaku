@@ -396,7 +396,9 @@ function LoginModal(props: ModalProps, ref: Ref<ILoginModal>) {
                         email: signupForm.getFieldValue('email'),
                         isNewEmail: true,
                       });
-                    } catch {}
+                    } catch {
+                      /* empty */
+                    }
                   }}
                 >
                   {t('loginModal.btn.code')}
@@ -560,7 +562,9 @@ function LoginModal(props: ModalProps, ref: Ref<ILoginModal>) {
                         email: resetForm.getFieldValue('email'),
                         isNewEmail: false,
                       });
-                    } catch {}
+                    } catch {
+                      /* empty */
+                    }
                   }}
                 >
                   {t('loginModal.btn.code')}

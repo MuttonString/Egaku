@@ -11,3 +11,11 @@ export const enum USER_SEX {
   MALE,
   FEMALE,
 }
+
+export const enum SUBMISSION_STATUS {
+  TO_BE_REVIEWED,
+  PASS,
+  NOT_PASS,
+  RE_REVIEW,
+  NEVER_PASS,
+}

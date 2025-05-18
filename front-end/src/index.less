@@ -52,7 +52,16 @@ html {
     border-radius: 8px;
     -webkit-backdrop-filter: var(--blur-backdrop);
     backdrop-filter: var(--blur-backdrop);
-    will-change: backdrop-filter;
+  }
+
+  .ant-menu-sub {
+    background: var(--secondary-background) !important;
+  }
+
+  .ant-menu-submenu.ant-slide-up-enter,
+  .ant-menu-submenu.ant-slide-up-leave {
+    -webkit-backdrop-filter: none;
+    backdrop-filter: none;
   }
 
   .ant-zoom-big-fast-enter,
@@ -60,7 +69,6 @@ html {
     border-radius: 6px;
     -webkit-backdrop-filter: var(--blur-backdrop);
     backdrop-filter: var(--blur-backdrop);
-    will-change: backdrop-filter;
   }
 
   .ant-drawer-content {

@@ -6,7 +6,7 @@ export interface IErrorNotification {
   open: (err?: Error | string) => void;
 }
 
-function ErrorNotification(_: any, ref: Ref<IErrorNotification>) {
+function ErrorNotification(_: unknown, ref: Ref<IErrorNotification>) {
   const { t } = useTranslation();
   const [api, contextHolder] = notification.useNotification();
 

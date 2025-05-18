@@ -4,7 +4,6 @@ import { login } from '../services/user';
 
 const request = axios.create({
   baseURL: '/api',
-  timeout: 10000,
   headers: {
     'Content-Type': 'application/json; charset=utf-8',
   },
@@ -24,6 +23,7 @@ request.interceptors.request.use((cfg) => {
 request.interceptors.response.use(async (resp) => {
   await sleep(1000);
   if (!resp.data.success && resp.data.data.error === 'NOT_LOGIN') {
+    sessionStorage.removeItem('token');
     const account = Cookies.get('account');
     const pwd = Cookies.get('pwd');
     if (account && pwd) {

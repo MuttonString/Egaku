@@ -134,8 +134,9 @@ function SettingsDrawer(_: DrawerProps, ref: Ref<ISettingsDrawer>) {
         <h3>{t('settingsDrawer.bgImg')}</h3>
         <Space.Compact>
           <Upload
-            accept="image/png, image/jpeg"
+            accept="image/*"
             beforeUpload={(file) => {
+              if (!file.type.startsWith('image')) return false;
               setFileName(file.name);
               changeBackground(file);
               return false;

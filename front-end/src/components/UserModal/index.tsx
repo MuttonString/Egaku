@@ -9,7 +9,14 @@ import {
   Radio,
   Upload,
 } from 'antd';
-import { forwardRef, Ref, useImperativeHandle, useRef, useState } from 'react';
+import {
+  forwardRef,
+  Ref,
+  useImperativeHandle,
+  useMemo,
+  useRef,
+  useState,
+} from 'react';
 import { useTranslation } from 'react-i18next';
 import styles from './index.module.less';
 import ImgCrop from 'antd-img-crop';
@@ -76,43 +83,48 @@ function UserModal(props: IProps, ref: Ref<IUserModal>) {
     },
   });
 
-  const avatarItems: MenuItem[] = [
-    {
-      label: (
-        <ImgCrop
-          showReset
-          resetText={t('userModal.avatar.reset')}
-          cropShape="round"
-          modalTitle={t('userModal.avatar.crop')}
-        >
-          <Upload
-            accept="image/png, image/jpeg"
-            showUploadList={false}
-            beforeUpload={async (file) => {
-              setProcessing(true);
-              const newFile = await imgResize(file, 512);
-              fileRun(newFile);
-              setProcessing(false);
-              return false;
-            }}
+  const avatarItems: MenuItem[] = useMemo(
+    () => [
+      {
+        label: (
+          <ImgCrop
+            showReset
+            resetText={t('userModal.avatar.reset')}
+            cropShape="round"
+            modalTitle={t('userModal.avatar.crop')}
+            beforeCrop={(file) => file.type.startsWith('image')}
           >
-            {t('userModal.avatar.change')}...
-          </Upload>
-        </ImgCrop>
-      ),
-      key: 'change',
-      onClick() {},
-    },
-    {
-      label: t('userModal.avatar.del'),
-      key: 'del',
-      danger: true,
-      disabled: !avatar,
-      onClick() {
-        setAvatar('');
+            <Upload
+              accept="image/*"
+              showUploadList={false}
+              beforeUpload={async (file) => {
+                if (!file.type.startsWith('image')) return false;
+                setProcessing(true);
+                const newFile = await imgResize(file, 256);
+                fileRun(newFile);
+                setProcessing(false);
+                return false;
+              }}
+            >
+              {t('userModal.avatar.change')}...
+            </Upload>
+          </ImgCrop>
+        ),
+        key: 'change',
+        onClick() {},
       },
-    },
-  ];
+      {
+        label: t('userModal.avatar.del'),
+        key: 'del',
+        danger: true,
+        disabled: !avatar,
+        onClick() {
+          setAvatar('');
+        },
+      },
+    ],
+    [avatar, fileRun, t]
+  );
 
   const sexOptions = [
     { value: USER_SEX.UNKNOWN, label: t('userModal.sex.secret') },
@@ -128,7 +140,6 @@ function UserModal(props: IProps, ref: Ref<IUserModal>) {
 
   const noticeOptions = [
     { value: 'reply', label: t('userModal.remind.reply') },
-    { value: 'at', label: t('userModal.remind.at') },
     { value: 'like', label: t('userModal.remind.like') },
     { value: 'notice', label: t('userModal.remind.notice') },
   ];
@@ -167,7 +178,6 @@ function UserModal(props: IProps, ref: Ref<IUserModal>) {
           avatar,
           showReminder: {
             reply: !!showReminder?.includes('reply'),
-            at: !!showReminder?.includes('at'),
             like: !!showReminder?.includes('like'),
             notice: !!showReminder?.includes('notice'),
           },
@@ -188,7 +198,7 @@ function UserModal(props: IProps, ref: Ref<IUserModal>) {
       <ErrorNotification ref={errorRef} />
       <LoginModal ref={resetRef} />
       <div className={styles.accountRow}>
-        <Dropdown menu={{ items: avatarItems }}>
+        <Dropdown menu={{ items: avatarItems }} forceRender>
           <Avatar
             shape="circle"
             src={processing || fileLoading || avatar}

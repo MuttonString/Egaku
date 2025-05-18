@@ -1,0 +1,44 @@
+.container {
+  overflow: auto;
+
+  .control {
+    overflow: auto;
+
+    * {
+      transition: none;
+    }
+  }
+
+  .tip {
+    float: left;
+  }
+
+  .cnt {
+    float: right;
+  }
+
+  .gray {
+    color: var(--secondary-text);
+  }
+
+  .editor {
+    background-color: var(--secondary-background);
+    border: var(--default-border) solid 1px;
+    border-radius: 8px;
+    padding: 8px;
+    height: calc(100vh - 246px);
+    overflow-y: scroll;
+
+    :global {
+      .DraftEditor-root,
+      .DraftEditor-editorContainer,
+      .public-DraftEditor-content {
+        height: 100%;
+      }
+    }
+  }
+}
+
+:global(.ant-tabs-top) .editor {
+  height: calc(100vh - 294px);
+}

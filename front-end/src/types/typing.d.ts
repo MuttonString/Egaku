@@ -27,9 +27,10 @@ interface UserSendCodeReq {
   isNewEmail?: boolean;
 }
 
-type ReminderType = 'reply' | 'at' | 'like' | 'notice';
+type ReminderType = 'reply' | 'like' | 'notice';
 
 interface UserGetInfoRes {
+  uid?: string;
   account?: string;
   email?: string;
   sex?: number;
@@ -39,7 +40,6 @@ interface UserGetInfoRes {
   exp?: number;
   signupTime?: number;
   admin?: boolean;
-  hasMsg?: boolean;
   msgNum?: Record<NotificationType, number>;
   showReminder?: Record<ReminderType, boolean>;
 }
@@ -54,4 +54,15 @@ interface UserUpdateReq {
   desc: string;
   avatar: string;
   showReminder: Record<ReminderType, boolean>;
+}
+
+interface ArticleSubmitReq {
+  title: string;
+  content: string;
+}
+
+interface VideoSubmitReq {
+  title: string;
+  cover: string;
+  video: string;
 }

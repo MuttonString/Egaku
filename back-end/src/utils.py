@@ -21,9 +21,9 @@ def success(data={}):
 def time():
     return datetime.now().timestamp() * 1000
 
-def hash_password(pwd: str, acc: str, email: str):
+def hash_password(pwd: str, uid: str):
     sha512 = hashlib.sha512()
-    sha512.update(f'{acc}{pwd}{email}'.encode('utf-8'))
+    sha512.update(f'{pwd}{uid}'.encode('utf-8'))
     return sha512.hexdigest()
 
 def token():
@@ -139,10 +139,10 @@ def verify_token(token: str):
             db.close()
             return False
         token_obj.expire_time = time() + 24 * 60 * 60 * 1000
-        email = token_obj.email
+        uid = token_obj.uid
         db.commit()
         db.close()
-        return email
+        return uid
     db.close()
     return False
 

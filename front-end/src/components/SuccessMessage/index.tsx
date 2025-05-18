@@ -6,7 +6,7 @@ export interface ISuccessMessage {
   open: (msg?: string) => void;
 }
 
-function SuccessMessage(_: any, ref: Ref<ISuccessMessage>) {
+function SuccessMessage(_: unknown, ref: Ref<ISuccessMessage>) {
   const { t } = useTranslation();
   const [messageApi, contextHolder] = message.useMessage();
 
