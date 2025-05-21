@@ -31,7 +31,10 @@
   "errorNotification": {
     "title": "錯誤",
     "notLogin": "登錄已過期",
-    "serverError": "伺服器錯誤"
+    "serverError": "伺服器錯誤",
+    "noPermission": "無權限",
+    "paramError": "參數錯誤",
+    "cannotOperationToSelf": "不能對自己操作"
   },
   "successMessage": {
     "title": "{{msg}}成功"
@@ -125,7 +128,33 @@
       "submission": "稿件管理",
       "reply": "回覆",
       "article": "投稿文章",
-      "video": "投稿視頻"
+      "video": "投稿視頻",
+      "audit": "審核"
+    },
+    "collection": {
+      "title": "標題",
+      "preview": "預覽",
+      "time": "收藏時間",
+      "remove": "移除"
+    },
+    "submission": {
+      "reviewing": "審核中",
+      "passed": "審核通過",
+      "notPass": "審核不通過",
+      "banned": "禁止",
+      "del": "刪除",
+      "reReview": "請求複審",
+      "title": "標題",
+      "content": "內容",
+      "time": "投稿時間",
+      "status": "狀態",
+      "delWarn": "確定要刪除嗎？稿件無法恢復。"
+    },
+    "reply": {
+      "title": "稿件標題",
+      "user": "用戶",
+      "time": "時間",
+      "content": "內容"
     },
     "article": {
       "title": "標題",
@@ -147,6 +176,63 @@
       "limit": "視頻最大為1GB",
       "crop": "裁切視頻封面",
       "reset": "重置"
+    },
+    "audit": {
+      "needReview": "待審核",
+      "needReviewAgain": "待複審",
+      "title": "標題",
+      "content": "內容",
+      "time": "投稿時間",
+      "status": "狀態",
+      "pass": "通過",
+      "reason": "原因",
+      "confirm": "確定",
+      "ban": "駁回"
     }
+  },
+  "singleArticle": {
+    "noArticle": "文章不存在",
+    "summary": "AI總結",
+    "cancelSubscribe": "取消訂閱",
+    "subscribe": "訂閱",
+    "comment": "評論",
+    "placeholder": "留下你的評論",
+    "send": "發送",
+    "noComment": "暫無評論",
+    "delConfirm": "確認刪除？"
+  },
+  "singleVideo": {
+    "noVideo": "視頻不存在",
+    "cancelSubscribe": "取消訂閱",
+    "subscribe": "訂閱",
+    "comment": "評論",
+    "placeholder": "留下你的評論",
+    "send": "發送",
+    "noComment": "暫無評論",
+    "delConfirm": "確認刪除？"
+  },
+  "article": {
+    "loadMore": "載入更多"
+  },
+  "video": {
+    "loadMore": "載入更多"
+  },
+  "submission": {
+    "noUser": "用戶不存在",
+    "signupDate": "註冊時間",
+    "subscriber": "訂閱者",
+    "video": "視頻",
+    "article": "文章",
+    "cancelSubscribe": "取消訂閱",
+    "subscribe": "訂閱",
+    "loadMore": "載入更多"
+  },
+  "subscription": {
+    "title": "訂閱列表",
+    "loadMore": "載入更多"
+  },
+  "search": {
+    "title": "「{{content}}」的搜尋結果",
+    "loadMore": "載入更多"
   }
 }

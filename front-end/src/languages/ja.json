@@ -18,6 +18,7 @@
     },
     "user": {
       "reply": "返信",
+      "submission": "自分の投稿",
       "settings": "アカウント設定",
       "logout": "ログアウト",
       "noLogin": "ログインしていない"
@@ -31,7 +32,10 @@
   "errorNotification": {
     "title": "エラー",
     "notLogin": "ログイン期限切れ",
-    "serverError": "サーバーエラー"
+    "serverError": "サーバーエラー",
+    "noPermission": "無許可",
+    "paramError": "パラメーターエラー",
+    "cannotOperationToSelf": "自分に対して操作不可"
   },
   "successMessage": {
     "title": "{{msg}}成功"
@@ -125,7 +129,33 @@
       "submission": "投稿管理",
       "reply": "返信",
       "article": "文章投稿",
-      "video": "ビデオ投稿"
+      "video": "ビデオ投稿",
+      "audit": "審査"
+    },
+    "collection": {
+      "title": "タイトル",
+      "preview": "プレビュー",
+      "time": "コレクション時間",
+      "remove": "削除"
+    },
+    "submission": {
+      "reviewing": "審査中",
+      "passed": "審査合格",
+      "notPass": "審査不合格",
+      "banned": "禁止",
+      "del": "削除",
+      "reReview": "再審査請求",
+      "title": "タイトル",
+      "content": "内容",
+      "time": "投稿時間",
+      "status": "ステータス",
+      "delWarn": "本当に削除しますか？投稿は復元できません。"
+    },
+    "reply": {
+      "title": "投稿タイトル",
+      "user": "ユーザー",
+      "time": "時間",
+      "content": "内容"
     },
     "article": {
       "title": "タイトル",
@@ -147,6 +177,63 @@
       "limit": "ビデオの最大サイズは1GBです",
       "crop": "ビデオカバーを切り取る",
       "reset": "リセット"
+    },
+    "audit": {
+      "needReview": "審査が必要",
+      "needReviewAgain": "再審査が必要",
+      "title": "タイトル",
+      "content": "内容",
+      "time": "投稿時間",
+      "status": "ステータス",
+      "pass": "パス",
+      "reason": "原因",
+      "confirm": "確認",
+      "ban": "拒否"
     }
+  },
+  "singleArticle": {
+    "noArticle": "文章存在しない",
+    "summary": "AI概要",
+    "cancelSubscribe": "フォロー解除",
+    "subscribe": "フォロー",
+    "comment": "コメント",
+    "placeholder": "コメントを書いて",
+    "send": "送信",
+    "noComment": "コメントなし",
+    "delConfirm": "本当に削除する？"
+  },
+  "singleVideo": {
+    "noVideo": "ビデオ存在しない",
+    "cancelSubscribe": "フォロー解除",
+    "subscribe": "フォロー",
+    "comment": "コメント",
+    "placeholder": "コメントを書いて",
+    "send": "送信",
+    "noComment": "コメントなし",
+    "delConfirm": "本当に削除する？"
+  },
+  "article": {
+    "loadMore": "もっとロード"
+  },
+  "video": {
+    "loadMore": "もっとロード"
+  },
+  "submission": {
+    "noUser": "ユーザー存在しない",
+    "signupDate": "登録時間：",
+    "subscriber": "フォロワー",
+    "video": "ビデオ",
+    "article": "文章",
+    "cancelSubscribe": "フォロー解除",
+    "subscribe": "フォロー",
+    "loadMore": "もっとロード"
+  },
+  "subscription": {
+    "title": "フォローリスト",
+    "loadMore": "もっとロード"
+  },
+  "search": {
+    "title": "「{{content}}」の検索結果",
+    "loadMore": "もっとロード"
   }
 }

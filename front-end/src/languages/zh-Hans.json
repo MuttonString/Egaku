@@ -31,7 +31,10 @@
   "errorNotification": {
     "title": "错误",
     "notLogin": "登录已过期",
-    "serverError": "服务器错误"
+    "serverError": "服务器错误",
+    "noPermission": "无权限",
+    "paramError": "参数错误",
+    "cannotOperationToSelf": "不能对自己操作"
   },
   "successMessage": {
     "title": "{{msg}}成功"
@@ -125,7 +128,33 @@
       "submission": "稿件管理",
       "reply": "回复",
       "article": "投稿文章",
-      "video": "投稿视频"
+      "video": "投稿视频",
+      "audit": "审核"
+    },
+    "collection": {
+      "title": "标题",
+      "preview": "预览",
+      "time": "收藏时间",
+      "remove": "移除"
+    },
+    "submission": {
+      "reviewing": "审核中",
+      "passed": "审核通过",
+      "notPass": "审核不通过",
+      "banned": "禁止",
+      "del": "删除",
+      "reReview": "请求复审",
+      "title": "标题",
+      "content": "内容",
+      "time": "投稿时间",
+      "status": "状态",
+      "delWarn": "确定要删除吗？稿件无法恢复。"
+    },
+    "reply": {
+      "title": "稿件标题",
+      "user": "用户",
+      "time": "时间",
+      "content": "内容"
     },
     "article": {
       "title": "标题",
@@ -147,6 +176,63 @@
       "limit": "视频最大为1GB",
       "crop": "裁切视频封面",
       "reset": "重置"
+    },
+    "audit": {
+      "needReview": "待审核",
+      "needReviewAgain": "待复审",
+      "title": "标题",
+      "content": "内容",
+      "time": "投稿时间",
+      "status": "状态",
+      "pass": "通过",
+      "reason": "原因",
+      "confirm": "确定",
+      "ban": "驳回"
     }
+  },
+  "singleArticle": {
+    "noArticle": "文章不存在",
+    "summary": "AI总结",
+    "cancelSubscribe": "取消关注",
+    "subscribe": "关注",
+    "comment": "评论",
+    "placeholder": "留下你的评论",
+    "send": "发送",
+    "noComment": "暂无评论",
+    "delConfirm": "确定删除？"
+  },
+  "singleVideo": {
+    "noVideo": "视频不存在",
+    "cancelSubscribe": "取消关注",
+    "subscribe": "关注",
+    "comment": "评论",
+    "placeholder": "留下你的评论",
+    "send": "发送",
+    "noComment": "暂无评论",
+    "delConfirm": "确定删除？"
+  },
+  "article": {
+    "loadMore": "加载更多"
+  },
+  "video": {
+    "loadMore": "加载更多"
+  },
+  "submission": {
+    "noUser": "用户不存在",
+    "signupDate": "注册时间：",
+    "subscriber": "关注者",
+    "video": "视频",
+    "article": "文章",
+    "cancelSubscribe": "取消关注",
+    "subscribe": "关注",
+    "loadMore": "加载更多"
+  },
+  "subscription": {
+    "title": "关注列表",
+    "loadMore": "加载更多"
+  },
+  "search": {
+    "title": "“{{content}}”的搜索结果",
+    "loadMore": "加载更多"
   }
 }

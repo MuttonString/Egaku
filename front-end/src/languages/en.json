@@ -34,7 +34,7 @@
     "notLogin": "Login expired",
     "serverError": "Server error",
     "noPermission": "No permission",
-    "paramError": "Param error",
+    "paramError": "Parameter error",
     "cannotOperationToSelf": "Can’t operate on self"
   },
   "successMessage": {
@@ -152,7 +152,7 @@
       "delWarn": "Are you sure you want to delete it? The submission cannot be restored."
     },
     "reply": {
-      "title": "Title",
+      "title": "Subscription title",
       "user": "User",
       "time": "Time",
       "content": "Content"
@@ -204,7 +204,6 @@
   },
   "singleVideo": {
     "noVideo": "The video does not exist",
-    "summary": "AI summary",
     "cancelSubscribe": "Unsubscribe",
     "subscribe": "Subscribe",
     "comment": "Comment",
