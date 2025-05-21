@@ -254,6 +254,7 @@ export default function PageLayout() {
         ),
         key: 'submission',
         onClick() {
+          setMobileMenuOpen(false);
           navigate('submission');
         },
       },
