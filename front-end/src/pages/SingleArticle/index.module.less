@@ -1,0 +1,128 @@
+.page {
+  display: flex;
+  gap: 16px;
+
+  .articlePart {
+    flex: 0.6;
+    background-color: var(--secondary-background);
+    border-radius: 8px;
+    padding: 16px;
+    min-width: 0;
+    flex-shrink: 0;
+
+    .title {
+      font-size: 1.2em;
+    }
+
+    .summary {
+      float: right;
+    }
+
+    .article {
+      margin-top: 16px;
+      overflow: auto;
+      max-height: calc(100vh - 172px);
+      line-height: 2em;
+    }
+  }
+
+  .subPart {
+    flex: 0.4;
+    height: calc(100vh - 80px);
+
+    .uploader {
+      width: 100%;
+      overflow: auto;
+      padding: 16px;
+      background-color: var(--secondary-background);
+      border-radius: 8px;
+      display: flex;
+      gap: 8px;
+      align-items: center;
+
+      .avatar {
+        min-width: 72px;
+        font-size: 40.5px !important;
+      }
+
+      .account {
+        line-height: 24px;
+      }
+
+      .accountName {
+        color: var(--secondary-text);
+        -webkit-user-select: text;
+        user-select: text;
+      }
+    }
+
+    .commentPart {
+      border-radius: 8px;
+      background-color: var(--secondary-background);
+      padding: 16px;
+      flex: 1;
+      overflow: auto;
+
+      .title {
+        font-size: 1.2em;
+        font-weight: bolder;
+      }
+
+      .commentCard {
+        background-color: var(--layout-background);
+        border-radius: 8px;
+        padding: 8px;
+        box-shadow: 2px 2px 8px var(--disabled-text);
+
+        .account {
+          align-items: center;
+
+          .avatar {
+            min-width: 32px;
+            cursor: pointer;
+          }
+
+          .senderName {
+            flex: 1;
+            font-weight: bolder;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+          }
+        }
+      }
+
+      .textarea {
+        margin-bottom: 1em;
+      }
+
+      .noComment {
+        color: var(--disabled-text);
+        text-align: center;
+      }
+    }
+  }
+
+  .gray {
+    color: var(--secondary-text);
+  }
+
+  .star {
+    color: var(--primary-color);
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .page {
+    flex-direction: column;
+
+    .videoPart,
+    .subPart {
+      flex: 1;
+    }
+  }
+}
+
+:global(.ant-popover) {
+  max-width: 50%;
+}

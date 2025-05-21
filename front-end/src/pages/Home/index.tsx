@@ -1,11 +1,10 @@
 import { useTranslation } from 'react-i18next';
 import styles from './index.module.less';
 import { Button } from 'antd';
-import { useRef, useState } from 'react';
-import LoginModal, {
-  ILoginModal,
-  LOGIN_MODAL_TYPE,
-} from '/src/components/LoginModal';
+import { useRef } from 'react';
+import { LOGIN_MODAL_TYPE } from '../../components/LoginModal/const';
+import LoginModal from '../../components/LoginModal';
+import type { ILoginModal } from '../../components/LoginModal';
 
 export default function Home() {
   const { t } = useTranslation();

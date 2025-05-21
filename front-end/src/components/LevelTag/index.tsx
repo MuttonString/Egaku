@@ -1,4 +1,5 @@
-import { Tag, TagProps, Tooltip } from 'antd';
+import { Tag, Tooltip } from 'antd';
+import type { TagProps } from 'antd';
 import { useEffect, useState } from 'react';
 import styles from './index.module.less';
 import classnames from '../../utils/classnames';

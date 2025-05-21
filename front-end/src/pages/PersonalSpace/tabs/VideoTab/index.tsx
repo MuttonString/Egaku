@@ -7,13 +7,11 @@ import { imgResize } from '../../../../utils/imgResize';
 import { LoadingOutlined, UploadOutlined } from '@ant-design/icons';
 import { useRequest } from 'ahooks';
 import { uploadFile } from '../../../../services/common';
-import ErrorNotification, {
-  IErrorNotification,
-} from '../../../../components/ErrorNotification';
+import ErrorNotification from '../../../../components/ErrorNotification';
+import type { IErrorNotification } from '../../../../components/ErrorNotification';
 import { submit } from '../../../../services/video';
-import SuccessMessage, {
-  ISuccessMessage,
-} from '../../../../components/SuccessMessage';
+import SuccessMessage from '../../../../components/SuccessMessage';
+import type { ISuccessMessage } from '../../../../components/SuccessMessage';
 
 export default function VideoTab() {
   const { t } = useTranslation();
@@ -84,7 +82,7 @@ export default function VideoTab() {
         />
         <Button
           type="primary"
-          disabled={!title || !cover || !video}
+          disabled={!title.trim() || !cover || !video}
           loading={submitLoading}
           onClick={() => {
             submitRun({

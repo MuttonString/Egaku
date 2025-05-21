@@ -1,0 +1,92 @@
+.page {
+  height: calc(100vh - 80px);
+
+  .part {
+    padding: 16px;
+    border-radius: 8px;
+    background-color: var(--secondary-background);
+  }
+
+  .left {
+    flex: 0.2;
+
+    .title {
+      font-size: 1.2em;
+      font-weight: bolder;
+    }
+
+    .avatar {
+      min-width: 72px;
+      font-size: 40.5px !important;
+      cursor: pointer;
+    }
+  }
+
+  .right {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    flex: 0.8;
+    overflow: auto;
+
+    .loading {
+      position: absolute;
+      right: 64px;
+      top: 64px;
+      font-size: 64px;
+      color: var(--primary-color);
+      z-index: 99;
+      pointer-events: none;
+    }
+
+    .card {
+      width: 100%;
+      border-radius: 8px;
+      background-color: var(--layout-background);
+      box-shadow: 2px 2px 8px var(--disabled-text);
+      transition: box-shadow 0.2s ease-out;
+      cursor: pointer;
+
+      &:hover {
+        box-shadow: 2px 2px 16px var(--secondary-text);
+      }
+
+      img {
+        height: 120px;
+        width: min(160px, 20%);
+        object-fit: cover;
+        object-position: center;
+        border-radius: 8px 0 0 8px;
+      }
+
+      .inner {
+        overflow-x: hidden;
+        padding: 8px;
+        height: auto;
+
+        .title {
+          font-size: 1.2em;
+          font-weight: bolder;
+          overflow-x: hidden;
+          text-overflow: ellipsis;
+          white-space: nowrap;
+        }
+
+        .gray {
+          color: var(--secondary-text);
+        }
+      }
+    }
+  }
+
+  @media screen and (max-width: 768px) {
+    .left {
+      flex: unset;
+      width: 96px;
+    }
+
+    .right {
+      flex: 1;
+    }
+  }
+}

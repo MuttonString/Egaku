@@ -1,5 +1,6 @@
 .layout {
   background: transparent;
+  min-width: 320px;
 }
 
 @header-height: 48px;
@@ -207,6 +208,8 @@
 
 .content {
   position: relative;
+  min-height: calc(100vh - @header-height);
+  padding: 16px;
 
   & > * {
     transition: color 0.2s cubic-bezier(0.645, 0.045, 0.355, 1),

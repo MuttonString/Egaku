@@ -1,6 +1,5 @@
 import {
   AutoComplete,
-  AutoCompleteProps,
   Avatar,
   Badge,
   Button,
@@ -11,9 +10,9 @@ import {
   Layout,
   Menu,
 } from 'antd';
+import type { AutoCompleteProps, MenuProps } from 'antd';
 import { useTranslation } from 'react-i18next';
 import styles from './index.module.less';
-import { MenuProps } from 'antd/lib';
 import Animation from '../components/Animation';
 import {
   HomeOutlined,
@@ -31,17 +30,17 @@ import {
   useSearchParams,
 } from 'react-router';
 import Cookies from 'js-cookie';
-import LoginModal, {
-  ILoginModal,
-  LOGIN_MODAL_TYPE,
-} from '../components/LoginModal';
+import LoginModal from '../components/LoginModal';
+import type { ILoginModal } from '../components/LoginModal';
 import { useRequest, useThrottleFn } from 'ahooks';
 import { getInfo } from '../services/user';
-import ErrorNotification, {
-  IErrorNotification,
-} from '../components/ErrorNotification';
-import SettingsDrawer, { ISettingsDrawer } from '../components/SettingsDrawer';
-import UserModal, { IUserModal } from '../components/UserModal';
+import ErrorNotification from '../components/ErrorNotification';
+import type { IErrorNotification } from '../components/ErrorNotification';
+import SettingsDrawer from '../components/SettingsDrawer';
+import type { ISettingsDrawer } from '../components/SettingsDrawer';
+import UserModal from '../components/UserModal';
+import type { IUserModal } from '../components/UserModal';
+import { LOGIN_MODAL_TYPE } from '../components/LoginModal/const';
 
 const { Header, Content } = Layout;
 type MenuItem = Required<MenuProps>['items'][number];
@@ -156,8 +155,7 @@ export default function PageLayout() {
   });
 
   useEffect(() => {
-    if (!location && sessionStorage.getItem('token'))
-      navigate('recommendation');
+    if (!location && sessionStorage.getItem('token')) navigate('subscription');
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
@@ -167,20 +165,6 @@ export default function PageLayout() {
 
   const items: MenuItem[] = useMemo(
     () => [
-      {
-        label: t('layout.menu.recommend'),
-        key: 'recommendation',
-        onClick() {
-          navigate('recommendation');
-        },
-      },
-      {
-        label: t('layout.menu.subscribe'),
-        key: 'subscription',
-        onClick() {
-          navigate('subscription');
-        },
-      },
       {
         label: t('layout.menu.article'),
         key: 'article',
@@ -215,15 +199,24 @@ export default function PageLayout() {
     [navigate]
   );
 
-  const extarItem: MenuItem = useMemo(
-    () => ({
-      label: t('layout.menu.personal'),
-      key: 'personal',
-      onClick() {
-        navigate('personal');
-        setShowDot(false);
+  const extarItems: MenuItem[] = useMemo(
+    () => [
+      {
+        label: t('layout.menu.subscribe'),
+        key: 'subscription',
+        onClick() {
+          navigate('subscription');
+        },
       },
-    }),
+      {
+        label: t('layout.menu.personal'),
+        key: 'personal',
+        onClick() {
+          navigate('personal');
+          setShowDot(false);
+        },
+      },
+    ],
     [navigate, t]
   );
 
@@ -251,50 +244,17 @@ export default function PageLayout() {
       },
       {
         label: (
-          <div>
-            {t('layout.user.like')}
-            {showDot &&
-              userData?.data.showReminder?.like &&
-              !!userData.data.msgNum?.like && (
-                <span className={styles.msgNum}>
-                  ({userData?.data.msgNum.like})
-                </span>
-              )}
-          </div>
-        ),
-        key: 'like',
-        onClick() {
-          setMobileMenuOpen(false);
-          setShowDot(false);
-          navigate('personal/like');
-        },
-      },
-      {
-        label: (
-          <div>
-            {t('layout.user.notice')}
-            {showDot &&
-              userData?.data.showReminder?.notice &&
-              !!userData.data.msgNum?.notice && (
-                <span className={styles.msgNum}>
-                  ({userData?.data.msgNum.notice})
-                </span>
-              )}
-          </div>
-        ),
-        key: 'notice',
-        onClick() {
-          setMobileMenuOpen(false);
-          setShowDot(false);
-          navigate('personal/notice');
-        },
-      },
-      {
-        label: (
           <span className={styles.optionDivider}>
-            {t('layout.user.settings')}
+            {t('layout.user.submission')}
           </span>
         ),
+        key: 'submission',
+        onClick() {
+          navigate('submission');
+        },
+      },
+      {
+        label: t('layout.user.settings'),
         key: 'settings',
         onClick() {
           userRef.current!.open(userData?.data);
@@ -338,7 +298,12 @@ export default function PageLayout() {
               className={styles.search}
               options={websiteOptions}
               onSelect={(val) => {
-                if (val) window.open(val + encodeURIComponent(searchVal));
+                if (val)
+                  window.open(
+                    val + encodeURIComponent(searchVal),
+                    '_blank',
+                    'noopener=yes,noreferrer=yes'
+                  );
                 else if (searchVal)
                   navigate(`search?search=${encodeURIComponent(searchVal)}`);
               }}
@@ -382,7 +347,10 @@ export default function PageLayout() {
                         ).substring(0, 2)}
                       </Avatar>
                     </Badge>
-                    <div className={styles.username}>
+                    <div
+                      className={styles.username}
+                      style={{ color: userData.data.admin ? 'red' : '' }}
+                    >
                       {userData?.data.nickname || userData?.data.account}
                     </div>
                   </Flex>
@@ -407,7 +375,7 @@ export default function PageLayout() {
               mode="vertical"
               items={
                 userData?.data.account
-                  ? [logoItem, ...items, extarItem]
+                  ? [logoItem, ...items, ...extarItems]
                   : [logoItem, ...items]
               }
               className={styles.verticalMenu}
@@ -424,7 +392,7 @@ export default function PageLayout() {
             </Animation>
             <Menu
               mode="horizontal"
-              items={userData?.data.account ? [...items, extarItem] : items}
+              items={userData?.data.account ? [...items, ...extarItems] : items}
               className={styles.menu}
               selectedKeys={[location]}
             />
@@ -435,7 +403,12 @@ export default function PageLayout() {
               className={styles.search}
               options={websiteOptions}
               onSelect={(val) => {
-                if (val) window.open(val + encodeURIComponent(searchVal));
+                if (val)
+                  window.open(
+                    val + encodeURIComponent(searchVal),
+                    '_blank',
+                    'noopener=yes,noreferrer=yes'
+                  );
                 else if (searchVal)
                   navigate(`search?search=${encodeURIComponent(searchVal)}`);
               }}
@@ -475,7 +448,10 @@ export default function PageLayout() {
                       ).substring(0, 2)}
                     </Avatar>
                   </Badge>
-                  <div className={styles.username}>
+                  <div
+                    className={styles.username}
+                    style={{ color: userData.data.admin ? 'red' : '' }}
+                  >
                     {userData.data.nickname || userData.data.account}
                   </div>
                 </Flex>

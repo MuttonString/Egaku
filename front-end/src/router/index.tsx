@@ -1,13 +1,15 @@
 import { createBrowserRouter, Navigate } from 'react-router';
 import App from '../App';
 import Home from '../pages/Home';
-import Recommendation from '../pages/Recommendation';
 import Subscription from '../pages/Subscription';
 import Article from '../pages/Article';
 import VideoPage from '../pages/VideoPage';
 import PersonalSpace from '../pages/PersonalSpace';
 import NotFound from '../pages/NotFound';
 import SearchResult from '../pages/SearchResult';
+import SingleArticle from '../pages/SingleArticle';
+import Submission from '../pages/Submission';
+import SingleVideo from '../pages/SingleVideo';
 
 const router = createBrowserRouter([
   {
@@ -19,10 +21,6 @@ const router = createBrowserRouter([
         element: <Home />,
       },
       {
-        path: 'recommendation',
-        element: <Recommendation />,
-      },
-      {
         path: 'subscription',
         element: <Subscription />,
       },
@@ -31,8 +29,16 @@ const router = createBrowserRouter([
         element: <Article />,
       },
       {
+        path: 'article/:id',
+        element: <SingleArticle />,
+      },
+      {
         path: 'video',
         element: <VideoPage />,
+      },
+      {
+        path: 'video/:id',
+        element: <SingleVideo />,
       },
       {
         path: 'personal',
@@ -46,7 +52,18 @@ const router = createBrowserRouter([
         path: 'search',
         element: <SearchResult />,
       },
-      { path: '*', element: <NotFound /> },
+      {
+        path: 'submission',
+        element: <Submission />,
+      },
+      {
+        path: 'submission/:uid',
+        element: <Submission />,
+      },
+      {
+        path: '*',
+        element: <NotFound />,
+      },
     ],
   },
 ]);

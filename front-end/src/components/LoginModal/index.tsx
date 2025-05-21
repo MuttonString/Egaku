@@ -1,13 +1,5 @@
-import {
-  Button,
-  Checkbox,
-  Form,
-  Input,
-  Modal,
-  ModalProps,
-  Progress,
-  Space,
-} from 'antd';
+import { Button, Checkbox, Form, Input, Modal, Progress, Space } from 'antd';
+import type { ModalProps } from 'antd';
 import {
   forwardRef,
   Ref,
@@ -21,12 +13,15 @@ import styles from './index.module.less';
 import zxcvbn from 'zxcvbn';
 import { useRequest } from 'ahooks';
 import { login, reset, sendCode, signup } from '../../services/user';
-import ErrorNotification, { IErrorNotification } from '../ErrorNotification';
-import SuccessMessage, { ISuccessMessage } from '../SuccessMessage';
+import ErrorNotification from '../ErrorNotification';
+import type { IErrorNotification } from '../ErrorNotification';
+import SuccessMessage from '../SuccessMessage';
+import type { ISuccessMessage } from '../SuccessMessage';
 import { md5 } from 'js-md5';
 import Cookies from 'js-cookie';
 import { USER_ERR } from '../../types/enums';
 import { useLocation, useNavigate } from 'react-router';
+import { LOGIN_MODAL_TYPE } from './const';
 
 const errMsgMap = {
   [USER_ERR.ACCOUNT_EXIST]: 'loginModal.invalid.existAccount',
@@ -35,12 +30,6 @@ const errMsgMap = {
   [USER_ERR.NOT_CORRECT]: 'loginModal.invalid.notCorrect',
   [USER_ERR.EMAIL_NOT_EXIST]: 'loginModal.invalid.notExistEmail',
 };
-
-export enum LOGIN_MODAL_TYPE {
-  LOGIN = 'login',
-  SIGNUP = 'signup',
-  RESET = 'reset',
-}
 
 export interface ILoginModal {
   open: (type: LOGIN_MODAL_TYPE) => void;
@@ -106,7 +95,7 @@ function LoginModal(props: ModalProps, ref: Ref<ILoginModal>) {
         }
         sessionStorage.setItem('token', res.data.token!);
         setOpen(false);
-        if (isIndex) navigate('/recommendation');
+        if (isIndex) navigate('/subscription');
         window.location.reload();
       } else {
         switch (res.data.error) {

@@ -1,15 +1,14 @@
 import { Button, Flex, Input, Space, Upload } from 'antd';
 import {
   AtomicBlockUtils,
-  ContentBlock,
   convertFromRaw,
   convertToRaw,
   Editor,
   EditorState,
   Modifier,
-  RawDraftContentState,
   RichUtils,
 } from 'draft-js';
+import type { ContentBlock, RawDraftContentState } from 'draft-js';
 import {
   KeyboardEventHandler,
   MouseEventHandler,
@@ -22,10 +21,10 @@ import {
 import styles from './index.module.less';
 import {
   BoldOutlined,
-  FileImageOutlined,
   HighlightOutlined,
   ItalicOutlined,
   OrderedListOutlined,
+  PictureOutlined,
   RedoOutlined,
   SaveOutlined,
   StrikethroughOutlined,
@@ -40,13 +39,11 @@ import FontSizeIcon from '../../../../components/FontSizeIcon';
 import localforage from 'localforage';
 import { useDebounceFn, useRequest } from 'ahooks';
 import { uploadFile } from '../../../../services/common';
-import ErrorNotification, {
-  IErrorNotification,
-} from '../../../../components/ErrorNotification';
+import ErrorNotification from '../../../../components/ErrorNotification';
+import type { IErrorNotification } from '../../../../components/ErrorNotification';
 import { submit } from '../../../../services/article';
-import SuccessMessage, {
-  ISuccessMessage,
-} from '../../../../components/SuccessMessage';
+import SuccessMessage from '../../../../components/SuccessMessage';
+import type { ISuccessMessage } from '../../../../components/SuccessMessage';
 
 const customStyleMap = {
   HIGHLIGHT: {
@@ -69,6 +66,15 @@ const customStyleMap = {
   },
 };
 
+type BlockProps = { blockProps: { src: string } };
+const imageRender = ({ blockProps }: BlockProps) => {
+  return (
+    <div>
+      <img src={blockProps.src} alt="" style={{ maxHeight: '20em' }} />
+    </div>
+  );
+};
+
 const COLORS = ['RED', 'BLUE'];
 const SIZE = ['1.5X', '2X', '3X', '4X'];
 
@@ -80,6 +86,8 @@ export default function ArticleTab() {
   const [tip, setTip] = useState('');
   const errorRef = useRef<IErrorNotification>(null);
   const successRef = useRef<ISuccessMessage>(null);
+  const isInternalCopyRef = useRef(false);
+  const editorRef = useRef<Editor>(null);
 
   const hideTip = useDebounceFn(() => setTip(''), { wait: 3000 }).run;
   const setTipTemp = useCallback(
@@ -147,13 +155,23 @@ export default function ArticleTab() {
       }
     };
 
+    const handleCopy = () => {
+      isInternalCopyRef.current = true;
+    };
+
     const interval = setInterval(() => {
       saveRef.current();
     }, 60 * 1000);
     window.addEventListener('keydown', handleWindowKeyDown);
 
+    const editorNode = editorRef.current!.editor!;
+    editorNode.addEventListener('copy', handleCopy);
+    editorNode.addEventListener('cut', handleCopy);
+
     return () => {
       window.removeEventListener('keydown', handleWindowKeyDown);
+      editorNode.removeEventListener('copy', handleCopy);
+      editorNode.removeEventListener('cut', handleCopy);
       clearInterval(interval);
     };
   }, []);
@@ -218,15 +236,6 @@ export default function ArticleTab() {
     setEditorState(newState);
   };
 
-  type BlockProps = { blockProps: { src: string } };
-  const imageRender = useCallback(({ blockProps }: BlockProps) => {
-    return (
-      <div>
-        <img src={blockProps.src} alt="" style={{ maxHeight: '20em' }} />
-      </div>
-    );
-  }, []);
-
   const blockRendererFn = useCallback(
     (contentBlock: ContentBlock) => {
       if (contentBlock.getType() === 'atomic') {
@@ -248,7 +257,7 @@ export default function ArticleTab() {
       }
       return null;
     },
-    [editorState, imageRender]
+    [editorState]
   );
 
   const insertImage = useCallback(
@@ -291,14 +300,29 @@ export default function ArticleTab() {
       const imageItem = Array.from(items).find((item) =>
         item.type.startsWith('image/')
       );
-      if (!imageItem) return;
-      setTipTemp(tips.uploading);
-      const file = imageItem.getAsFile();
-      if (file) {
-        uploadRun(file);
+      if (imageItem) {
+        setTipTemp(tips.uploading);
+        const file = imageItem.getAsFile();
+        if (file) uploadRun(file);
+        return;
       }
+
+      const text = e.clipboardData.getData('text/plain');
+      const shouldPreserveStyle = isInternalCopyRef.current;
+      isInternalCopyRef.current = false;
+      if (shouldPreserveStyle) return;
+      e.preventDefault();
+      const currentContent = editorState.getCurrentContent();
+      const selection = editorState.getSelection();
+      const newContent = Modifier.replaceText(currentContent, selection, text);
+      const newEditorState = EditorState.push(
+        editorState,
+        newContent,
+        'insert-characters'
+      );
+      setEditorState(newEditorState);
     },
-    [setTipTemp, tips.uploading, uploadRun]
+    [editorState, setTipTemp, tips.uploading, uploadRun]
   );
 
   const { run: submitRun, loading: submitLoading } = useRequest(submit, {
@@ -307,6 +331,7 @@ export default function ArticleTab() {
       if (data.success) {
         setTitle('');
         setEditorState(EditorState.createEmpty());
+        setCnt(0);
         localforage.removeItem('articleTitle');
         localforage.removeItem('articleContent');
         successRef.current!.open(t('personal.article.submit'));
@@ -333,7 +358,12 @@ export default function ArticleTab() {
         />
         <Button
           type="primary"
-          disabled={!title || !cnt || cnt > 5000}
+          disabled={
+            !title.trim() ||
+            !cnt ||
+            cnt > 3000 ||
+            !editorState.getCurrentContent().getPlainText().trim()
+          }
           loading={submitLoading}
           onClick={() => {
             submitRun({
@@ -341,6 +371,7 @@ export default function ArticleTab() {
               content: JSON.stringify(
                 convertToRaw(editorState.getCurrentContent())
               ),
+              plainText: editorState.getCurrentContent().getPlainText(),
             });
           }}
         >
@@ -494,8 +525,8 @@ export default function ArticleTab() {
             }}
           >
             <Button size="small" onClick={() => {}} onMouseDown={onMouseDown}>
-              <FileImageOutlined />
-              {t('personal.article.upload')}
+              <PictureOutlined />
+              {t('personal.article.upload')}...
             </Button>
           </Upload>
         </Flex>
@@ -505,6 +536,7 @@ export default function ArticleTab() {
           onPaste={handlePaste}
         >
           <Editor
+            ref={editorRef}
             editorState={editorState}
             customStyleMap={customStyleMap}
             onChange={(state) => {
@@ -537,9 +569,9 @@ export default function ArticleTab() {
           </div>
           <div
             className={styles.cnt}
-            style={{ color: cnt > 5000 ? 'red' : '' }}
+            style={{ color: cnt > 3000 ? 'red' : '' }}
           >
-            {cnt} / 5000
+            {cnt} / 3000
           </div>
         </div>
       </div>

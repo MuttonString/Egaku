@@ -11,7 +11,6 @@ html {
   --blur-backdrop: saturate(180%) blur(20px);
 
   .ant-layout-header,
-  .ant-tooltip-inner,
   .ant-dropdown-menu,
   .ant-drawer-content-wrapper,
   .ant-select-dropdown,
@@ -38,7 +37,19 @@ html {
   }
 
   .ant-modal-mask {
+    -webkit-backdrop-filter: var(--blur-backdrop);
     backdrop-filter: var(--blur-backdrop);
+  }
+
+  .ant-table {
+    background: var(--layout-background) !important;
+    border-radius: 8px !important;
+  }
+
+  .ant-pagination-total-text {
+    color: var(--secondary-text) !important;
+    right: 0;
+    position: absolute;
   }
 
   .ant-form-vertical {
@@ -71,7 +82,9 @@ html {
     backdrop-filter: var(--blur-backdrop);
   }
 
-  .ant-drawer-content {
+  .ant-drawer-content,
+  .ant-table-cell,
+  .ant-table-placeholder {
     background: transparent !important;
   }
 
@@ -79,8 +92,18 @@ html {
     rotate: 180deg;
   }
 
+  .ant-select-show-search .ant-select-arrow {
+    rotate: unset;
+  }
+
   .ant-select .ant-select-arrow {
     transition: rotate 200ms ease-in-out;
+  }
+
+  .ant-card {
+    background: var(--secondary-background) !important;
+    -webkit-backdrop-filter: var(--blur-backdrop);
+    backdrop-filter: var(--blur-backdrop);
   }
 
   .img-crop-control {

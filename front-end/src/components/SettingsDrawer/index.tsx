@@ -1,14 +1,6 @@
 import { CheckCircleOutlined, DeleteOutlined } from '@ant-design/icons';
-import {
-  Button,
-  Drawer,
-  DrawerProps,
-  Input,
-  Select,
-  Space,
-  Switch,
-  Upload,
-} from 'antd';
+import { Button, Drawer, Input, Select, Space, Switch, Upload } from 'antd';
+import type { DrawerProps } from 'antd';
 import {
   forwardRef,
   Ref,

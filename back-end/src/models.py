@@ -7,6 +7,8 @@ class Config(Base):
     smtp_port = Column(INT)
     sender_email = Column(VARCHAR(255), primary_key=True)
     sender_password = Column(VARCHAR(255))
+    api_key = Column(VARCHAR(255))
+    secret_key = Column(VARCHAR(255))
 
 class User(Base):
     __tablename__ = 'user'
@@ -22,6 +24,7 @@ class User(Base):
     signup_time = Column(TimestampDateTime, nullable=False)
     admin = Column(BOOLEAN)
     disable_reminder = Column(INT)
+    remind_after = Column(TimestampDateTime)
 
 class Token(Base):
     __tablename__ = 'token'
@@ -52,7 +55,9 @@ class Article(Base):
     submit_time = Column(TimestampDateTime, nullable=False)
     title = Column(VARCHAR(50), nullable=False)
     content = Column(TEXT, nullable=False)
+    preview = Column(VARCHAR(51), nullable=False)
     status = Column(INT, nullable=False)
+    desc = Column(VARCHAR(255))
 
 class Video(Base):
     __tablename__ = 'video'
@@ -63,3 +68,27 @@ class Video(Base):
     cover = Column(VARCHAR(255), nullable=False)
     video = Column(VARCHAR(255), nullable=False)
     status = Column(INT, nullable=False)
+    desc = Column(VARCHAR(255))
+
+class Collection(Base):
+    __tablename__ = 'collection'
+    id = Column(BigIntStr, primary_key=True, autoincrement=True, index=True, unique=True)
+    uid = Column(BigIntStr, nullable=False)
+    submission_id = Column(BigIntStr, nullable=False)
+    type = Column(INT, nullable=False)
+    time = Column(TimestampDateTime, nullable=False)
+
+class Comment(Base):
+    __tablename__ = 'comment'
+    id = Column(BigIntStr, primary_key=True, autoincrement=True, index=True, unique=True)
+    uid = Column(BigIntStr, nullable=False)
+    content = Column(VARCHAR(255), nullable=False)
+    time = Column(TimestampDateTime, nullable=False)
+    submission_id = Column(BigIntStr, nullable=False)
+    type = Column(INT, nullable=False)
+
+class Follow(Base):
+    __tablename__ = 'follow'
+    id = Column(BigIntStr, primary_key=True, autoincrement=True, index=True, unique=True)
+    uid = Column(BigIntStr, nullable=False)
+    follower_id = Column(BigIntStr, nullable=False)

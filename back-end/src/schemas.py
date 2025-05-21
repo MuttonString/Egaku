@@ -30,8 +30,51 @@ class UserUpdate(BaseModel):
 class ArticleSubmit(BaseModel):
     title: str
     content: str
+    plainText: str
 
 class VideoSubmit(BaseModel):
     title: str
     cover: str
     video: str
+
+class CommonUid(BaseModel):
+    uid: Optional[str] = None
+
+class CommonList(BaseModel):
+    uid: Optional[str] = None
+    pageNum: int
+    pageSize: int
+
+class CommonUpd(BaseModel):
+    id: str
+    type: int
+    status: int
+    desc: Optional[str] = None
+
+class CommonId(BaseModel):
+    id: str
+    type: Optional[int] = None
+
+class UserGetComment(BaseModel):
+    id: str
+    type: int
+    pageNum: int
+    pageSize: int
+
+class UserSendComment(BaseModel):
+    id: str
+    type: int
+    content: str
+
+class ArticleSummary(BaseModel):
+    title: str
+    content: str
+
+class UserGetReply(BaseModel):
+    pageNum: int
+    pageSize: int
+
+class CommonSearch(BaseModel):
+    content: str
+    pageNum: int
+    pageSize: int

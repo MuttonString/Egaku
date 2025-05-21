@@ -1,0 +1,89 @@
+.upperPart {
+  background-color: var(--secondary-background);
+  border-radius: 8px;
+  padding: 16px;
+  overflow-x: auto;
+  -webkit-backdrop-filter: var(--blur-backdrop);
+  backdrop-filter: var(--blur-backdrop);
+
+  .avatar {
+    min-width: 72px;
+    font-size: 40.5px;
+  }
+
+  .nickname {
+    font-size: 1.2em;
+    font-weight: bolder;
+  }
+
+  .accountName {
+    color: var(--secondary-text);
+    -webkit-user-select: text;
+    user-select: text;
+    font-size: 1.2em;
+  }
+
+  .man {
+    color: royalblue;
+    font-size: 1.2em;
+  }
+
+  .woman {
+    color: hotpink;
+    font-size: 1.2em;
+  }
+
+  .signupTime {
+    color: var(--secondary-text);
+  }
+
+  .cntPart {
+    flex-direction: row-reverse;
+
+    .cntTitle {
+      font-size: 1.2em;
+      font-weight: bolder;
+    }
+
+    .cnt {
+      font-size: 2em;
+    }
+  }
+}
+
+.card {
+  width: min(400px, calc(50% - 8px));
+
+  .preview {
+    padding: 8px;
+    border-bottom: 1px solid var(--default-border);
+  }
+
+  img {
+    height: 200px;
+    object-fit: cover;
+    object-position: center;
+  }
+}
+
+.loading {
+  position: absolute;
+  left: 32px;
+  top: 32px;
+  font-size: 64px;
+  color: var(--primary-color);
+  z-index: 99;
+  filter: drop-shadow(2px 2px 8px var(--secondary-background));
+  pointer-events: none;
+}
+
+.loadMore {
+  text-align: center;
+  text-shadow: 2px 2px 8px var(--secondary-background);
+}
+
+@media screen and (max-width: 768px) {
+  .account {
+    flex-direction: column;
+  }
+}

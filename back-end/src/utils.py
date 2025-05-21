@@ -1,6 +1,6 @@
 from datetime import datetime
-from .database import db
-from .models import Config, Token
+from .database import SessionLocal
+from .models import Config, Token, User, Article, Video
 import hashlib
 import secrets
 import re
@@ -12,7 +12,17 @@ from fastapi import UploadFile, File
 import uuid
 import os
 
-def error(msg='Server error'):
+db = SessionLocal()
+config = db.query(Config).first()
+SMTP_SERVER = config.smtp_server
+SMTP_PORT = config.smtp_port
+SENDER_EMAIL = config.sender_email
+SENDER_PASSWORD = config.sender_password
+API_KEY = config.api_key
+SECRET_KEY = config.secret_key
+db.close()
+
+def error(msg='SERVER_ERROR'):
     return { 'success': False, 'data': { 'error': msg } }
 
 def success(data={}):
@@ -39,13 +49,6 @@ def generate_code():
     return ''.join(random.choice('ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789') for _ in range(6))
 
 def send_code(code: str, email: str, lang: str):
-    config = db.query(Config).first()
-    db.close()
-    SMTP_SERVER = config.smtp_server
-    SMTP_PORT = config.smtp_port
-    SENDER_EMAIL = config.sender_email
-    SENDER_PASSWORD = config.sender_password
-
     server = smtplib.SMTP(SMTP_SERVER, SMTP_PORT)
     server.login(SENDER_EMAIL, SENDER_PASSWORD)
     
@@ -131,17 +134,17 @@ def send_code(code: str, email: str, lang: str):
 
     server.sendmail(SENDER_EMAIL, email, message.as_string())
     server.quit()
-    
+
 def verify_token(token: str):
+    db = SessionLocal()
     token_obj = db.query(Token).filter(Token.token == token).order_by(Token.expire_time.desc()).first()
     if token_obj:
         if token_obj.expire_time < time():
             db.close()
             return False
-        token_obj.expire_time = time() + 24 * 60 * 60 * 1000
+        token_obj.expire_time = time() + 60 * 60 * 1000
         uid = token_obj.uid
         db.commit()
-        db.close()
         return uid
     db.close()
     return False
@@ -158,3 +161,110 @@ async def save_file(file: UploadFile = File(..., max_size=1024*1024*1024)):
         while chunk := await file.read(1024 * 1024):
             buffer.write(chunk)
     return f'{BASE_URL}/files/{filename}'
+
+def exp_plus(uid: str, exp: int):
+    db = SessionLocal()
+    user = db.query(User).filter(User.uid == uid).first()
+    user.exp = user.exp + exp
+    db.commit()
+
+import json
+import base64
+from urllib.request import urlopen
+from urllib.request import Request
+from urllib.error import URLError
+from urllib.parse import urlencode
+from urllib.parse import quote_plus
+import ssl
+ssl._create_default_https_context = ssl._create_unverified_context
+TEXT_CENSOR = 'https://aip.baidubce.com/rest/2.0/solution/v1/text_censor/v2/user_defined'
+VIDEO_CENSOR = 'https://aip.baidubce.com/rest/2.0/solution/v1/video_censor/v1/video/submit'
+def _fetch_review_token():
+    TOKEN_URL = 'https://aip.baidubce.com/oauth/2.0/token'
+    params = {
+                'grant_type': 'client_credentials',
+                'client_id': API_KEY,
+                'client_secret': SECRET_KEY
+            }
+    post_data = urlencode(params).encode('utf-8')
+    req = Request(TOKEN_URL, post_data)
+    try:
+        f = urlopen(req, timeout=5)
+        result_str = f.read()
+    except URLError as err:
+        print(err)
+    result_str = result_str.decode()
+    result = json.loads(result_str)
+    if ('access_token' in result.keys() and 'scope' in result.keys()):
+        if not 'brain_all_scope' in result['scope'].split(' '):
+            print ('please ensure has check the ability')
+            return
+        return result['access_token']
+    else:
+        print ('please overwrite the correct API_KEY and SECRET_KEY')
+        return
+
+def _request(url, data):
+    req = Request(url, data.encode('utf-8'))
+    try:
+        f = urlopen(req)
+        result_str = f.read().decode()
+        return json.loads(result_str)
+    except URLError as err:
+        print(err)
+
+def _read_file(path):
+    f = None
+    try:
+        f = open(f'./uploads/{path}', 'rb')
+        return f.read()
+    except:
+        print('read file fail')
+        return None
+    finally:
+        if f:
+            f.close()
+
+_token = _fetch_review_token()
+def review(content: str, type: int, id: str, uid: str):
+    db = SessionLocal()
+    if type == 0:
+        text_url = TEXT_CENSOR + "?access_token=" + _token
+        result = _request(text_url, urlencode({ 'text': content }))
+        print(result)
+        article = db.query(Article).filter(Article.id == id).first()
+        if result['conclusion'] == '合规':
+            article.status = 1
+            db.commit()
+            exp_plus(uid, 20)
+        else:
+            article.status = 2
+            article.desc = '; '.join(list(map(lambda obj: obj['msg'], result['data'])))
+            db.commit()
+    elif type == 1:
+        video_url = VIDEO_URL + "?access_token=" + _token
+        # TODO 缺失存储视频的网络服务器，无法AI审核视频，暂时直接过审
+        result = { 'conslusion': '合规' }
+        print(result)
+        video = db.query(Video).filter(Video.id == id).first()
+        if result['conclusion'] == '合规':
+            video.status = 1
+            db.commit()
+            exp_plus(uid, 20)
+        else:
+            video.status = 2
+            video.desc = '; '.join(list(map(lambda obj: obj['msg'], result['data'])))
+            db.commit()
+    db.close()
+
+import requests
+NEWS_SUMMARY = 'https://aip.baidubce.com/rpc/2.0/nlp/v1/news_summary'
+def summary(title: str, content: str):
+    url = NEWS_SUMMARY + '?charset=UTF-8&access_token=' + _token
+    result = requests.post(url, data=json.dumps({
+        'title': title,
+        'content': content,
+        'max_summary_len': 200,
+    }), headers={ 'Content-Type': 'application/json' }).json()
+    print(result)
+    return result['summary']

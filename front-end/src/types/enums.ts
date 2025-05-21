@@ -17,5 +17,10 @@ export const enum SUBMISSION_STATUS {
   PASS,
   NOT_PASS,
   RE_REVIEW,
-  NEVER_PASS,
+  BANNED,
+}
+
+export const enum SUBMISSION_TYPE {
+  ARTICLE,
+  VIDEO,
 }

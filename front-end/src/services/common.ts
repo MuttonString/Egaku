@@ -10,3 +10,9 @@ export async function uploadFile(file: File): Response<UploadFileRes> {
     },
   });
 }
+
+export async function search(
+  data: CommonSearchReq
+): Response<CommonListRes<SubmissionPreviewObj>> {
+  return await request.post('/common/search', data);
+}

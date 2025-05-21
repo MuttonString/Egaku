@@ -4,11 +4,11 @@ import {
   Checkbox,
   Dropdown,
   Input,
-  MenuProps,
   Modal,
   Radio,
   Upload,
 } from 'antd';
+import type { MenuProps } from 'antd';
 import {
   forwardRef,
   Ref,
@@ -23,12 +23,15 @@ import ImgCrop from 'antd-img-crop';
 import { LoadingOutlined, MailOutlined } from '@ant-design/icons';
 import { useRequest } from 'ahooks';
 import { uploadFile } from '../../services/common';
-import ErrorNotification, { IErrorNotification } from '../ErrorNotification';
+import ErrorNotification from '../ErrorNotification';
+import type { IErrorNotification } from '../ErrorNotification';
 import { USER_SEX } from '../../types/enums';
 import LevelTag from '../LevelTag';
-import LoginModal, { ILoginModal, LOGIN_MODAL_TYPE } from '../LoginModal';
+import LoginModal from '../LoginModal';
+import type { ILoginModal } from '../LoginModal';
 import { update } from '../../services/user';
 import { imgResize } from '../../utils/imgResize';
+import { LOGIN_MODAL_TYPE } from '../LoginModal/const';
 
 type MenuItem = Required<MenuProps>['items'][number];
 const { TextArea } = Input;
@@ -140,8 +143,6 @@ function UserModal(props: IProps, ref: Ref<IUserModal>) {
 
   const noticeOptions = [
     { value: 'reply', label: t('userModal.remind.reply') },
-    { value: 'like', label: t('userModal.remind.like') },
-    { value: 'notice', label: t('userModal.remind.notice') },
   ];
 
   useImperativeHandle(ref, () => ({
@@ -178,8 +179,6 @@ function UserModal(props: IProps, ref: Ref<IUserModal>) {
           avatar,
           showReminder: {
             reply: !!showReminder?.includes('reply'),
-            like: !!showReminder?.includes('like'),
-            notice: !!showReminder?.includes('notice'),
           },
         });
       }}

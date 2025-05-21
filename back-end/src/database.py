@@ -8,7 +8,6 @@ POOL_SIZE = 20
 
 engine = create_engine(DATABASE_URL, pool_size=POOL_SIZE)
 SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
-db = SessionLocal()
 Base = declarative_base()
 
 class TimestampDateTime(TypeDecorator):

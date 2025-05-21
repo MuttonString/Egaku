@@ -10,7 +10,6 @@ const request = axios.create({
 });
 
 const html = document.querySelector('html')!;
-const sleep = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
 
 request.interceptors.request.use((cfg) => {
   const token = sessionStorage.getItem('token');
@@ -21,7 +20,6 @@ request.interceptors.request.use((cfg) => {
 });
 
 request.interceptors.response.use(async (resp) => {
-  await sleep(1000);
   if (!resp.data.success && resp.data.data.error === 'NOT_LOGIN') {
     sessionStorage.removeItem('token');
     const account = Cookies.get('account');

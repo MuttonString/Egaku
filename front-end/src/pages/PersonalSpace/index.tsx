@@ -1,11 +1,17 @@
-import { Col, Row, Tabs, TabsProps } from 'antd';
+import { Tabs } from 'antd';
+import type { TabsProps } from 'antd';
 import { useEffect, useMemo, useState } from 'react';
 import { useNavigate, useParams } from 'react-router';
 import styles from './index.module.less';
 import { useTranslation } from 'react-i18next';
 import ArticleTab from './tabs/ArticleTab';
-import { useThrottleFn } from 'ahooks';
+import { useRequest, useThrottleFn } from 'ahooks';
 import VideoTab from './tabs/VideoTab';
+import SubmissionTab from './tabs/SubmissionTab';
+import CollectionTab from './tabs/CollectionTab';
+import ReplyTab from './tabs/ReplyTab';
+import { isAdmin } from '../../services/user';
+import AuditTab from './tabs/AuditTab';
 
 export default function PersonalSpace() {
   const { t } = useTranslation();
@@ -32,29 +38,26 @@ export default function PersonalSpace() {
     setTab(params.tab);
   }, [params.tab]);
 
+  const { data: isAdminData } = useRequest(isAdmin);
+
   const items: TabsProps['items'] = useMemo(
     () => [
       {
         key: 'collection',
         label: t('personal.tabs.collection'),
+        children: <CollectionTab />,
       },
       {
         key: 'submission',
         label: t('personal.tabs.submission'),
+        children: <SubmissionTab />,
       },
       {
         key: 'reply',
         label: (
           <span className={styles.divider}>{t('personal.tabs.reply')}</span>
         ),
-      },
-      {
-        key: 'like',
-        label: t('personal.tabs.like'),
-      },
-      {
-        key: 'notice',
-        label: t('personal.tabs.notice'),
+        children: <ReplyTab />,
       },
       {
         key: 'article',
@@ -72,20 +75,29 @@ export default function PersonalSpace() {
     [t]
   );
 
+  const adminItems: TabsProps['items'] = useMemo(
+    () => [
+      {
+        key: 'audit',
+        label: (
+          <span className={styles.divider}>{t('personal.tabs.audit')}</span>
+        ),
+        children: <AuditTab />,
+      },
+    ],
+    [t]
+  );
+
   return (
-    <Row className={styles.page}>
-      <Col xs={0} sm={1} md={2} lg={4} />
-      <Col xs={24} sm={22} md={20} lg={18} className={styles.content}>
-        <Tabs
-          tabPosition={isMobile ? 'top' : 'left'}
-          className={styles.tabs}
-          items={items}
-          activeKey={tab}
-          onChange={(val) => {
-            navigate('/personal/' + val);
-          }}
-        />
-      </Col>
-    </Row>
+    <Tabs
+      tabPosition={isMobile ? 'top' : 'left'}
+      className={styles.tabs}
+      items={isAdminData?.data.isAdmin ? [...items, ...adminItems] : items}
+      activeKey={tab}
+      onChange={(val) => {
+        navigate('/personal/' + val);
+      }}
+      destroyOnHidden
+    />
   );
 }

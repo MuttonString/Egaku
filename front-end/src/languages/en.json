@@ -11,7 +11,6 @@
   },
   "layout": {
     "menu": {
-      "recommend": "Recommendation",
       "subscribe": "Subscription",
       "article": "Article",
       "video": "Video",
@@ -19,8 +18,7 @@
     },
     "user": {
       "reply": "Reply",
-      "like": "Like",
-      "notice": "Notification",
+      "submission": "My submission",
       "settings": "Account settings",
       "logout": "Logout",
       "noLogin": "Not logged in"
@@ -32,7 +30,12 @@
     }
   },
   "errorNotification": {
-    "title": "Error"
+    "title": "Error",
+    "notLogin": "Login expired",
+    "serverError": "Server error",
+    "noPermission": "No permission",
+    "paramError": "Param error",
+    "cannotOperationToSelf": "Can’t operate on self"
   },
   "successMessage": {
     "title": "{{msg}} successful"
@@ -110,9 +113,7 @@
     },
     "remind": {
       "title": "Show message reminder",
-      "reply": "Reply",
-      "like": "Like",
-      "notice": "Notification"
+      "reply": "Reply"
     },
     "desc": {
       "title": "Brief introduction",
@@ -125,12 +126,36 @@
   "personal": {
     "tabs": {
       "collection": "Collection",
-      "submission": "My Submission",
+      "submission": "Submission management",
       "reply": "Reply",
-      "like": "Like",
-      "notice": "Notification",
       "article": "Submit Article",
-      "video": "Submit Video"
+      "video": "Submit Video",
+      "audit": "Audit"
+    },
+    "collection": {
+      "title": "Title",
+      "preview": "Preview",
+      "time": "Collection time",
+      "remove": "Remove"
+    },
+    "submission": {
+      "reviewing": "Under audit",
+      "passed": "Audit passed",
+      "notPass": "Failed audit",
+      "banned": "Banned",
+      "del": "Delete",
+      "reReview": "Request for re-audit",
+      "title": "Title",
+      "content": "Content",
+      "time": "Submit time",
+      "status": "Status",
+      "delWarn": "Are you sure you want to delete it? The submission cannot be restored."
+    },
+    "reply": {
+      "title": "Title",
+      "user": "User",
+      "time": "Time",
+      "content": "Content"
     },
     "article": {
       "title": "Title",
@@ -152,6 +177,64 @@
       "limit": "The maxium video size is 1GB",
       "crop": "Crop video cover",
       "reset": "Reset"
+    },
+    "audit": {
+      "needReview": "Need to be audited",
+      "needReviewAgain": "Need to be re-audited",
+      "title": "Title",
+      "content": "Content",
+      "time": "Submit time",
+      "status": "Status",
+      "pass": "Pass",
+      "reason": "Reason",
+      "confirm": "Confirm",
+      "ban": "Reject"
     }
+  },
+  "singleArticle": {
+    "noArticle": "The article does not exist",
+    "summary": "AI summary",
+    "cancelSubscribe": "Unsubscribe",
+    "subscribe": "Subscribe",
+    "comment": "Comment",
+    "placeholder": "Leave your comment",
+    "send": "Send",
+    "noComment": "No comment",
+    "delConfirm": "Sure you want to delete?"
+  },
+  "singleVideo": {
+    "noVideo": "The video does not exist",
+    "summary": "AI summary",
+    "cancelSubscribe": "Unsubscribe",
+    "subscribe": "Subscribe",
+    "comment": "Comment",
+    "placeholder": "Leave your comment",
+    "send": "Send",
+    "noComment": "No comment",
+    "delConfirm": "Sure you want to delete?"
+  },
+  "article": {
+    "loadMore": "Load more"
+  },
+  "video": {
+    "loadMore": "Load more"
+  },
+  "submission": {
+    "noUser": "The user does not exist",
+    "signupDate": "Sign up date: ",
+    "subscriber": "Subscriber",
+    "video": "Video",
+    "article": "Article",
+    "cancelSubscribe": "Unsubscribe",
+    "subscribe": "Subscribe",
+    "loadMore": "Load more"
+  },
+  "subscription": {
+    "title": "Subscription List",
+    "loadMore": "Load more"
+  },
+  "search": {
+    "title": "Search result of “{{content}}”",
+    "loadMore": "Load more"
   }
 }

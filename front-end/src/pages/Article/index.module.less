@@ -1,0 +1,24 @@
+.card {
+  flex: 0.5;
+
+  .preview {
+    color: var(--text);
+    border-top: 1px solid var(--default-border);
+  }
+}
+
+.loading {
+  position: absolute;
+  left: 32px;
+  top: 32px;
+  font-size: 64px;
+  color: var(--primary-color);
+  z-index: 99;
+  filter: drop-shadow(2px 2px 8px var(--secondary-background));
+  pointer-events: none;
+}
+
+.loadMore {
+  text-align: center;
+  text-shadow: 2px 2px 8px var(--secondary-background);
+}

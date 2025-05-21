@@ -1,0 +1,25 @@
+.card {
+  width: min(400px, calc(50% - 8px));
+
+  img {
+    height: 200px;
+    object-fit: cover;
+    object-position: center;
+  }
+}
+
+.loading {
+  position: absolute;
+  left: 32px;
+  top: 32px;
+  font-size: 64px;
+  color: var(--primary-color);
+  z-index: 99;
+  filter: drop-shadow(2px 2px 8px var(--secondary-background));
+  pointer-events: none;
+}
+
+.loadMore {
+  text-align: center;
+  text-shadow: 2px 2px 8px var(--secondary-background);
+}
