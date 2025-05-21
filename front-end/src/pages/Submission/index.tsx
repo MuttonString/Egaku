@@ -265,7 +265,7 @@ export default function Submission() {
                 title={
                   <Flex gap={8} align="center">
                     {ele.type === 0 ? <ReadOutlined /> : <PlaySquareOutlined />}
-                    {ele.title}
+                    <div className={styles.title}>{ele.title}</div>
                   </Flex>
                 }
                 description={dayjs(ele.submitTime).format('LLLL')}
