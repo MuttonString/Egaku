@@ -19,6 +19,7 @@ import {
   LoadingOutlined,
   LoginOutlined,
   MenuOutlined,
+  RobotFilled,
   SettingFilled,
   UserOutlined,
 } from '@ant-design/icons';
@@ -41,6 +42,8 @@ import type { ISettingsDrawer } from '../components/SettingsDrawer';
 import UserModal from '../components/UserModal';
 import type { IUserModal } from '../components/UserModal';
 import { LOGIN_MODAL_TYPE } from '../components/LoginModal/const';
+import AIDrawer from '../components/AIDrawer';
+import type { IAIDrawer } from '../components/AIDrawer';
 
 const { Header, Content } = Layout;
 type MenuItem = Required<MenuProps>['items'][number];
@@ -54,6 +57,7 @@ export default function PageLayout() {
   const errorRef = useRef<IErrorNotification>(null);
   const settingsRef = useRef<ISettingsDrawer>(null);
   const userRef = useRef<IUserModal>(null);
+  const aiDrawerRef = useRef<IAIDrawer>(null);
 
   const [isMobile, setIsMobile] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
@@ -283,6 +287,7 @@ export default function PageLayout() {
       <ErrorNotification ref={errorRef} />
       <SettingsDrawer ref={settingsRef} />
       <UserModal ref={userRef} onSuccess={userRun} />
+      <AIDrawer ref={aiDrawerRef} />
 
       {isMobile ? (
         <Header className={styles.headerMobile}>
@@ -321,6 +326,15 @@ export default function PageLayout() {
               />
             </AutoComplete>
           </div>
+          <Animation animation="bounce">
+            <Button
+              type="text"
+              className={styles.right}
+              onClick={() => aiDrawerRef.current!.open()}
+            >
+              <RobotFilled />
+            </Button>
+          </Animation>
           <Animation animation="spin">
             <Button
               type="text"
@@ -426,6 +440,15 @@ export default function PageLayout() {
               />
             </AutoComplete>
 
+            <Animation animation="bounce">
+              <Button
+                type="text"
+                className={styles.btn}
+                onClick={() => aiDrawerRef.current!.open()}
+              >
+                <RobotFilled />
+              </Button>
+            </Animation>
             <Animation animation="spin">
               <Button
                 type="text"
