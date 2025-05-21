@@ -77,6 +77,7 @@ export default function SearchResult() {
       navigate('/', { replace: true });
       return;
     }
+    setSearchList([]);
     pageRef.current = 1;
     searchRun({
       content: q!,
