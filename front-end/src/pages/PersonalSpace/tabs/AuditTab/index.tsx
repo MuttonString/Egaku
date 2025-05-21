@@ -82,6 +82,7 @@ export default function AuditTab() {
             return (
               <Image
                 src={cover}
+                height={150}
                 preview={{
                   destroyOnHidden: true,
                   imageRender: () => (

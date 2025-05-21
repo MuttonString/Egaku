@@ -100,6 +100,7 @@ export default function SubmissionTab() {
             return (
               <Image
                 src={cover}
+                height={150}
                 preview={{
                   destroyOnHidden: true,
                   imageRender: () => (
