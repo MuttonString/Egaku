@@ -18,6 +18,7 @@
     },
     "user": {
       "reply": "回复",
+      "submission": "我的稿件",
       "settings": "账户设置",
       "logout": "退出登录",
       "noLogin": "未登录"
