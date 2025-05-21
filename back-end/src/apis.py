@@ -374,7 +374,7 @@ def user_get_collection(data: CommonList, token: str = Header(None)):
         uid = verify_token(token)
         if not uid:
             return error('NOT_LOGIN')
-        collections = db.query(Collection).filter(Collection.uid == uid)
+        collections = db.query(Collection).filter(Collection.uid == uid).order_by(desc(Collection.time))
         total = db.execute(db.query(func.count()).select_from(collections.subquery())).scalar()
         collection_result = collections.limit(data.pageSize).offset((data.pageNum - 1) * data.pageSize).all()
         result_list = []
@@ -801,7 +801,7 @@ def user_get_submission(data: CommonList, token: str = Header(None)):
 def article_get_all(data: CommonList):
     db = SessionLocal()
     try:
-        articles = db.query(Article).filter(Article.status == 1)
+        articles = db.query(Article).filter(Article.status == 1).order_by(desc(Article.submit_time))
         total = db.execute(db.query(func.count()).select_from(articles.subquery())).scalar()
         result = articles.limit(data.pageSize).offset((data.pageNum - 1) * data.pageSize).all()
         result_list = []
@@ -826,7 +826,7 @@ def article_get_all(data: CommonList):
 def video_get_all(data: CommonList):
     db = SessionLocal()
     try:
-        videos = db.query(Video).filter(Video.status == 1)
+        videos = db.query(Video).filter(Video.status == 1).order_by(desc(Video.submit_time))
         total = db.execute(db.query(func.count()).select_from(videos.subquery())).scalar()
         result = videos.limit(data.pageSize).offset((data.pageNum - 1) * data.pageSize).all()
         result_list = []
