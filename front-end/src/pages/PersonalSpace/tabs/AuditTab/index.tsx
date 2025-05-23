@@ -150,6 +150,7 @@ export default function AuditTab() {
                       ? SUBMISSION_TYPE.VIDEO
                       : SUBMISSION_TYPE.ARTICLE,
                     status: SUBMISSION_STATUS.PASS,
+                    desc: '',
                   })
                 }
               >

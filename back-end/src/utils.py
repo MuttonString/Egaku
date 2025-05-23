@@ -1,3 +1,12 @@
+import requests
+import json
+import ssl
+from urllib.parse import quote_plus
+from urllib.parse import urlencode
+from urllib.error import URLError
+from urllib.request import Request
+from urllib.request import urlopen
+import base64
 from datetime import datetime
 from .database import SessionLocal
 from .models import Config, Token, User, Article, Video
@@ -22,22 +31,28 @@ API_KEY = config.api_key
 SECRET_KEY = config.secret_key
 db.close()
 
+
 def error(msg='SERVER_ERROR'):
-    return { 'success': False, 'data': { 'error': msg } }
+    return {'success': False, 'data': {'error': msg}}
+
 
 def success(data={}):
-    return { 'success': True, 'data': data }
+    return {'success': True, 'data': data}
+
 
 def time():
     return datetime.now().timestamp() * 1000
+
 
 def hash_password(pwd: str, uid: str):
     sha512 = hashlib.sha512()
     sha512.update(f'{pwd}{uid}'.encode('utf-8'))
     return sha512.hexdigest()
 
+
 def token():
     return secrets.token_hex(32)
+
 
 def mask_email(email: str):
     masked = re.sub(r'(\w)(\w+)(\w)(?=@)',
@@ -45,13 +60,15 @@ def mask_email(email: str):
                     email)
     return masked
 
+
 def generate_code():
     return ''.join(random.choice('ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789') for _ in range(6))
+
 
 def send_code(code: str, email: str, lang: str):
     server = smtplib.SMTP(SMTP_SERVER, SMTP_PORT)
     server.login(SENDER_EMAIL, SENDER_PASSWORD)
-    
+
     message = MIMEMultipart()
     message['From'] = 'Egaku@egaku.com'
     message['To'] = email
@@ -135,9 +152,11 @@ def send_code(code: str, email: str, lang: str):
     server.sendmail(SENDER_EMAIL, email, message.as_string())
     server.quit()
 
+
 def verify_token(token: str):
     db = SessionLocal()
-    token_obj = db.query(Token).filter(Token.token == token).order_by(Token.expire_time.desc()).first()
+    token_obj = db.query(Token).filter(Token.token == token).order_by(
+        Token.expire_time.desc()).first()
     if token_obj:
         if token_obj.expire_time < time():
             db.close()
@@ -148,6 +167,7 @@ def verify_token(token: str):
         return uid
     db.close()
     return False
+
 
 async def save_file(file: UploadFile = File(..., max_size=1024*1024*1024)):
     BASE_URL = 'http://localhost:8000'
@@ -162,30 +182,26 @@ async def save_file(file: UploadFile = File(..., max_size=1024*1024*1024)):
             buffer.write(chunk)
     return f'{BASE_URL}/files/{filename}'
 
+
 def exp_plus(uid: str, exp: int):
     db = SessionLocal()
     user = db.query(User).filter(User.uid == uid).first()
     user.exp = user.exp + exp
     db.commit()
 
-import json
-import base64
-from urllib.request import urlopen
-from urllib.request import Request
-from urllib.error import URLError
-from urllib.parse import urlencode
-from urllib.parse import quote_plus
-import ssl
+
 ssl._create_default_https_context = ssl._create_unverified_context
 TEXT_CENSOR = 'https://aip.baidubce.com/rest/2.0/solution/v1/text_censor/v2/user_defined'
 VIDEO_CENSOR = 'https://aip.baidubce.com/rest/2.0/solution/v1/video_censor/v1/video/submit'
+
+
 def _fetch_review_token():
     TOKEN_URL = 'https://aip.baidubce.com/oauth/2.0/token'
     params = {
-                'grant_type': 'client_credentials',
-                'client_id': API_KEY,
-                'client_secret': SECRET_KEY
-            }
+        'grant_type': 'client_credentials',
+        'client_id': API_KEY,
+        'client_secret': SECRET_KEY
+    }
     post_data = urlencode(params).encode('utf-8')
     req = Request(TOKEN_URL, post_data)
     try:
@@ -197,12 +213,13 @@ def _fetch_review_token():
     result = json.loads(result_str)
     if ('access_token' in result.keys() and 'scope' in result.keys()):
         if not 'brain_all_scope' in result['scope'].split(' '):
-            print ('please ensure has check the ability')
+            print('please ensure has check the ability')
             return
         return result['access_token']
     else:
-        print ('please overwrite the correct API_KEY and SECRET_KEY')
+        print('please overwrite the correct API_KEY and SECRET_KEY')
         return
+
 
 def _request(url, data):
     req = Request(url, data.encode('utf-8'))
@@ -212,6 +229,7 @@ def _request(url, data):
         return json.loads(result_str)
     except URLError as err:
         print(err)
+
 
 def _read_file(path):
     f = None
@@ -225,12 +243,15 @@ def _read_file(path):
         if f:
             f.close()
 
+
 _token = _fetch_review_token()
+
+
 def review(content: str, type: int, id: str, uid: str):
     db = SessionLocal()
     if type == 0:
         text_url = TEXT_CENSOR + "?access_token=" + _token
-        result = _request(text_url, urlencode({ 'text': content }))
+        result = _request(text_url, urlencode({'text': content}))
         print(result)
         article = db.query(Article).filter(Article.id == id).first()
         if result['conclusion'] == '合规':
@@ -239,12 +260,13 @@ def review(content: str, type: int, id: str, uid: str):
             exp_plus(uid, 20)
         else:
             article.status = 2
-            article.desc = '; '.join(list(map(lambda obj: obj['msg'], result['data'])))
+            article.desc = '; '.join(
+                list(map(lambda obj: obj['msg'], result['data'])))
             db.commit()
     elif type == 1:
         video_url = VIDEO_URL + "?access_token=" + _token
         # TODO 缺失存储视频的网络服务器，无法AI审核视频，暂时直接过审
-        result = { 'conslusion': '合规' }
+        result = {'conslusion': '合规'}
         print(result)
         video = db.query(Video).filter(Video.id == id).first()
         if result['conclusion'] == '合规':
@@ -253,18 +275,21 @@ def review(content: str, type: int, id: str, uid: str):
             exp_plus(uid, 20)
         else:
             video.status = 2
-            video.desc = '; '.join(list(map(lambda obj: obj['msg'], result['data'])))
+            video.desc = '; '.join(
+                list(map(lambda obj: obj['msg'], result['data'])))
             db.commit()
     db.close()
 
-import requests
+
 NEWS_SUMMARY = 'https://aip.baidubce.com/rpc/2.0/nlp/v1/news_summary'
+
+
 def summary(title: str, content: str):
     url = NEWS_SUMMARY + '?charset=UTF-8&access_token=' + _token
     result = requests.post(url, data=json.dumps({
         'title': title,
         'content': content,
         'max_summary_len': 200,
-    }), headers={ 'Content-Type': 'application/json' }).json()
+    }), headers={'Content-Type': 'application/json'}).json()
     print(result)
     return result['summary']

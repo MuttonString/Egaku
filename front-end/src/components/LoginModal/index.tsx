@@ -130,7 +130,7 @@ function LoginModal(props: ModalProps, ref: Ref<ILoginModal>) {
               { name: 'email', errors: [t(errMsgMap[res.data.error])] },
             ]);
           case USER_ERR.CODE_ERROR:
-            return resetForm.setFields([
+            return signupForm.setFields([
               { name: 'code', errors: [t(errMsgMap[res.data.error])] },
             ]);
           default:
@@ -155,7 +155,7 @@ function LoginModal(props: ModalProps, ref: Ref<ILoginModal>) {
       } else {
         switch (res.data.error) {
           case USER_ERR.EMAIL_NOT_EXIST:
-            return signupForm.setFields([
+            return resetForm.setFields([
               { name: 'email', errors: [t(errMsgMap[res.data.error])] },
             ]);
           case USER_ERR.CODE_ERROR:

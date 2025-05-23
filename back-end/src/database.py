@@ -10,6 +10,7 @@ engine = create_engine(DATABASE_URL, pool_size=POOL_SIZE)
 SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
 Base = declarative_base()
 
+
 class TimestampDateTime(TypeDecorator):
     ''' 将数据库的DATETIME类型与时间戳相互转换 '''
     impl = DATETIME
@@ -20,7 +21,8 @@ class TimestampDateTime(TypeDecorator):
 
     def process_result_value(self, value, dialect):
         return int(value.replace(tzinfo=timezone.utc).timestamp() * 1000) if value else None
-    
+
+
 class BigIntStr(TypeDecorator):
     ''' 将数据库的BIGINT转换为字符串 '''
     impl = BIGINT
