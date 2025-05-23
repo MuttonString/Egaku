@@ -94,3 +94,8 @@ class CommonSearch(BaseModel):
     content: str
     pageNum: int
     pageSize: int
+
+
+class CommonImageProcessing(BaseModel):
+    image: str
+    api: str

@@ -14,7 +14,8 @@
       "subscribe": "关注",
       "article": "文章",
       "video": "视频",
-      "personal": "个人空间"
+      "personal": "个人空间",
+      "aiImage": "AI图像处理"
     },
     "user": {
       "reply": "回复",
@@ -235,5 +236,25 @@
   "search": {
     "title": "“{{content}}”的搜索结果",
     "loadMore": "加载更多"
+  },
+  "aiImage": {
+    "option": {
+      "coloring": "图像上色",
+      "animization": "图像动漫化",
+      "defogging": "图像去雾",
+      "contrast": "图像对比度增强",
+      "scale": "图像无损放大",
+      "restore": "图像拉伸恢复",
+      "definition": "图像清晰度增强",
+      "colorEnhance": "图像色彩增强"
+    },
+    "switch": {
+      "original": "原图",
+      "processed": "处理后"
+    },
+    "btn": {
+      "upload": "上传图片",
+      "submit": "提交"
+    }
   }
 }

@@ -14,7 +14,8 @@
       "subscribe": "フォロー",
       "article": "文章",
       "video": "ビデオ",
-      "personal": "個人スペース"
+      "personal": "個人スペース",
+      "aiImage": "AI画像処理"
     },
     "user": {
       "reply": "返信",
@@ -235,5 +236,25 @@
   "search": {
     "title": "「{{content}}」の検索結果",
     "loadMore": "もっとロード"
+  },
+  "aiImage": {
+    "option": {
+      "coloring": "画像の色付け",
+      "animization": "画像のアニメ化",
+      "defogging": "画像の曇り除去",
+      "contrast": "画像のコントラスト強調",
+      "scale": "画像の高解像度化",
+      "restore": "画像の伸縮復元",
+      "definition": "画像の鮮明化",
+      "colorEnhance": "画像の色彩強調"
+    },
+    "switch": {
+      "original": "原図",
+      "processed": "処理後"
+    },
+    "btn": {
+      "upload": "画像をアップロード",
+      "submit": "提出"
+    }
   }
 }

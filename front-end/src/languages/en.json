@@ -14,7 +14,8 @@
       "subscribe": "Subscription",
       "article": "Article",
       "video": "Video",
-      "personal": "Personal Space"
+      "personal": "Personal Space",
+      "aiImage": "AI Image Processing"
     },
     "user": {
       "reply": "Reply",
@@ -235,5 +236,25 @@
   "search": {
     "title": "Search result of “{{content}}”",
     "loadMore": "Load more"
+  },
+  "aiImage": {
+    "option": {
+      "coloring": "Image colorization",
+      "animization": "Image animation style transfer",
+      "defogging": "Image defogging",
+      "contrast": "Image contrast enhancement",
+      "scale": "Image super-resolution",
+      "restore": "Image stretch restoration",
+      "definition": "Image sharpness enhancement",
+      "colorEnhance": "Image color enhancement"
+    },
+    "switch": {
+      "original": "Original",
+      "processed": "Processed"
+    },
+    "btn": {
+      "upload": "Upload image",
+      "submit": "Submit"
+    }
   }
 }

@@ -262,7 +262,7 @@ def video_submit(data: VideoSubmit, token: str = Header(None)):
         db.refresh(new_video)
         id = new_video.id
         db.commit()
-        review(data.video, 0, id, uid)
+        review(data.video, 1, id, uid)
         return success()
     except Exception as e:
         db.rollback()
@@ -1131,5 +1131,14 @@ def user_get_submission_need_review(data: CommonList, token: str = Header(token)
         })
     except Exception as e:
         db.rollback()
+        print(e.args)
+        return error()
+
+
+@router.post('/common/imageProcessing')
+def image_processing(data: CommonImageProcessing):
+    try:
+        return success({'image': ai_image_procssing(data.image, data.api)})
+    except Exception as e:
         print(e.args)
         return error()

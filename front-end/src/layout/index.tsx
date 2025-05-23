@@ -183,6 +183,13 @@ export default function PageLayout() {
           navigate('video');
         },
       },
+      {
+        label: t('layout.menu.aiImage'),
+        key: 'aiImage',
+        onClick() {
+          navigate('aiImage');
+        },
+      },
     ],
     [navigate, t]
   );

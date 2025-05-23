@@ -229,3 +229,7 @@ interface CommonSearchReq extends CommonListReq {
 interface UserIsAdminRes {
   isAdmin?: boolean;
 }
+
+interface ImageProcessingRes {
+  image?: string;
+}

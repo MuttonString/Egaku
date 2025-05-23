@@ -264,20 +264,21 @@ def review(content: str, type: int, id: str, uid: str):
                 list(map(lambda obj: obj['msg'], result['data'])))
             db.commit()
     elif type == 1:
-        video_url = VIDEO_URL + "?access_token=" + _token
-        # TODO 缺失存储视频的网络服务器，无法AI审核视频，暂时直接过审
-        result = {'conslusion': '合规'}
-        print(result)
-        video = db.query(Video).filter(Video.id == id).first()
-        if result['conclusion'] == '合规':
-            video.status = 1
-            db.commit()
-            exp_plus(uid, 20)
-        else:
-            video.status = 2
-            video.desc = '; '.join(
-                list(map(lambda obj: obj['msg'], result['data'])))
-            db.commit()
+        pass
+        # video_url = VIDEO_URL + "?access_token=" + _token
+        # TODO 缺失存储视频的网络服务器，无法AI审核视频
+        # result = {'conslusion': '合规'}
+        # print(result)
+        # video = db.query(Video).filter(Video.id == id).first()
+        # if result['conclusion'] == '合规':
+        #     video.status = 1
+        #     db.commit()
+        #     exp_plus(uid, 20)
+        # else:
+        #     video.status = 2
+        #     video.desc = '; '.join(
+        #         list(map(lambda obj: obj['msg'], result['data'])))
+        #     db.commit()
     db.close()
 
 
@@ -293,3 +294,21 @@ def summary(title: str, content: str):
     }), headers={'Content-Type': 'application/json'}).json()
     print(result)
     return result['summary']
+
+
+def ai_image_procssing(image: str, api: str):
+    APIS = {
+        'coloring': 'https://aip.baidubce.com/rest/2.0/image-process/v1/colourize',
+        'animization': 'https://aip.baidubce.com/rest/2.0/image-process/v1/selfie_anime',
+        'defogging': 'https://aip.baidubce.com/rest/2.0/image-process/v1/dehaze',
+        'contrast': 'https://aip.baidubce.com/rest/2.0/image-process/v1/contrast_enhance',
+        'scale': 'https://aip.baidubce.com/rest/2.0/image-process/v1/image_quality_enhance',
+        'restore': 'https://aip.baidubce.com/rest/2.0/image-process/v1/stretch_restore',
+        'definition': 'https://aip.baidubce.com/rest/2.0/image-process/v1/image_definition_enhance',
+        'colorEnhance': 'https://aip.baidubce.com/rest/2.0/image-process/v1/color_enhance',
+    }
+    url = APIS[api] + '?access_token=' + _token
+    result = requests.post(url, data={'image': image}, headers={
+                           'Content-Type': 'application/x-www-form-urlencoded'}).json()
+    print(result)
+    return result['image']

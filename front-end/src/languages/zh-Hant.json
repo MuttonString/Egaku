@@ -14,7 +14,8 @@
       "subscribe": "訂閱",
       "article": "文章",
       "video": "視頻",
-      "personal": "個人空間"
+      "personal": "個人空間",
+      "aiImage": "AI影像處理"
     },
     "user": {
       "reply": "回覆",
@@ -235,5 +236,25 @@
   "search": {
     "title": "「{{content}}」的搜尋結果",
     "loadMore": "載入更多"
+  },
+  "aiImage": {
+    "option": {
+      "coloring": "影像上色",
+      "animization": "影像動漫化",
+      "defogging": "影像去霧",
+      "contrast": "影像對比度增強",
+      "scale": "影像無損放大",
+      "restore": "影像拉伸修復",
+      "definition": "影像清晰度增強",
+      "colorEnhance": "影像色彩增強"
+    },
+    "switch": {
+      "original": "原始圖",
+      "processed": "處理後"
+    },
+    "btn": {
+      "upload": "上傳圖片",
+      "submit": "提交"
+    }
   }
 }

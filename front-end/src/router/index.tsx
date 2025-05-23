@@ -10,6 +10,7 @@ import SearchResult from '../pages/SearchResult';
 import SingleArticle from '../pages/SingleArticle';
 import Submission from '../pages/Submission';
 import SingleVideo from '../pages/SingleVideo';
+import AIImage from '../pages/AIImage';
 
 const router = createBrowserRouter([
   {
@@ -59,6 +60,10 @@ const router = createBrowserRouter([
       {
         path: 'submission/:uid',
         element: <Submission />,
+      },
+      {
+        path: 'aiImage',
+        element: <AIImage />,
       },
       {
         path: '*',

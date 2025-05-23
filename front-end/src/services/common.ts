@@ -16,3 +16,13 @@ export async function search(
 ): Response<CommonListRes<SubmissionPreviewObj>> {
   return await request.post('/common/search', data);
 }
+
+export async function aiImageProcessing(
+  base64: string,
+  api: string
+): Response<ImageProcessingRes> {
+  return await request.post('/common/imageProcessing', {
+    api,
+    image: base64.split(',')[1],
+  });
+}
